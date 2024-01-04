@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Indexer/etc/indexer.xsd">
+    <indexer id="magenest_rental_rule" view_id="magenest_rental_rule" class="Magenest\RentalSystem\Model\Indexer">
+        <title>Magenest RentalSystem Price Rules</title>
+        <description>Index applicable products for Rental Price Rules</description>
+    </indexer>
+</config>

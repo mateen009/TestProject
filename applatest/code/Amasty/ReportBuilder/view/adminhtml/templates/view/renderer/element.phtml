@@ -1,0 +1,11 @@
+<?php
+/** @var \Amasty\ReportBuilder\Block\Adminhtml\Widget\Form\Renderer\DefaultElement $block */
+/** @var \Magento\Framework\Escaper $escaper */
+
+$element = $block->getElement();
+?>
+
+<div class="amrepbuilder-field <?= $escaper->escapeHtmlAttr($element->getWrapperClass()) ?>">
+    <?= /* @noEscape */ $element->getLabelHtml() ?>
+    <?= /* @noEscape */ $element->getElementHtml() ?>
+</div>

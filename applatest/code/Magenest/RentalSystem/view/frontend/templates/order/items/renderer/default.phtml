@@ -1,0 +1,114 @@
+<?php
+/**
+ * Copyright © 2018 Magenest. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+/** @var  $block \Magenest\RentalSystem\Block\Order\Item\Renderer\DefaultRenderer */
+$_item = $block->getItem();
+?>
+<tr id="order-item-row-<?= $block->escapeHtml($_item->getId()) ?>">
+    <td class="col name" data-th="<?= $block->escapeHtml(__('Product Name')); ?>">
+        <strong class="product name product-item-name"><?= $block->escapeHtml($_item->getName()) ?></strong>
+        <?php if ($_options = $block->getItemOptions()): ?>
+            <dl class="item-options">
+                <?php foreach ($_options as $_option) : ?>
+                    <dt><?= $block->escapeHtml($_option['label']) ?></dt>
+                    <?php if (!$block->getPrintStatus()): ?>
+                        <?php $_formatedOptionValue = $block->getFormatedOptionValue($_option) ?>
+                        <dd>
+                            <?= $block->escapeHtml(
+                                $_formatedOptionValue['full_view'] ?? $_formatedOptionValue['value']
+                            ) ?>
+                        </dd>
+                    <?php else: ?>
+                        <dd>
+                            <?= nl2br($block->escapeHtml(($_option['print_value'] ?? $_option['value']))) ?>
+                        </dd>
+                    <?php endif; ?>
+                <?php endforeach; ?>
+            </dl>
+        <?php endif; ?>
+        <?php $addtInfoBlock = $block->getProductAdditionalInformationBlock(); ?>
+        <?php if ($addtInfoBlock) : ?>
+            <?= $addtInfoBlock->setItem($_item)->toHtml(); ?>
+        <?php endif; ?>
+        <?= $block->escapeHtml($_item->getDescription()) ?>
+        <?php if ($_item->getProductType() == 'rental') { ?>
+            <?php if ($_item->getProductOptions()): ?>
+                <dl class="item-options">
+                    <?php foreach ($_item->getProductOptions() as $_option): ?>
+                        <?php if (isset($_option['additional_options']) && !empty($_option['additional_options'])) { ?>
+                            <div class="product-option-block">
+                                <br><br>
+                                <?php $data = $_option['additional_options']; ?>
+                                <?php if (!empty($data['options'])) { ?>
+                                    <?php foreach ($data['options'] as $option) : ?>
+                                        <?php $optionTitleAndPrice = $block->getOptionTitleAndPrice($option) ?>
+                                        <?php if (!empty($optionTitleAndPrice)) : ?>
+                                            <span>
+                                                <b><?= $block->escapeHtml($optionTitleAndPrice['option_title'] . ": ") ?></b>
+                                                <?= $block->escapeHtml($optionTitleAndPrice['option_type_title']) ?>
+                                            </span>
+                                            <br>
+                                        <?php endif; ?>
+                                    <?php endforeach; ?>
+                                <?php } ?>
+                                <span>
+                                    <b><?= $block->escapeHtml(__('From') . ':') ?></b>
+                                    <?= $block->escapeHtml(
+                                        $block->getDateString(date('Y-m-d H:i:s', $data['rental_from']))
+                                    ) ?>
+                                </span>
+                                <br>
+                                <span>
+                                    <b><?= $block->escapeHtml(__('To') . ':') ?></b>
+                                    <?= $block->escapeHtml(
+                                        $block->getDateString(date('Y-m-d H:i:s', $data['rental_to']))
+                                    ) ?>
+                                </span>
+                                <br><br>
+                            </div>
+                        <?php } ?>
+                    <?php endforeach; ?>
+                </dl>
+            <?php endif; ?>
+        <?php } ?>
+    </td>
+    <td class="col sku" data-th="<?= $block->escapeHtml(__('SKU')); ?>">
+        <?= $block->prepareSku($block->getSku()) ?>
+    </td>
+    <td class="col price" data-th="<?= $block->escapeHtml(__('Price')); ?>">
+        <?= $block->getItemPriceHtml(); ?>
+    </td>
+    <td class="col qty" data-th="<?= $block->escapeHtml(__('Qty')); ?>">
+        <ul class="items-qty">
+            <?php if ($block->getItem()->getQtyOrdered() > 0): ?>
+                <li class="item">
+                    <span class="title"><?= $block->escapeHtml(__('Ordered')) ?></span>
+                    <span class="content"><?= $block->escapeHtml($block->getItem()->getQtyOrdered() * 1) ?></span>
+                </li>
+            <?php endif; ?>
+            <?php if ($block->getItem()->getQtyShipped() > 0): ?>
+                <li class="item">
+                    <span class="title"><?= $block->escapeHtml(__('Shipped')) ?></span>
+                    <span class="content"><?= $block->escapeHtml($block->getItem()->getQtyShipped() * 1) ?></span>
+                </li>
+            <?php endif; ?>
+            <?php if ($block->getItem()->getQtyCanceled() > 0): ?>
+                <li class="item">
+                    <span class="title"><?= $block->escapeHtml(__('Canceled')) ?></span>
+                    <span class="content"><?= $block->escapeHtml($block->getItem()->getQtyCanceled() * 1) ?></span>
+                </li>
+            <?php endif; ?>
+            <?php if ($block->getItem()->getQtyRefunded() > 0): ?>
+                <li class="item">
+                    <span class="title"><?= $block->escapeHtml(__('Refunded')) ?></span>
+                    <span class="content"><?= $block->escapeHtml($block->getItem()->getQtyRefunded() * 1) ?></span>
+                </li>
+            <?php endif; ?>
+        </ul>
+    </td>
+    <td class="col subtotal" data-th="<?= $block->escapeHtml(__('Subtotal')) ?>">
+        <?= $block->getItemRowTotalHtml(); ?>
+    </td>
+</tr>

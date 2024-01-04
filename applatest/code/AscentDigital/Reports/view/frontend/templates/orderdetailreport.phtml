@@ -1,0 +1,823 @@
+<?php $objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+    $order = $block->getOrders();
+    $orderStatus = $block->getAllOrderStatus();
+?>
+<html lang="en">
+
+<head>
+<style>
+.multiselect-dropdown span.maxselected {
+    width: 100px;
+}
+.optdel {
+    display: none !important;
+}
+@media (min-width: 500px) {
+        .row:after {
+            content: " ";
+            
+            display: table;
+            clear: both;
+        }
+
+        .row {
+            padding-top: 25px;
+        }
+
+        .column-half {
+            float: left;
+            width: 20%;
+            box-sizing: border-box;
+        }
+
+        .column-half-right {
+            float: right;
+            width: 20%;
+            box-sizing: border-box;
+        }
+    }
+.result {
+    position: absolute;
+    z-index: 999;
+    top: 100%;
+    left: -1%;
+    background: white;
+    width: 102%;
+    box-sizing: border-box;
+}.result p:hover{background-color: lightgrey;
+   }
+.search-box {
+    position: relative !important;
+    line-height: 28px;
+}
+@media (min-width: 1260px) {
+    .magezon-builder .mgz-container {
+        width: 1260px;
+    }
+}
+
+
+</style>
+    
+</head>
+<style>
+
+.order-details-items {
+    margin-top: -1px;
+    padding: 25px;
+}
+
+.order-details-items {
+    border: 1px solid #cccccc;
+    margin-bottom: 40px;
+    padding: 10px;
+}
+
+.button-import {
+    white-space: nowrap;
+}
+
+.button-pdf {
+    white-space: nowrap;
+}
+
+.datefrom-div {
+    margin-left: 5px;
+}
+
+.dateto-div {
+    margin-left: 5px;
+}
+
+.sku-div {
+    margin-left: 5px;
+}
+.email-div{
+    margin-left: 5px;
+}
+.buttonssearch-div{
+    margin-left: 5px;
+}
+.buttonsexport-div{
+    margin-left: 5px;
+}
+.buttonspdf-div{
+    margin-left: 5px;
+}
+.selectstatus-div{
+    margin-left: 5px;
+}
+</style>
+<form method="GET" action="">
+<?php
+
+    $skusArray = array();
+    $selectedSkus = '';
+    $productsData = array();
+    if(isset($_GET['skus'])) {
+        $selectedSkus = $_GET['skus'];
+        $productsData = $block->getProducts($selectedSkus);
+       // $skusArray = explode(",",$selectedSkus);
+    }
+    
+if (isset($_POST['search'])) {
+} else {
+    $_orders = $block->getOrders();
+    echo $block->getChildHtml('info');
+    if ($_orders && count($_orders)) {
+?>
+<div class="row">
+<div class="column-half" style="width: 100%; display: flex;">
+
+          <div class="datefrom-div">
+          <input type="date" style="width:130px" class="form-control" name="from" style="width:150px" value="<?php if(isset($_GET['from']) && !empty($_GET['from'])){
+              echo $_GET['from'];
+          }else{
+              echo '';
+          }?>"/>
+          </div>
+          <div class="dateto-div">
+          <input type="date" style="width:130px" class="form-control" name="to" style="width:150px" value="<?php if(isset($_GET['to']) && !empty($_GET['to'])){
+              echo $_GET['to'];
+          }else{
+              echo '';
+          }?>"/>
+          </div>
+          <div class="sku-div">
+          <div class="input-box" style="clear: both;">
+          <div class="modelno-repeat">
+          <div class="search-box">
+          
+            <select
+                name="field2"
+                id="field2"
+                multiple
+                multiselect-search="true"
+                multiselect-select-all="false"
+                style="width:200px;height:30px"
+                multiselect-max-items="1"
+                onclick="addSku()" 
+                onchange="addOptions(Array.from(this.selectedOptions).map(x=>x.value??x.text))"
+            >
+            <?php
+                foreach ($productsData as $proData) { ?>
+                    <option value="<?= $proData['sku'] ?>" selected><?= $proData['name'] ?></option>
+            <?php } ?>
+                
+            </select>
+            
+          <input type="hidden" name="skus" id="skus" value="<?=$selectedSkus?>" />
+          <i class="fa fa-plus add_fields"></i>
+          <div class="result"></div>
+          </div>
+          </div>
+          </div>
+          </div>
+          <?php if($block->getCustomerType()!=1){
+         ?>
+         <div class="email-div">
+        
+            
+            <div class="input-box" style="clear: both;">
+            <div class="modelno-repeat">
+            <div class="search-box">
+            <input type="text" name="email" id="modeldata" style="width:186px" autocomplete="off" placeholder="Sales rep email..." title="" value="<?php if(isset($_GET['email']) && !empty($_GET['email'])){
+                echo $_GET['email'];
+            }else{
+                echo '';
+            }?>"
+            <i class="fa fa-plus add_fields"></i>
+            <div class="result" ></div>
+            </div>
+            </div>
+            </div>
+         </div>
+         <?php } ?>
+         
+         
+        <div class="buttonssearch-div">
+        <button class="btn btn-primary" name="search" type="submit"><span class="glyphicon glyphicon-search"></span> Search</button>
+        </div>
+        <div class="buttonsexport-div">
+        <button id="export_data" name="export_data" class="button-import" type="submit"> Export Data</button>
+        </div>
+        <div class="buttonspdf-div">
+        <button id="generate_pdf" name="generate_pdf" type="submit" class="button-pdf" formtarget="_blank"> PDF</button>
+        </div>
+        <div class="selectstatus-div">
+        <select name="status" style="margin-left: 10px;width:100px" title="Order Status" onchange="location = this.value;">
+            <option value="<?= $block->escapeUrl($block->getHistoryPageURL()) ?>">All</option>
+            <?php foreach ($orderStatus as $orderStatusVal) : ?>
+                <?php if ($orderStatusVal['value']) : ?>
+                    <?php
+                    $selectedVal = '';
+                    if ($block->getCurrentURL() == $block->getOrderStatusURL($orderStatusVal['value'])) {
+                        $selectedVal = "selected='selected'";
+                    }
+                    ?>
+                    <option value="<?= $block->escapeUrl($block->getOrderStatusURL($orderStatusVal['value'])) ?>" <?= /* @noEscape */ $selectedVal ?>>
+                        <span>
+                            <?= $block->escapeHtml(__($orderStatusVal['label'])) ?>
+                        </span>
+                    </option>
+                <?php endif; ?>
+            <?php endforeach; ?>
+        </select>
+        </div>
+    </div>
+</div>
+<div class="column main" style="padding-top: 50px;padding-right: 30px;padding-bottom: 50px;width:100%">
+    
+    <?php foreach($order->getData() as $data){
+        $order = $objectManager->create('Magento\Sales\Api\Data\OrderInterface')->load($data['entity_id']);
+        $orderItems = $objectManager->create('Magento\Sales\Api\OrderRepositoryInterface');
+        $orderProducts = $orderItems->get($data['entity_id']);
+        ?>
+            <div class="page-title-wrapper">
+            
+            <div>
+                <div style="text-align:left">
+                <strong><span style="display: block; margin-bottom:16px;">
+                Increment Id # <?php echo $data['increment_id']; ?>   </span></strong>
+                </div>
+                <div style="text-align:right">
+                <a href="<?= $this->getUrl('sales/order/view/order_id/'.$data['entity_id'])?>" class="action view">
+                    <span>View Order</span>
+                </a>
+                </div>
+            </div>
+            <div>
+                <span style="display: block; margin-bottom:16px;">
+                SO # <?php echo $data['ns_so_number']; ?>   </span>
+            </div>
+                 <div>
+                    <span style="display: block; margin-bottom:16px;">
+                        Sales Rep Email: <?php echo $data['customer_email']; ?>        </span>
+                </div>
+               <div>
+                   <span style="display: block; margin-bottom:16px;">
+                   Agency Name: <?php echo $data['agency_name']; ?>   </span>
+               </div>
+            </div>
+            </br>
+            <div class="order-details-items ordered">
+            <div class="table-wrapper order-items">
+            <table class="data table table-order-items history" id="my-orders-table" summary="Items Ordered">
+                <caption class="table-caption">Items Ordered</caption>
+                <thead>
+                       <tr>
+                        <th class="col name">Product Name</th>
+                        <th class="col sku">SKU</th>
+                    </tr>
+                </thead>
+              <tbody>
+
+              <?php
+                  if(!empty($order->getAllItems())){
+                     foreach($order->getAllItems() as $item){
+                            
+                        ?>
+                         <tr id="order-item-row-436">
+                             <td class="col name" style="background-color:white" data-th="Product Name"><strong class="product name product-item-name"><?php echo $item->getName();?></strong></td>
+                             <td class="col sku" style="background-color:white" data-th="SKU"> <?php echo $item->getSku();?></td>
+                         </tr>
+                     <?php
+                        }
+                     }?>
+                  
+                  
+                        
+             </tbody>
+            </table>
+        </div>
+        
+            
+        </div>
+        <hr>
+        
+    <?php } ?>
+    <?php if ($block->getPagerHtml()) : ?>
+        <div class="order-products-toolbar toolbar bottom"><?= $block->getPagerHtml() ?></div>
+    <?php endif ?>
+     </div>
+
+
+<?php } else {
+
+?>
+
+<div class="row">
+            <div class="column-half" style="width: 100%; display: flex;">
+
+                  <div class="datefrom-div">
+                  <input type="date" style="width:130px" class="form-control" name="from" style="width:150px" value="<?php if(isset($_GET['from']) && !empty($_GET['from'])){
+                      echo $_GET['from'];
+                  }else{
+                      echo '';
+                  }?>"/>
+                  </div>
+                  <div class="dateto-div">
+                  <input type="date" style="width:130px" class="form-control" name="to" style="width:150px" value="<?php if(isset($_GET['to']) && !empty($_GET['to'])){
+                      echo $_GET['to'];
+                  }else{
+                      echo '';
+                  }?>"/>
+                  </div>
+                  <div class="sku-div">
+                  <div class="input-box" style="clear: both;">
+                  <div class="modelno-repeat">
+                  <div class="search-box">
+                  
+                    <select
+                        name="field2"
+                        id="field2"
+                        multiple
+                        multiselect-search="true"
+                        multiselect-select-all="false"
+                        style="width:200px;height:30px"
+                        multiselect-max-items="1"
+                        onclick="addSku()" 
+                        onchange="addOptions(Array.from(this.selectedOptions).map(x=>x.value??x.text))"
+                    >
+                    <?php
+                        foreach ($productsData as $proData) { ?>
+                            <option value="<?= $proData['sku'] ?>" selected><?= $proData['name'] ?></option>
+                    <?php } ?>
+                        
+                    </select>
+                    
+                  <input type="hidden" name="skus" id="skus" value="<?=$selectedSkus?>" />
+                  <i class="fa fa-plus add_fields"></i>
+                  <div class="result"></div>
+                  </div>
+                  </div>
+                  </div>
+                  </div>
+                  <?php if($block->getCustomerType()!=1){
+                 ?>
+                 <div class="email-div">
+                
+                    
+                    <div class="input-box" style="clear: both;">
+                    <div class="modelno-repeat">
+                    <div class="search-box">
+                    <input type="text" name="email" id="modeldata" style="width:130px" autocomplete="off" placeholder="Sales rep email..." title="" value="<?php if(isset($_GET['email']) && !empty($_GET['email'])){
+                        echo $_GET['email'];
+                    }else{
+                        echo '';
+                    }?>"
+                    <i class="fa fa-plus add_fields"></i>
+                    <div class="result"></div>
+                    </div>
+                    </div>
+                    </div>
+                 </div>
+                 <?php } ?>
+                 
+                 
+                <div class="buttonssearch-div">
+                <button class="btn btn-primary" name="search" type="submit"><span class="glyphicon glyphicon-search"></span> Search</button>
+                </div>
+                <div class="buttonsexport-div">
+                <button id="export_data" name="export_data" class="button-import" type="submit"> Export Data</button>
+                </div>
+                <div class="buttonspdf-div">
+                <button id="generate_pdf" name="generate_pdf" type="submit" class="button-pdf" formtarget="_blank"> PDF</button>
+                </div>
+                <div class="selectstatus-div">
+                <select name="status" style="margin-left: 10px;width:100px" title="Order Status" onchange="location = this.value;">
+                    <option value="<?= $block->escapeUrl($block->getHistoryPageURL()) ?>">All</option>
+                    <?php foreach ($orderStatus as $orderStatusVal) : ?>
+                        <?php if ($orderStatusVal['value']) : ?>
+                            <?php
+                            $selectedVal = '';
+                            if ($block->getCurrentURL() == $block->getOrderStatusURL($orderStatusVal['value'])) {
+                                $selectedVal = "selected='selected'";
+                            }
+                            ?>
+                            <option value="<?= $block->escapeUrl($block->getOrderStatusURL($orderStatusVal['value'])) ?>" <?= /* @noEscape */ $selectedVal ?>>
+                                <span>
+                                    <?= $block->escapeHtml(__($orderStatusVal['label'])) ?>
+                                </span>
+                            </option>
+                        <?php endif; ?>
+                    <?php endforeach; ?>
+                </select>
+                </div>
+            </div>
+         </div>
+        </br>
+        </br>
+        </br>
+        <div class="message info empty"><span><?= $block->escapeHtml($block->getEmptyOrdersMessage()) ?></span></div>
+        <?php
+
+}
+}
+?>
+</form>
+<script type="text/javascript">
+    require(['jquery'], function($) {
+        jQuery(document).ready(function () {
+                               
+        jQuery('.search-box input[type="text"]').on("keyup input", function () {
+                                   /* Get input value on change */
+         var inputVal = jQuery(this).val();
+         var resultDropdown = jQuery(this).siblings(".result");
+         //getting url
+         var url='<?php echo $this->getUrl('order/index/index') ?>'
+         if (inputVal.length==3) {
+         jQuery.get(url, {search: inputVal}).done(function (data) {
+         // Display the returned data in browser
+          resultDropdown.html(data);
+          });
+         } else {
+          resultDropdown.empty();
+         }
+         });
+
+        // Set search input value on click of result item
+        jQuery(document).on("click", ".result p", function () {
+          jQuery(this).parents(".search-box").find('input[type="text"]').val(jQuery(this).text());
+          jQuery(this).parent(".result").empty();
+       });
+                               
+       })
+    })
+</script>
+<script>
+  function addOptions(option) {
+    console.log(option);
+    let skus = option.join();
+    document.getElementById("skus").value = skus;
+    console.log(skus);
+  }
+</script>
+<!-- sku search script -->
+<!-- <script>
+    // selec function call on selcet product
+    function addOptions(option) {
+        console.log(option);
+        let skus = option.join();
+        document.getElementById("skus").value = skus;
+        console.log(skus);
+    }
+</script> -->
+<script>
+    var style = document.createElement('style');
+    style.setAttribute("id", "multiselect_dropdown_styles");
+    style.innerHTML = `
+.multiselect-dropdown{
+  display: inline-block;
+  padding: 2px 5px 0px 5px;
+  border-radius: 4px;
+  border: solid 1px #ced4da;
+  background-color: white;
+  position: relative;
+  background-repeat: no-repeat;
+  background-position: right .75rem center;
+  background-size: 16px 12px;
+}
+.multiselect-dropdown span.optext, .multiselect-dropdown span.placeholder{
+  margin-right:0.5em; 
+  margin-bottom:2px;
+  padding:1px 0; 
+  border-radius: 4px; 
+  display:inline-block;
+}
+.multiselect-dropdown span.optext{
+  background-color:lightgray;
+  padding:1px 0.75em; 
+}
+.multiselect-dropdown span.optext .optdel {
+  float: right;
+  margin: 0 -6px 1px 5px;
+  font-size: 0.7em;
+  margin-top: 2px;
+  cursor: pointer;
+  color: #666;
+}
+.multiselect-dropdown span.optext .optdel:hover { color: #c66;}
+.multiselect-dropdown span.placeholder{
+  color:#ced4da;
+}
+.multiselect-dropdown-list-wrapper{
+  box-shadow: gray 0 3px 8px;
+  z-index: 100;
+  padding:2px;
+  border-radius: 4px;
+  border: solid 1px #ced4da;
+  display: none;
+  margin: -1px;
+  position: absolute;
+  top:0;
+  left: 0;
+  right: 0;
+  background: white;
+}
+.multiselect-dropdown-list-wrapper .multiselect-dropdown-search{
+  margin-bottom:5px;
+}
+.multiselect-dropdown-list{
+  padding:2px;
+  height: 15rem;
+  overflow-y:auto;
+  overflow-x: hidden;
+}
+.multiselect-dropdown-list::-webkit-scrollbar {
+  width: 6px;
+}
+.multiselect-dropdown-list::-webkit-scrollbar-thumb {
+  background-color: #bec4ca;
+  border-radius:3px;
+}
+
+.multiselect-dropdown-list div{
+  padding: 5px;
+}
+.multiselect-dropdown-list input{
+  height: 1.15em;
+  width: 1.15em;
+  margin-right: 0.35em;  
+}
+.multiselect-dropdown-list div.checked{
+}
+.multiselect-dropdown-list div:hover{
+  background-color: #ced4da;
+}
+.multiselect-dropdown span.maxselected {width:100%;}
+.multiselect-dropdown-all-selector {border-bottom:solid 1px #999;}
+`;
+    document.head.appendChild(style);
+
+    function MultiselectDropdown(options) {
+        var config = {
+            search: true,
+            height: '15rem',
+            placeholder: 'Products',
+            txtSelected: 'selected',
+            txtAll: 'All',
+            txtRemove: 'Remove',
+            txtSearch: 'search',
+            ...options
+        };
+
+        function newEl(tag, attrs) {
+
+            var e = document.createElement(tag);
+            if (attrs !== undefined) Object.keys(attrs).forEach(k => {
+                if (k === 'class') {
+                    Array.isArray(attrs[k]) ? attrs[k].forEach(o => o !== '' ? e.classList.add(o) : 0) : (attrs[k] !== '' ? e.classList.add(attrs[k]) : 0)
+                } else if (k === 'style') {
+                    Object.keys(attrs[k]).forEach(ks => {
+                        e.style[ks] = attrs[k][ks];
+                    });
+                } else if (k === 'text') {
+                    attrs[k] === '' ? e.innerHTML = '&nbsp;' : e.innerText = attrs[k]
+                } else e[k] = attrs[k];
+            });
+            return e;
+        }
+
+
+        document.querySelectorAll("select[multiple]").forEach((el, k) => {
+            var div = newEl('div', {
+                class: 'multiselect-dropdown',
+                style: {
+                    width: config.style?.width ?? el.clientWidth + 'px',
+                    padding: config.style?.padding ?? ''
+                }
+            });
+            el.style.display = 'none';
+            el.parentNode.insertBefore(div, el.nextSibling);
+            var listWrap = newEl('div', {
+                class: 'multiselect-dropdown-list-wrapper'
+            });
+            var list = newEl('div', {
+                class: 'multiselect-dropdown-list',
+                id: ['multiselect-dropdown-list-id'],
+                style: {
+                    height: config.height
+                }
+            });
+            var search = newEl('input', {
+                class: ['multiselect-dropdown-search'].concat([config.searchInput?.class ?? 'form-control']),
+                id: ['product-sku-input'],
+                style: {
+                    width: '100%',
+                    display: el.attributes['multiselect-search']?.value === 'true' ? 'block' : 'none'
+                },
+                placeholder: config.txtSearch
+            });
+            listWrap.appendChild(search);
+            div.appendChild(listWrap);
+            listWrap.appendChild(list);
+
+            el.loadOptions = () => {
+                list.innerHTML = '';
+
+                if (el.attributes['multiselect-select-all']?.value == 'true') {
+                    var op = newEl('div', {
+                        class: 'multiselect-dropdown-all-selector'
+                    })
+                    var ic = newEl('input', {
+                        type: 'checkbox'
+                    });
+                    op.appendChild(ic);
+                    op.appendChild(newEl('label', {
+                        text: config.txtAll
+                    }));
+
+                    op.addEventListener('click', () => {
+                        op.classList.toggle('checked');
+                        op.querySelector("input").checked = !op.querySelector("input").checked;
+
+                        var ch = op.querySelector("input").checked;
+                        list.querySelectorAll(":scope > div:not(.multiselect-dropdown-all-selector)")
+                            .forEach(i => {
+                                if (i.style.display !== 'none') {
+                                    i.querySelector("input").checked = ch;
+                                    i.optEl.selected = ch
+                                }
+                            });
+
+                        el.dispatchEvent(new Event('change'));
+                    });
+                    ic.addEventListener('click', (ev) => {
+                        ic.checked = !ic.checked;
+                    });
+                    el.addEventListener('change', (ev) => {
+                        let itms = Array.from(list.querySelectorAll(":scope > div:not(.multiselect-dropdown-all-selector)")).filter(e => e.style.display !== 'none')
+                        let existsNotSelected = itms.find(i => !i.querySelector("input").checked);
+                        if (ic.checked && existsNotSelected) ic.checked = false;
+                        else if (ic.checked == false && existsNotSelected === undefined) ic.checked = true;
+                    });
+
+                    list.appendChild(op);
+                }
+
+                Array.from(el.options).map(o => {
+                    var op = newEl('div', {
+                        class: o.selected ? 'checked' : '',
+                        optEl: o
+                    })
+                    var ic = newEl('input', {
+                        type: 'checkbox',
+                        checked: o.selected
+                    });
+                    op.appendChild(ic);
+                    op.appendChild(newEl('label', {
+                        text: o.text
+                    }));
+
+                    op.addEventListener('click', () => {
+                        op.classList.toggle('checked');
+                        op.querySelector("input").checked = !op.querySelector("input").checked;
+                        op.optEl.selected = !!!op.optEl.selected;
+                        el.dispatchEvent(new Event('change'));
+                    });
+                    ic.addEventListener('click', (ev) => {
+                        ic.checked = !ic.checked;
+                    });
+                    o.listitemEl = op;
+                    list.appendChild(op);
+                });
+                div.listEl = listWrap;
+
+                div.refresh = () => {
+                    div.querySelectorAll('span.optext, span.placeholder').forEach(t => div.removeChild(t));
+                    var sels = Array.from(el.selectedOptions);
+                    if (sels.length > (el.attributes['multiselect-max-items']?.value ?? 5)) {
+                        div.appendChild(newEl('span', {
+                            class: ['optext', 'maxselected'],
+                            text: sels.length + ' ' + config.txtSelected
+                        }));
+                    } else {
+                        sels.map(x => {
+                            var c = newEl('span', {
+                                class: 'optext',
+                                text: x.text,
+                                srcOption: x
+                            });
+                            if ((el.attributes['multiselect-hide-x']?.value !== 'true'))
+                                c.appendChild(newEl('span', {
+                                    class: 'optdel',
+                                    text: '🗙',
+                                    title: config.txtRemove,
+                                    onclick: (ev) => {
+                                        c.srcOption.listitemEl.dispatchEvent(new Event('click'));
+                                        div.refresh();
+                                        ev.stopPropagation();
+                                    }
+                                }));
+
+                            div.appendChild(c);
+                        });
+                    }
+                    if (0 == el.selectedOptions.length) div.appendChild(newEl('span', {
+                        class: 'placeholder',
+                        text: el.attributes['placeholder']?.value ?? config.placeholder
+                    }));
+                };
+                div.refresh();
+            }
+            el.loadOptions();
+
+            search.addEventListener('input', () => {
+                // multiple select by ajax function 
+                var sku = document.getElementById('product-sku-input').value;
+                getProducts(sku, sku.length);
+
+                list.querySelectorAll(":scope div:not(.multiselect-dropdown-all-selector)").forEach(d => {
+                    var txt = d.querySelector("label").innerText.toUpperCase();
+                    d.style.display = txt.includes(search.value.toUpperCase()) ? 'block' : 'none';
+                });
+            });
+
+            div.addEventListener('click', () => {
+                div.listEl.style.display = 'block';
+                search.focus();
+                search.select();
+            });
+
+            document.addEventListener('click', function(event) {
+                if (!div.contains(event.target)) {
+                    listWrap.style.display = 'none';
+                    div.refresh();
+                }
+            });
+        });
+    }
+
+    window.addEventListener('load', () => {
+        MultiselectDropdown(window.MultiselectDropdownOptions);
+    });
+
+    function getProducts(name, length) {
+        require(['jquery'], function($) {
+            if (length >= 3) {
+                var id;
+                var selectedSku = $("#skus").val();
+                var customurl = "<?php echo $this->getUrl('customreports/firstnetreports/productfilter') ?>";
+                $.ajax({
+                    url: customurl,
+                    type: 'POST',
+                    dataType: 'json',
+                    data: {
+                        sku: name,
+                        selectedSku: selectedSku,
+                    },
+                    complete: function(response) {
+                        if (response.responseJSON.success) {
+                            // remove unchecked product select options
+                            removeUncheckedOptions($);
+
+                            // $('#field2').append('<option value="COAM" selected>COAM</option>');
+                            $("#multiselect-dropdown-list-id").append(response.responseJSON.products);
+                        } else {
+                            // remove unchecked product select options
+                            removeUncheckedOptions($);
+                            console.log('Error happens. Try again.');
+                        }
+                    },
+                    error: function(xhr, status, errorThrown) {
+                        console.log('Error happens. Try again.');
+                    }
+                });
+            } else {
+                // remove unchecked product select options
+                removeUncheckedOptions($);
+            }
+        });
+    }
+    // check box on change finction 
+    function addSelectOption(sku, name, id) {
+        require(['jquery'], function($) {
+            var checkbox = $(id).val();
+            if (checkbox == 'false') {
+                $(id).val('true');
+                $('#field2').append('<option value="' + sku + '" selected>' + name + '</option>');
+            } else {
+                $("option[value='" + sku + "']").remove();
+                $(id).val('false');
+            }
+            var select = document.getElementById('field2');
+            var skus = [...select.selectedOptions]
+                .map(option => option.value);
+            document.getElementById("skus").value = skus;
+            console.log(skus);
+        })
+    }
+
+    // remove unchecked product select options function
+    function removeUncheckedOptions($) {
+        $("#multiselect-dropdown-list-id :input").each(function(e) {
+            id = this.id;
+            value = this.value;
+            if (value == 'false') {
+                $("#class-" + id).remove();
+            }
+        });
+    }
+</script>
+<!-- end sku search filter -->

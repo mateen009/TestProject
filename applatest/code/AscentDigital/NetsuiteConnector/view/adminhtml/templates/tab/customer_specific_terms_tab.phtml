@@ -1,0 +1,50 @@
+<section class="admin__page-section">
+    <div class="admin__page-section-title">
+        <span class="title">
+            <?php /* @escapeNotVerified */ echo __('Customer Specific Terms Cron Job') ?>
+        </span>
+
+    </div>
+    <div class="admin__page-section-content">
+        <div class="order-information textfied" id="customer-specific-terms-cron-message">
+            <div class="box">
+                <div class="customer-specific-terms-cron-box-content">
+                    <p></p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="admin__page-section-item-content edit-checkoutfield-date" id="run-customer-specific-terms-cron-job-form">
+        <button id="customer-specific-terms-cron-submit">Run Customer Specific Terms Cron Job</button>
+    </div>
+    
+</section>
+<script type="text/javascript">
+    // Customer Specific Terms cron job
+    document.querySelector('#customer-specific-terms-cron-submit').addEventListener('click', function() {
+        document.querySelector('#customer-specific-terms-cron-submit').innerHTML = 'Running...';
+        document.querySelector('#customer-specific-terms-cron-submit').disabled = true;
+        require([
+            'jquery'
+        ], function($) {
+            var url = '<?=
+                        /** @noEscape */
+                        $block->getUrl("nsproduct/cron/customerspecificterms") ?>';
+            jQuery.ajax({
+                url: url,
+                data: {
+                    orderCron: 'run'
+                },
+                type: "POST",
+                async: false,
+            }).done(function(response) {
+                $(".customer-specific-terms-cron-box-content").html("<span style='color:#008000; font-weight:bold'>Customer Specific Terms cron job completed. </span>");
+                $("#customer-specific-terms-cron-submit").text('Run Customer Specific Terms Cron Job');
+                document.querySelector('#customer-specific-terms-cron-submit').disabled = false;
+            });
+
+            //});            
+        });
+    });
+    
+</script>

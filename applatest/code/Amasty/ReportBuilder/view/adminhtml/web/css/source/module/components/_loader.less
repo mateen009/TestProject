@@ -1,0 +1,84 @@
+//
+//  Inputs Component
+//  ______________________________________________
+
+//
+//  Variables
+//  ----------------------------------------------
+
+@amrepbuilder-loader__size: 48px;
+@amrepbuilder-loader__color__main: #ff3d00;
+@amrepbuilder-loader__color__second: #e3e3e3;
+
+//
+//  Keyframes
+//  ----------------------------------------------
+
+@keyframes rotation {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+//
+//  Common
+//  ----------------------------------------------
+
+& when (@media-common = true) {
+    .amrepbuilder-loader {
+        & {
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            z-index: 399;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(255, 255, 255, .4);
+        }
+
+        .amrepbuilder-item {
+            & {
+                position: relative;
+                display: inline-block;
+                width: @amrepbuilder-loader__size;
+                height: @amrepbuilder-loader__size;
+                border: 3px solid;
+                border-color: @amrepbuilder-loader__color__second @amrepbuilder-loader__color__second transparent transparent;
+                border-radius: 50%;
+                animation: rotation 1s linear infinite;
+            }
+
+            &:after,
+            &:before {
+                position: absolute;
+                top: 0;
+                right: 0;
+                bottom: 0;
+                left: 0;
+                margin: auto;
+                width: @amrepbuilder-loader__size - 8px;
+                height: @amrepbuilder-loader__size - 8px;
+                border: 3px solid;
+                border-color: transparent transparent @amrepbuilder-loader__color__main @amrepbuilder-loader__color__main;
+                border-radius: 50%;
+                content: '';
+                transform-origin: center center;
+                animation: 'rotationBack' .5s linear infinite;
+            }
+
+            &:before {
+                width: @amrepbuilder-loader__size - 16px;
+                height: @amrepbuilder-loader__size - 16px;
+                border-color: @amrepbuilder-loader__color__second @amrepbuilder-loader__color__second transparent transparent;
+                animation: rotation 1.5s linear infinite;
+            }
+        }
+    }
+}

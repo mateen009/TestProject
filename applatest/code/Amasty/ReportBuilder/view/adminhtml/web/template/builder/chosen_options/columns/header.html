@@ -1,0 +1,61 @@
+<section class="amrepbuilder-header">
+    <div class="amrepbuilder-title-block">
+        <input class="amrepbuilder-title -input"
+               if="item.isEdited()"
+               data-bind="
+                    event: {
+                        keyup: function(ui, event) {
+                            item.customTitle(event.target.value);
+                        }
+                    },
+                    attr: {
+                        maxlength: 64
+                    },
+                    value: item.customTitle()"/>
+        <span class="amrepbuilder-title"
+              if="!item.isEdited()"
+              data-bind="
+                   event: {
+                       click: function() {
+                           $data.onFocus(item);
+                       }
+                   }">
+           <!-- ko text: item.customTitle && item.customTitle() ? item.customTitle() : item.title --><!-- /ko -->
+           <!-- ko if: !item.isEdited() -->
+               <!-- ko template: $data.templates.editIcon --><!-- /ko -->
+           <!-- /ko -->
+        </span>
+
+        <div class="amrepbuilder-title-toolbar" if="item.isEdited">
+            <!-- ko template: {
+                name: $data.templates.button,
+                data: {
+                    classes: '-icon -check -square',
+                    templatePath: $data.templates.checkIcon,
+                    title: 'Save title',
+                    events: {
+                        click: function() {
+                            $data.save();
+                        }
+                    }
+                }
+            } --><!-- /ko -->
+            <!-- ko template: {
+                name: $data.templates.button,
+                data: {
+                    classes: '-icon -square',
+                    templatePath: $data.templates.closeIcon,
+                    title: 'Reset title',
+                    events: {
+                        click: function() {
+                            $data.cancel();
+                        }
+                    }
+                }
+            } --><!-- /ko -->
+        </div>
+    </div>
+    <!-- ko scope: "index = chosen_column_toolbar" -->
+        <!-- ko template: { name: $data.getTemplate(), data: { $data: $data, item: $parent.item } }--><!-- /ko -->
+    <!-- /ko -->
+</section>

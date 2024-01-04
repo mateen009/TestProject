@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © 2019 Magenest. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+    <menu>
+        <add id="Magenest_RentalSystem::rental" title="Magenest Rental Management" module="Magenest_RentalSystem" sortOrder="20" resource="Magenest_RentalSystem::rental" parent="Magento_Catalog::catalog"/>
+        <add id="Magenest_RentalSystem::products" title="Rental Products" module="Magenest_RentalSystem" sortOrder="10" action="rentalsystem/product/index" resource="Magenest_RentalSystem::products" parent="Magenest_RentalSystem::rental"/>
+        <add id="Magenest_RentalSystem::orders" title="Rental Orders" module="Magenest_RentalSystem" sortOrder="15" action="rentalsystem/order/index" resource="Magenest_RentalSystem::orders" parent="Magento_Sales::sales_operation"/>
+
+        <add id="Magenest_RentalSystem::rental_rule" title="Rental Price Rule" translate="title" sortOrder="50" module="Magenest_RentalSystem" parent="Magento_CatalogRule::promo" action="rentalsystem/rule/index" resource="Magento_RentalSystem::rental_rule"/>
+
+        <add id="Magenest_RentalSystem::reportrental" title="Magenest Rental Report" module="Magenest_RentalSystem" sortOrder="20" resource="Magenest_RentalSystem::reportrental" parent="Magento_Reports::report"/>
+        <add id="Magenest_RentalSystem::salesreport" title="Sales Report" module="Magenest_RentalSystem" sortOrder="20" action="rentalsystem/report_sales/salesreport" resource="Magenest_RentalSystem::salesreport" parent="Magenest_RentalSystem::reportrental"/>
+        <add id="Magenest_RentalSystem::productreport" title="Product Reports" module="Magenest_RentalSystem" sortOrder="20" action="rentalsystem/report_sales/productreport" resource="Magenest_RentalSystem::productreport" parent="Magenest_RentalSystem::reportrental"/>
+    </menu>
+</config>

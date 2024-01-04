@@ -1,0 +1,101 @@
+{
+  "name": "Customer Performance Overview",
+  "main_entity": "customer",
+  "store_ids": {"0": "0"},
+  "is_use_period": "0",
+  "chart_axis_x": "",
+  "chart_axis_y": "",
+  "display_chart": "",
+  "columns": {
+    "customer.dob": {
+      "column_id": "customer.dob",
+      "is_date_filter": "0",
+      "filter": "",
+      "visibility": "1",
+      "position": "3",
+      "order": "0"
+    },
+    "customer.entity_id": {
+      "column_id": "customer.entity_id",
+      "is_date_filter": "0",
+      "filter": "",
+      "visibility": "1",
+      "position": "0",
+      "order": "2"
+    },
+    "customer.firstname": {
+      "column_id": "customer.firstname",
+      "is_date_filter": "0",
+      "filter": "",
+      "visibility": "1",
+      "position": "1",
+      "order": "0"
+    },
+    "customer.lastname": {
+      "column_id": "customer.lastname",
+      "is_date_filter": "0",
+      "filter": "",
+      "visibility": "1",
+      "position": "2",
+      "order": "0"
+    },
+    "customer_address.country_id": {
+      "column_id": "customer_address.country_id",
+      "is_date_filter": "0",
+      "filter": "",
+      "visibility": "1",
+      "position": "4",
+      "order": "0"
+    },
+    "order.entity_id": {
+      "column_id": "order.entity_id",
+      "is_date_filter": "0",
+      "filter": "",
+      "visibility": "1",
+      "position": "5",
+      "order": "0"
+    },
+    "order.grand_total": {
+      "column_id": "order.grand_total",
+      "is_date_filter": "0",
+      "filter": "",
+      "visibility": "1",
+      "position": "9",
+      "order": "0"
+    },
+    "order.subtotal": {
+      "column_id": "order.subtotal",
+      "is_date_filter": "0",
+      "filter": "",
+      "visibility": "1",
+      "position": "7",
+      "order": "0"
+    },
+    "order.total_paid": {
+      "column_id": "order.total_paid",
+      "is_date_filter": "0",
+      "filter": "",
+      "visibility": "1",
+      "position": "8",
+      "order": "0"
+    },
+    "order.total_qty_ordered": {
+      "column_id": "order.total_qty_ordered",
+      "is_date_filter": "0",
+      "filter": "",
+      "visibility": "1",
+      "position": "6",
+      "order": "0"
+    }
+  },
+    "scheme": {
+        "customer_address": {
+            "source_entity": "customer",
+            "entity": "customer_address"
+        },
+        "order": {
+            "source_entity": "customer",
+            "entity": "order"
+        }
+    }
+}

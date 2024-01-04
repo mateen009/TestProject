@@ -1,0 +1,47 @@
+<p></p>
+<?php
+$_order = $block->getOrder();
+if ($_order):
+$_items = $_order->getAllItems();
+
+?>
+
+<table class="email-items" cellspacing="0" cellpadding="10" border="0" width="650" style="border:1px solid #EAEAEA;text-align:left;">
+    <thead>
+        <tr>
+            <th class="item-info" bgcolor="#EAEAEA" style="font-size:13px; padding:3px 9px">
+                <?= __('Items') ?>
+            </th>
+            <th class="item-qty" bgcolor="#EAEAEA" style="font-size:13px; padding:3px 9px">
+                <?= __('Sku') ?>
+            </th>
+            <th class="item-qty" bgcolor="#EAEAEA" style="font-size:13px; padding:3px 9px">
+                <?= __('Qty') ?>
+            </th>
+        </tr>
+    </thead>
+    <?php $i = 0; foreach($_items as $_item): ?>
+        <?php
+            if ($_item->getParentItem()) {
+                continue;
+            } else $i++;
+        ?>
+        <tbody<?php echo $i%2 ? ' bgcolor="#F6F6F6"' : '' ?>>
+              <tr id="order-item-row-<?= (int) $_item->getId() ?>">
+                <td class="col name" data-th="<?= $block->escapeHtml(__('Product Name')) ?>">
+                    <strong class="product name product-item-name"><?= $block->escapeHtml($_item->getName()) ?></strong>
+                </td>
+                <td class="col sku" data-th="<?= $block->escapeHtml(__('SKU')) ?>">
+                    <?= /* @noEscape */ $_item->getSku() ?>
+                </td>
+                <td class="col qty" data-th="<?= $block->escapeHtml(__('Qty')) ?>">
+                    <?= (float) $_item->getQtyOrdered() ?>
+                </td>
+                
+           </tr>
+        </tbody>
+    <?php endforeach; ?>
+    
+</table>
+
+<?php endif; ?>

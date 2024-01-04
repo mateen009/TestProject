@@ -1,0 +1,10 @@
+<ul class="amrepbuilder-column-toolbar"
+    data-bind="
+        css: {
+            '-disabled': $parent.isEdited()
+        },
+        foreach: { data: $data.elems(), as: 'tmplName' }">
+    <li class="amrepbuilder-item">
+        <!-- ko template: { name: tmplName, data: $parent } --><!-- /ko -->
+    </li>
+</ul>

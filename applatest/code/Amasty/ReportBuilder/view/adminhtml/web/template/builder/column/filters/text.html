@@ -1,0 +1,27 @@
+<div class="amrepbuilder-column-filter -text">
+    <label class="amrepbuilder-label">
+        <input class="amrepbuilder-input"
+               data-bind="
+                   event: {
+                        keyup: function() {
+                            $data.filtration.value(event.target.value);
+                        }
+                   },
+                   value: $data.filtration.value()" />
+    </label>
+</div>
+
+<!-- ko template: {
+            name: $parent.templates.filterToolbar,
+            data: {
+                uiClass: $parent,
+                cancelListener: function() {
+                    $parent.clearText($data);
+                },
+                applyListener: function() {
+                    $parent.applyFiltration($data);
+                },
+                applyStates: { '-disabled': !$data.filtration.value() }
+            }
+        } -->
+<!-- /ko -->

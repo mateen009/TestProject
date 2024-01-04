@@ -1,0 +1,85 @@
+<style>
+    @media (min-width: 500px) {
+        .row:after {
+            content: " ";
+            display: table;
+            clear: both;
+        }
+
+        .column_total {
+            font-weight: bold;
+            
+        }
+        
+        .row {
+            padding-top: 15px;
+            padding-bottom: 15px;
+        }
+
+        .column-half {
+            float: left;
+            width: 30%;
+            padding: 0 5px;
+            box-sizing: border-box;
+        }
+
+        .column-half-right {
+            float: right;
+            width: 20%;
+            box-sizing: border-box;
+        }
+
+        .button-import {
+            white-space: nowrap;
+            margin-left: 10px;
+        }
+
+        .button-pdf {
+            white-space: nowrap;
+            margin-left: 10px;
+        }
+    }
+</style>
+
+<?php
+  $productsData = $block->getProductsData();
+  //echo "<pre>";print_r($productsData);die();
+?>
+
+<form method="GET" action="">
+    <div class="row">
+        <div class="column-half" style="display: flex;">
+
+            <button id="export_data" name="export_data" class="button-import" type="submit"> Export Data</button>
+
+        </div>
+    </div>
+
+    <table class="data table table-order-items history" id="my-orders-table">
+        <caption class="table-caption"><?= $block->escapeHtml(__('Orders')) ?></caption>
+        <thead>
+            <tr>
+
+                <th scope="col" class="col total"><?= $block->escapeHtml(__('Item Name')) ?></th>
+                <th scope="col" class="col total"><?= $block->escapeHtml(__('Sku')) ?></th>
+                <th scope="col" class="col total"><?= $block->escapeHtml(__('Quantity')) ?></th>
+
+            </tr>
+        </thead>
+        <tbody>
+            <?php 
+
+            foreach ($productsData as $proData) : ?>
+                <tr>
+                    <td class="col id"><?= $proData['name'] ?></td>
+                    <td class="col id"><?= $proData['sku'] ?></td>
+                    <td class="col id"><?= $proData['qty'] ?></td>
+                    <td class="col id"></td>
+                </tr>
+            <?php endforeach; ?>
+        </tbody>
+    </table>
+
+</form>
+
+  <br/><br/>

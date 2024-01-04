@@ -1,0 +1,157 @@
+<style>
+    @media (min-width: 500px) {
+
+        /* ym */
+        .dropdown-content {
+            position: absolute;
+            background-color: #f6f6f6;
+            overflow: auto;
+        }
+
+        .dropdown-content a {
+            color: black;
+            padding: 10px 16px;
+            text-decoration: none;
+            display: block;
+            width: 200px;
+        }
+
+        .dropdown-content a:hover {
+            background-color: #ddd;
+        }
+
+        .show {
+            display: block !important;
+        }
+
+        .dropdown-values {
+            display: none;
+        }
+
+        /* ym */
+        .row:after {
+            content: " ";
+            display: table;
+            clear: both;
+        }
+
+        .optdel {
+            display: none !important;
+        }
+
+        .row {
+            padding-top: 15px;
+            padding-bottom: 15px;
+        }
+
+        .multiselect-dropdown span.maxselected {
+            width: 100px;
+        }
+
+        .column_total {
+            font-weight: bold;
+
+        }
+
+        .column-half {
+            float: left;
+            width: 20%;
+            padding: 0 5px;
+            box-sizing: border-box;
+        }
+
+        .column-half-right {
+            float: right;
+            width: 20%;
+            box-sizing: border-box;
+        }
+
+        .button-import {
+            white-space: nowrap;
+            margin-left: 10px;
+        }
+
+        .input-box {
+            white-space: nowrap;
+            margin-left: 10px;
+        }
+
+        .button-pdf {
+            white-space: nowrap;
+            margin-left: 10px;
+        }
+
+        .btn-primary {
+            white-space: nowrap;
+            margin-left: 10px;
+        }
+
+        .search-box {
+            position: relative !important;
+            line-height: 28px;
+        }
+
+        .result {
+            position: absolute;
+            z-index: 999;
+            top: 100%;
+            left: 0;
+            background: #fff;
+            width: 100%;
+            box-sizing: border-box;
+        }
+    }
+    table {
+        border-collapse: collapse;
+        width: 100%;
+    }
+
+    th,
+    td {
+        text-align: left;
+        padding: 8px;
+    }
+
+    tr:nth-child(even) {
+        background-color: #f2f2f2;
+    }
+</style>
+<?php
+  $productsData = $block->getProductsData();
+  //echo "<pre>";print_r($productsData);die();
+?>
+<form method="GET" action="">
+    <div class="row">
+        <div class="column-half" style="display: flex;">
+
+            <button id="export_data" name="export_data" class="button-import" type="submit"> Export Data</button>
+
+        </div>
+    </div>
+<div class="content" style="margin: 15px;">
+<table class="data table table-order-items history" id="my-orders-table">
+      <thead>
+          <tr>
+
+              <th scope="col" class="col total"><?= $block->escapeHtml(__('Item Name')) ?></th>
+              <th scope="col" class="col total"><?= $block->escapeHtml(__('Sku')) ?></th>
+              <th scope="col" class="col total"><?= $block->escapeHtml(__('Quantity')) ?></th>
+              <th scope="col" class="col total"></th>
+
+          </tr>
+      </thead>
+      <tbody>
+          <?php 
+
+          foreach ($productsData as $proData) : ?>
+              <tr>
+                  <td class="col id"><?= $proData['name'] ?></td>
+                  <td class="col id"><?= $proData['sku'] ?></td>
+                  <td class="col id"><?= $proData['qty'] ?></td>
+              </tr>
+          <?php endforeach; ?>
+      </tbody>
+  </table>
+</div>
+</form>
+  <br/><br/>

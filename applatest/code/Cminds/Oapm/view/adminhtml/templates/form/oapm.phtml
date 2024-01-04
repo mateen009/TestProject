@@ -1,0 +1,32 @@
+<?php
+/**
+ * @var \Cminds\Oapm\Block\Form\Oapm $block
+ * @see \Cminds\Oapm\Block\Form\Oapm
+ */
+?>
+<fieldset class="admin__fieldset payment-method" id="payment_form_<?= $block->escapeHtml($block->getMethodCode()) ?>" style="display: none">
+    <div class="admin__field _required">
+        <label for="recipient_name" class="admin__field-label"><span><?= $block->escapeHtml(__('Recipient Name')) ?></span></label>
+        <div class="admin__field-control">
+            <input type="text" id="recipient_name" name="payment[recipient_name]"
+                   title="<?= $block->escapeHtml(__("Recipient Name")) ?>" class="required-entry admin__control-text"
+                   value="<?= /* @noEscape */ $block->getInfoData('additional_information/recipient_name') ?>"/>
+        </div>
+    </div>
+    <div class="admin__field _required">
+        <label for="recipient_email" class="admin__field-label"><span><?= $block->escapeHtml(__('Recipient Email')) ?></span></label>
+        <div class="admin__field-control">
+            <input type="text" id="recipient_email" name="payment[recipient_email]"
+                   title="<?= $block->escapeHtml(__("Recipient Email")) ?>" class="required-entry admin__control-text"
+                   value="<?= /* @noEscape */ $block->getInfoData('additional_information/recipient_email') ?>"/>
+        </div>
+    </div>
+    <div class="admin__field _required">
+        <label for="recipient_note" class="admin__field-label"><span><?= $block->escapeHtml(__('Note To Recipient')) ?></span></label>
+        <div class="admin__field-control">
+            <input type="text" id="recipient_note" name="payment[recipient_note]"
+                   title="<?= $block->escapeHtml(__("Note To Recipient")) ?>" class="required-entry admin__control-text"
+                   value="<?= /* @noEscape */ $block->getInfoData('additional_information/recipient_note') ?>"/>
+        </div>
+    </div>
+</fieldset>

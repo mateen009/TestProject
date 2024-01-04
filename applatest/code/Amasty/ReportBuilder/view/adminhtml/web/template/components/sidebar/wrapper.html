@@ -1,0 +1,22 @@
+<div class="amrepbuilder-sidebar-block">
+    <!-- ko scope: "index = amrepbuilder_sidebar_header" -->
+        <!-- ko template: getTemplate() --><!-- /ko -->
+    <!-- /ko -->
+    <!-- ko scope: "index = amrepbuilder_sidebar_content" -->
+        <!-- ko template: getTemplate() --><!-- /ko -->
+    <!-- /ko -->
+</div>
+
+<!-- ko template: {
+    name: $data.templates.button,
+    data: {
+        classes: '-icon -square -toggle',
+        templatePath: $data.templates.toggleIcon,
+        title: 'Toggle',
+        events: {
+            click: function () {
+                $data.toggleSidebar();
+            }
+        }
+    }
+} --><!-- /ko -->

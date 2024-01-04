@@ -1,0 +1,298 @@
+<style>
+    @media (min-width: 500px) {
+
+        /* ym */
+        .dropdown-content {
+            position: absolute;
+            background-color: #f6f6f6;
+            overflow: auto;
+        }
+
+        .dropdown-content a {
+            color: black;
+            padding: 10px 16px;
+            text-decoration: none;
+            display: block;
+            width: 200px;
+        }
+
+        .dropdown-content a:hover {
+            background-color: #ddd;
+        }
+
+        .show {
+            display: block !important;
+        }
+
+        .dropdown-values {
+            display: none;
+        }
+
+        /* ym */
+        .row:after {
+            content: " ";
+            display: table;
+            clear: both;
+        }
+
+        .optdel {
+            display: none !important;
+        }
+
+        .row {
+            padding-top: 15px;
+            padding-bottom: 15px;
+        }
+
+        .multiselect-dropdown span.maxselected {
+            width: 100px;
+        }
+
+        .column_total {
+            font-weight: bold;
+
+        }
+
+        .column-half {
+            float: left;
+            width: 20%;
+            padding: 0 5px;
+            box-sizing: border-box;
+        }
+
+        .column-half-right {
+            float: right;
+            width: 20%;
+            box-sizing: border-box;
+        }
+
+        .button-import {
+            white-space: nowrap;
+            margin-left: 10px;
+        }
+
+        .input-box {
+            white-space: nowrap;
+            margin-left: 10px;
+        }
+
+        .button-pdf {
+            white-space: nowrap;
+            margin-left: 10px;
+        }
+
+        .btn-primary {
+            white-space: nowrap;
+            margin-left: 10px;
+        }
+
+        .search-box {
+            position: relative !important;
+            line-height: 28px;
+        }
+
+        .result {
+            position: absolute;
+            z-index: 999;
+            top: 100%;
+            left: 0;
+            background: #fff;
+            width: 100%;
+            box-sizing: border-box;
+        }
+        .selecttype-div {
+            position: relative !important;
+            line-height: 28px;
+        }
+    }
+    table {
+        border-collapse: collapse;
+        width: 100%;
+    }
+
+    th,
+    td {
+        text-align: left;
+        padding: 8px;
+    }
+
+    tr:nth-child(even) {
+        background-color: #f2f2f2;
+    }
+</style>
+
+<?php
+// die('mateee');
+$data = $block->getAERecords();
+$cid = $block->getCustomerId();
+$objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+$storeManager = $objectManager->get('\Magento\Store\Model\StoreManagerInterface');
+$baseUrl = $storeManager->getStore()->getBaseUrl();
+$paramtype = 'all';
+$paramCaseStatus = 'all';
+$paramApprovalStatus = 'all';
+// $paramDate=date('Y-m-d');
+
+if (isset($_GET['exchangetype'])) {
+    $paramtype = $_GET['exchangetype'];
+}
+if (isset($_GET['case_status'])) {
+    $paramCaseStatus = $_GET['case_status'];
+}
+if (isset($_GET['approval_status'])) {
+    $paramApprovalStatus = $_GET['approval_status'];
+}
+if (isset($_GET['customer_email'])) {
+    $paramCustomerEmail= $_GET['customer_email'];
+}
+// if (isset($_GET['createddate'])) {
+//     $paramApprovalStatus = $_GET['createddate'];
+//     echo "<pre>";print_r($paramApprovalStatus);die("dieee");
+// }
+?>
+
+<form method="GET" action="">
+    <div class="row">
+        <div class="column-half" style="width:95%;padding:5px 0;display: flex;">
+            <div class="selecttype-div">
+                <select name="exchangetype" style="width:300px;height:32px" title="Exchange Type">
+                    <option value="all" <?= $paramtype == 'all' ? 'selected' : '' ?>>Exchange Type</option>
+                    <option value="repair" <?= $paramtype == 'repair' ? 'selected' : '' ?>>Repair & Return</option>
+                    <option value="request" <?= $paramtype == 'request' ? 'selected' : '' ?>>Ship On Request</option>
+                    <option value="return" <?= $paramtype == 'return' ? 'selected' : '' ?>>Ship On Return</option>
+                    <option value="lost" <?= $paramtype == 'lost' ? 'selected' : '' ?>>Lost Or Stolen</option>
+                    <button name='submit'> </button>
+                </select>
+            </div>
+            <div class="selectcasestatus-div">
+                <select name="case_status" style="margin-left: 10px;width:300px;height:32px" title="Type">
+                    <option value="all" <?= $paramCaseStatus == 'all' ? 'selected' : '' ?>>Case Status</option>
+                    <option value="Closed" <?= $paramCaseStatus == 'Closed' ? 'selected' : '' ?>>Closed</option>
+                    <option value="Completed" <?= $paramCaseStatus == 'Completed' ? 'selected' : '' ?>>Completed</option>
+                    <option value="Cancelled" <?= $paramCaseStatus == 'Cancelled' ? 'selected' : '' ?>>Cancelled</option>
+                </select>
+            </div>
+            <div class="selectapprovalstatus-div">
+                <select name="approval_status" style="margin-left: 10px;width:300px;height:32px" title="Type">
+                    <option value="all" <?= $paramApprovalStatus == 'all' ? 'selected' : '' ?>>Approval Status</option>
+                    <option value="pending" <?= $paramApprovalStatus == 'pending' ? 'selected' : '' ?>>Pending Approval</option>
+                    <option value="Approved" <?= $paramApprovalStatus == 'Approved' ? 'selected' : '' ?>>Approved</option>
+                </select>
+            </div>
+            <!-- <div class="input-box" style="clear: both;">
+            <div class="modelno-repeat">
+            <div class="search-box">
+            <input type="text" style="margin-left: 10px;width:200px;height:32px" class="input-text required-entry" id="sales-rep-email"  placeholder="Select Email" name="sales-rep-email"  value='<?=isset($_GET["customer_email"])?$_GET["customer_email"]:""?>'>
+            <div id="SMDropdown" class="dropdown-content">
+                                               <div id="dropdown-values-sm" class="dropdown-values">
+
+                                               </div>
+            </div>
+            </div>
+            </div> -->
+            <div class="submitbutton-div">
+                <button type="submit" style="margin-left: 10px;width:100px">Submit</button>
+            </div>
+        </div>
+    </div>
+    
+    
+    
+    <?php if (count($data) > 0) { ?>
+        <div class="scrollit">
+            
+            <table class="data table table-order-items history" id="my-orders-table">
+                <thead>
+                <tr>
+                <th scope="col" class="col casenumber"><?= $block->escapeHtml(__('Case Number')) ?></th>
+                    <th scope="col" class="col msgsku"><?= $block->escapeHtml(__('MSG Sku#')) ?></th>
+                    <!-- <th scope="col" class="col deviceimei"><?= '' //$block->escapeHtml(__('Serial#')) 
+                                                                ?></th> -->
+                    <th scope="col" class="col submitterfirstname"><?= $block->escapeHtml(__('First Name')) ?></th>
+                    <th scope="col" class="col submitteremail"><?= $block->escapeHtml(__('Email')) ?></th>
+                    <th scope="col" class="col exchangetype"><?= $block->escapeHtml(__('Exchange Type')) ?></th>
+                    <!-- <th scope="col" class="col action">Action</th> -->
+                </tr>
+            </thead>
+            <tbody>
+                <?php
+                foreach ($data as $ae) : //echo "<pre>";print_r($order->getData());die();
+                ?>
+                    <tr>
+                    <td class="col casenumber"><?= $ae['casenumber'] ?></td>
+                        <td class="col msgsku"><?= $ae['msgsku'] ?></td>
+                        <!-- <td class="col deviceimei"><?= '' //$ae['deviceimei'] 
+                                                        ?></td> -->
+                        <td class="col submitterfirstname"><?= $ae['submitterfirstname'] ?></td>
+                        <td class="col submitteremail"><?= $ae['submitteremail'] ?></td>
+                        <td class="col exchangetype"><?= $ae['exchangetype'] ?></td>
+                        <!-- <td class="col id"><a href="<?= $this->getUrl() ?>advanceexchange/manage/detail?ae_id=<?= $ae['advanced_exchange_id'] ?>">View Detail</a></td> -->
+                    </tr>
+                <?php endforeach; ?>
+            </tbody>
+        </table>
+                </div>
+    <?php } else {
+        echo "No Records Found";
+    } ?>
+   
+
+    <script>
+     require([
+          "jquery",
+          "mage/calendar","domReady!"
+     ], function($){
+         $("#calendar_inputField").calendar({
+            
+              buttonText:"<?php echo __('Select Date') ?>",
+            })
+                
+          
+            // alert($(this).val());
+       });
+    require(['jquery'], function($) {
+        // Sales Rep Email JS
+        $('#sales-rep-email').click(function() {
+            $("#dropdown-values-sr").addClass("show");
+        });
+
+        $(document).click(function(e) {
+            if (e.target.id != 'sales-rep-email') {
+                $("#dropdown-values-sr").removeClass("show");
+            }
+        });
+
+        $('#sales-rep-email').keyup(function() {
+            $("#dropdown-values-sr").empty();
+            var sales_rep_email = $('#sales-rep-email').val();
+            if (sales_rep_email.length >= 3) {
+                var customurl = "<?php echo $this->getUrl('adminreports/reports/emailfilter') ?>";
+                $.ajax({
+                    url: customurl,
+                    type: 'POST',
+                    dataType: 'json',
+                    data: {
+                        salesrep_email: sales_rep_email,
+                    },
+                    complete: function(response) {
+                        if (response.responseJSON.success) {
+                            $("#dropdown-values-sr").empty();
+                            $("#dropdown-values-sr").append(response.responseJSON.customers);
+                        } else {
+                            console.log('Error happens in Sales Rep Email. Try again.');
+                        }
+                    },
+                    error: function(xhr, status, errorThrown) {
+                        console.log('Error happens. Try again.');
+                    }
+                });
+            }
+        });
+        });
+        function setSRValueOfInput(e) {
+        document.getElementById("sales-rep-email").value = e.innerHTML;
+    }
+</script>
+
+        
+        </form>

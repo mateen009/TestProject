@@ -1,0 +1,19 @@
+<li data-bind="
+        afterRender: function() {
+            item.position = $index();
+        },
+        attr: {
+            class: 'amrepbuilder-column-block' + ' -' + (item.type ? item.type : item.backend_type) + ($index() === 0 ? ' -disabled' : ''),
+            title: item.entity_name
+        },
+        css: {
+            '-opened': item.isFooterActive(),
+            '-edit': item.isEdited()
+        }"
+    data-amrepbuilder-js="column">
+    <!-- ko scope: "index = chosen_column_header" -->
+        <!-- ko template: { name: $data.getTemplate(), data: { $data: $data, item: $parent.item } } --><!-- /ko -->
+    <!-- /ko -->
+
+    <!-- ko template: uiClass.templates.columnFooter --><!-- /ko -->
+</li>

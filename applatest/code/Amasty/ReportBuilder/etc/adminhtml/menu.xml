@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+    <menu>
+        <add id="Amasty_ReportBuilder::reports" title="Amasty Custom Report Builder" module="Amasty_ReportBuilder" sortOrder="105" parent="Magento_Reports::report" resource="Amasty_ReportBuilder::reports"/>
+        <add id="Amasty_ReportBuilder::index" title="Custom Report Builder" module="Amasty_ReportBuilder" sortOrder="10" parent="Amasty_ReportBuilder::reports" action="amreportbuilder/report/index" resource="Amasty_ReportBuilder::reports"/>
+        <add id="Amasty_ReportBuilder::index1" title="Sales Rep Orders Report" module="Amasty_ReportBuilder" sortOrder="20" parent="Amasty_ReportBuilder::reports" action="amreportbuilder/report/view/report_id/11" resource="Amasty_ReportBuilder::reports"/>
+    </menu>
+</config>

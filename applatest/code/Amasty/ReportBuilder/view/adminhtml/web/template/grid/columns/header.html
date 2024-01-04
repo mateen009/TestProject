@@ -1,0 +1,24 @@
+<th class="data-grid-th"
+    click="sort"
+    css="
+        _sortable: sortable,
+        _draggable: draggable,
+        _ascend: sorting === 'asc' ,
+        _descend: sorting === 'desc'">
+    <span class="data-grid-cell-content" attr="'data-tooltip-trigger': ko.uid" translate="label"/>
+    <p class=""
+       tooltip="
+           tooltipClasses: 'data-grid-column-tooltip',
+           trigger: '[data-tooltip-trigger=' + ko.uid + ']',
+           action: 'hover',
+           delay: 500,
+           center: true,
+           position: 'top',
+           closeButton: true,
+           closeOnScroll: false">
+        <span><!-- ko i18n: 'Entity' --><!-- /ko -->: <b><!-- ko text: $data.entity_name --><!-- /ko --></b></span><br>
+        <span><!-- ko i18n: 'Aggregation' --><!-- /ko -->: <b><!-- ko text: $data.aggregation_type --><!-- /ko --></b></span>
+    </p>
+</th>
+
+

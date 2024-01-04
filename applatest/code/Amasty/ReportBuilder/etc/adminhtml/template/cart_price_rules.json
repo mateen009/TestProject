@@ -1,0 +1,83 @@
+{
+  "name": "Cart Price Rules discount overview",
+  "main_entity": "order",
+  "store_ids": {"0": "0"},
+  "is_use_period": "1",
+  "chart_axis_x": "",
+  "chart_axis_y": "",
+  "display_chart": "0",
+  "columns": {
+    "order.discount_amount": {
+      "column_id": "order.discount_amount",
+      "is_date_filter": "0",
+      "filter": "",
+      "visibility": "1",
+      "position": "8",
+      "order": "0"
+    },
+    "order.discount_refunded": {
+      "column_id": "order.discount_refunded",
+      "is_date_filter": "0",
+      "filter": "",
+      "visibility": "1",
+      "position": "7",
+      "order": "0"
+    },
+    "order.discount_invoiced": {
+      "column_id": "order.discount_invoiced",
+      "is_date_filter": "0",
+      "filter": "",
+      "visibility": "1",
+      "position": "6",
+      "order": "0"
+    },
+    "order.discount_canceled": {
+      "column_id": "order.discount_canceled",
+      "is_date_filter": "0",
+      "filter": "",
+      "visibility": "1",
+      "position": "5",
+      "order": "0"
+    },
+    "order.shipping_discount_amount": {
+      "column_id": "order.shipping_discount_amount",
+      "is_date_filter": "0",
+      "filter": "",
+      "visibility": "1",
+      "position": "4",
+      "order": "0"
+    },
+    "order.discount_description": {
+      "column_id": "order.discount_description",
+      "is_date_filter": "0",
+      "filter": "",
+      "visibility": "1",
+      "position": "3",
+      "order": "0"
+    },
+    "order.applied_rule_ids": {
+      "column_id": "order.applied_rule_ids",
+      "is_date_filter": "0",
+      "filter": "",
+      "visibility": "1",
+      "position": "2",
+      "order": "0"
+    },
+    "order.increment_id": {
+      "column_id": "order.increment_id",
+      "is_date_filter": "0",
+      "filter": "",
+      "visibility": "1",
+      "position": "1",
+      "order": "0"
+    },
+    "order.created_at": {
+      "column_id": "order.created_at",
+      "is_date_filter": "0",
+      "filter": "",
+      "visibility": "1",
+      "position": "0",
+      "order": "2"
+    }
+  }
+}

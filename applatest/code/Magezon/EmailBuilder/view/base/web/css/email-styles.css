@@ -1,0 +1,4 @@
+.adminhtml-email_template-edit #convert_button, #email_template_load_form,
+    #field_template_styles, .adminhtml-email_template-edit .magezon-builder-directive-settings {
+    display: none;
+}

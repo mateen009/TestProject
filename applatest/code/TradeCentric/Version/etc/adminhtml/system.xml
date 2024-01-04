@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+        <tab id="punchout2go" translate="label" sortOrder="1000">
+            <label>TradeCentric</label>
+        </tab>
+        <section id="tradecentric_version" translate="label" type="text" sortOrder="100" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+            <label>Version</label>
+            <tab>punchout2go</tab>
+            <resource>TradeCentric_Vendor::config_version</resource>
+            <group id="system" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>System</label>
+                <field id="version" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Current Version</label>
+                    <frontend_model>TradeCentric\Version\Block\Forms\Config\Version</frontend_model>
+                </field>
+            </group>
+        </section>
+    </system>
+</config>

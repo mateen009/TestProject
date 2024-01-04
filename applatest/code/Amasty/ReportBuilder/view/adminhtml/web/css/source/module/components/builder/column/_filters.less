@@ -1,0 +1,68 @@
+//
+//  Column Header Component
+//  ______________________________________________
+
+//
+//  Common
+//  ----------------------------------------------
+
+& when (@media-common = true) {
+    .amrepbuilder-column-filter {
+        & {
+            transition: .1s;
+        }
+
+        .amrepbuilder-label {
+            & {
+                .amrepbuilder-flex(none, center);
+
+                position: relative;
+            }
+
+            &:not(:last-child) {
+                margin-bottom: @amrepbuilder__indent;
+            }
+        }
+
+        .amrepbuilder-title {
+            display: block;
+            padding: 0 0 @amrepbuilder__indent__m;
+            font-weight: @font-weight__semibold;
+        }
+    }
+
+    .amrepbuilder-column-filter.-range {
+        .amrepbuilder-input {
+            margin: 0 0 0 @amrepbuilder__indent__m;
+        }
+
+        .amrepbuilder-text {
+            flex-basis: 50px;
+        }
+    }
+
+    .amrepbuilder-column-filter.-date {
+        .amrepbuilder-title {
+            padding-bottom: @amrepbuilder__indent__m;
+        }
+
+        .amrepbuilder-label:hover svg {
+            fill: @amrepbuilder-color__hover;
+        }
+
+        svg {
+            position: absolute;
+            right: 5px;
+            width: 18px;
+            height: 18px;
+
+            fill: #dadada;
+        }
+
+        .ui-datepicker-trigger {
+            position: absolute;
+            right: 0;
+            opacity: 0;
+        }
+    }
+}

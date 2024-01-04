@@ -1,0 +1,57 @@
+{
+  "name": "Returning Customers (more than 3 orders, more than 500{currency} spent)",
+  "main_entity": "customer",
+  "store_ids": {"0": "0"},
+  "is_use_period": "0",
+  "chart_axis_x": "",
+  "chart_axis_y": "",
+  "display_chart": "",
+  "columns": {
+    "customer.email": {
+      "column_id": "customer.email",
+      "is_date_filter": "0",
+      "filter": "",
+      "visibility": "1",
+      "position": "1",
+      "order": "0"
+    },
+    "customer.firstname": {
+      "column_id": "customer.firstname",
+      "is_date_filter": "0",
+      "filter": "",
+      "visibility": "1",
+      "position": "2",
+      "order": "0"
+    },
+    "customer.lastname": {
+      "column_id": "customer.lastname",
+      "is_date_filter": "0",
+      "filter": "",
+      "visibility": "1",
+      "position": "3",
+      "order": "0"
+    },
+    "order.entity_id": {
+      "column_id": "order.entity_id",
+      "is_date_filter": "0",
+      "filter": "{\"from\":\"3\",\"to\":\"\"}",
+      "visibility": "1",
+      "position": "4",
+      "order": "0"
+    },
+    "order.grand_total": {
+      "column_id": "order.grand_total",
+      "is_date_filter": "0",
+      "filter": "{\"from\":\"500\",\"to\":\"\"}",
+      "visibility": "1",
+      "position": "5",
+      "order": "0"
+    }
+  },
+  "scheme": {
+    "order": {
+      "source_entity": "customer",
+      "entity": "order"
+    }
+  }
+}

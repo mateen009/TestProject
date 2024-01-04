@@ -1,0 +1,34 @@
+<!--
+/**
+ * Amasty Popup Component
+ */
+-->
+
+<aside class="amrepbuilder-popup-wrapper"
+       data-bind="
+           visible: isActive,
+           afterRender: function(node) {
+                initWrapper(node);
+           }">
+    <div data-bind="attr: { class: 'amrepbuilder-popup' + (type() ? ' -' + type() : '') }">
+        <button class="amrepbuilder-button -clear -close"
+                data-bind="event: {
+                    click: close
+                }">
+        </button>
+        <div class="amrepbuilder-title">
+            <p class="amrepbuilder-header" if="header" data-bind="i18n: header"></p>
+            <p class="amrepbuilder-description" if="description" data-bind="i18n: description"></p>
+        </div>
+        <div class="amrepbuilder-content" if="content" data-bind="html: content"></div>
+        <div class="amrepbuilder-checkbox-block" if="checkbox">
+            <input class="amrepbuilder-checkbox"
+                   type="checkbox"
+                   data-bind="checked: checkbox().observer">
+            <span class="amrepbuilder-text" data-bind="i18n: checkbox().title"></span>
+        </div>
+        <div class="amrepbuilder-toolbar" if="buttons().length" data-bind="foreach: buttons">
+            <button data-bind="i18n: text, attr: { class: 'amrepbuilder-button' + ' ' + classes }, click: callback"></button>
+        </div>
+    </div>
+</aside>

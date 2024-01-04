@@ -1,0 +1,8 @@
+<?php
+$element = $this->getElement();
+$width   = $element->getData('logo_width');
+$height  = $element->getData('logo_height');
+?>
+<a href="<?= $block->getUrl('') ?>">
+    <img src="<?= $block->getLogoSrc() ?>" <?= $width ? 'width="' . $width . '"' : '' ?> <?= $height ? 'height="' . $height . '"' : '' ?>/>
+</a>

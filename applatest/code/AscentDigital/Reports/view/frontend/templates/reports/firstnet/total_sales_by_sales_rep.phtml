@@ -1,0 +1,156 @@
+<style>
+    @media (min-width: 500px) {
+        .row:after {
+            content: " ";
+            display: table;
+            clear: both;
+        }
+
+        .column_total {
+            font-weight: bold;
+            
+        }
+        
+        .row {
+            padding-top: 25px;
+        }
+
+        .column-half {
+            float: right;
+            width: 20%;
+            padding: 0 5px;
+            box-sizing: border-box;
+        }
+
+        .column-half-right {
+            float: right;
+            width: 20%;
+            box-sizing: border-box;
+        }
+
+        .button-import {
+            white-space: nowrap;
+            margin-left: 10px;
+        }
+
+        .button-pdf {
+            white-space: nowrap;
+            margin-left: 10px;
+        }
+    }
+</style>
+<form method="GET" action="">
+
+    <?php
+    $objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+
+    $orderStatus = $block->getAllOrderStatus();
+
+    $blockViewOrder =  $objectManager->create('\Magento\Sales\Block\Order\History');
+        
+    $storeManager = $objectManager->get('\Magento\Store\Model\StoreManagerInterface');
+    $baseUrl = $storeManager->getStore()->getBaseUrl();
+    // $quoteRequests = $blockCustomer->getCustomerQuoteRequestList();
+    if (isset($_POST['search'])) {
+    } else {
+        $_orders = $block->getOrders();
+
+        echo $block->getChildHtml('info');
+        if ($_orders && count($_orders)) {
+    ?>
+            <div class="row">
+
+
+                <div class="column-half" style="width: 40%; display: flex;">
+                    <button id="export_data" name="export_data" class="button-import" type="submit"> Export Data</button>
+                    <button id="generate_pdf" name="generate_pdf" type="submit" class="button-pdf" formtarget="_blank"> PDF</button>
+                </div>
+            </div>
+            <div class="table-wrapper orders-history">
+                <div class="field  required" style="display: flex;float: left;flex-direction: row;justify-content: center;align-items: center;">
+
+
+                </div>
+
+                <table class="data table table-order-items history" id="my-orders-table">
+                    <caption class="table-caption"><?= $block->escapeHtml(__('Orders')) ?></caption>
+                    <thead>
+                        <tr>
+
+                            <th scope="col" class="col date"><?= $block->escapeHtml(__('Email')) ?></th>
+                            <th scope="col" class="col total"><?= $block->escapeHtml(__('Total Orders')) ?></th>
+                            <th scope="col" class="col total"><?= $block->escapeHtml(__('On Demo')) ?></th>
+                            <th scope="col" class="col total"><?= $block->escapeHtml(__('Due')) ?></th>
+                            <th scope="col" class="col total"><?= $block->escapeHtml(__('Completed')) ?></th>
+                            <th scope="col" class="col total"><?= $block->escapeHtml(__('Qty Ordered')) ?></th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php
+
+                        foreach ($_orders as $_order) : ?>
+                            <tr>
+                                <td data-th="<?= $block->escapeHtml(__('Email')) ?>" class="col id"><?= $_order->getCustomerEmail() ?></td>
+                                <td data-th="<?= $block->escapeHtml(__('Total Orders')) ?>" class="col id"><?= $block->getOrderCount($_order->getCustomerEmail()) ?></td>
+                                <td data-th="<?= $block->escapeHtml(__('On Demo')) ?>" class="col id"><a href="<?=$baseUrl?>mobilecg/firstnetreports/demoorders/?search=&email=<?= $_order->getCustomerEmail()?>"><?= $block->getDemoOrderCount($_order->getCustomerEmail()) ?></a></td>
+                                <td data-th="<?= $block->escapeHtml(__('Due')) ?>" class="col id"><a href="<?=$baseUrl?>order/index/backorderindex/?search=&email=<?= $_order->getCustomerEmail()?>"><?= $block->getLateOrderCount($_order->getCustomerEmail()) ?></a></td>
+                                <td data-th="<?= $block->escapeHtml(__('Compelete')) ?>" class="col id"><?= $block->getCompletedOrderCount($_order->getCustomerEmail()) ?></td>
+                                <td data-th="<?= $block->escapeHtml(__('Order Total')) ?>" class="col total"><?= /* @noEscape */ number_format($_order->getTotalQtyOrdered())  ?></td>
+                            </tr>
+                        <?php endforeach; ?>
+                    </tbody>
+                </table>
+            </div>
+            <?php if ($block->getPagerHtml()) : ?>
+                <div class="order-products-toolbar toolbar bottom"><?= $block->getPagerHtml() ?></div>
+            <?php endif ?>
+        <?php } else { ?>
+            <div class="row">
+
+
+
+                <div class="column-half" style="width: 40%; display: flex;">
+                    <button id="export_data" name="export_data" class="button-import" type="submit"> Export Data</button>
+                    <button id="generate_pdf" name="generate_pdf" type="submit" class="button-pdf" formtarget="_blank"> PDF</button>
+                </div>
+            </div>
+            </br>
+            </br>
+            </br>
+            <div class="message info empty"><span><?= $block->escapeHtml($block->getEmptyOrdersMessage()) ?></span></div>
+
+
+    <?php }
+    }
+    ?>
+</form>
+<script type="text/javascript">
+    require(['jquery'], function($) {
+        jQuery(document).ready(function() {
+
+            jQuery('.search-box input[type="text"]').on("keyup input", function() {
+                /* Get input value on change */
+                var inputVal = jQuery(this).val();
+                var resultDropdown = jQuery(this).siblings(".result");
+                if (inputVal.length == 3) {
+                    jQuery.get("https://caad034362.nxcli.net/firstnet/order/index/index", {
+                        search: inputVal
+                    }).done(function(data) {
+                        // Display the returned data in browser
+                        resultDropdown.html(data);
+                    });
+                } else {
+                    resultDropdown.empty();
+                }
+            });
+
+            // Set search input value on click of result item
+            jQuery(document).on("click", ".result p", function() {
+                jQuery(this).parents(".search-box").find('input[type="text"]').val(jQuery(this).text());
+                jQuery(this).parent(".result").empty();
+            });
+
+        })
+    })
+</script>

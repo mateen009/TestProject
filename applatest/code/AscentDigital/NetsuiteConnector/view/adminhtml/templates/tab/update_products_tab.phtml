@@ -1,0 +1,50 @@
+<section class="admin__page-section">
+    <div class="admin__page-section-title">
+        <span class="title">
+            <?php /* @escapeNotVerified */ echo __('Update Products Cron Job') ?>
+        </span>
+
+    </div>
+    <div class="admin__page-section-content">
+        <div class="order-information textfied" id="update_products-cron-message">
+            <div class="box">
+                <div class="update_products-cron-box-content">
+                    <p></p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="admin__page-section-item-content edit-checkoutfield-date" id="run-update_products-cron-job-form">
+        <button id="update_products-cron-submit">Run Update Products Cron Job</button>
+    </div>
+   
+</section>
+<script type="text/javascript">
+    // Update Products cron job
+    document.querySelector('#update_products-cron-submit').addEventListener('click', function() {
+        document.querySelector('#update_products-cron-submit').innerHTML = 'Running...';
+        document.querySelector('#update_products-cron-submit').disabled = true;
+        require([
+            'jquery'
+        ], function($) {
+            var url = '<?=
+                        /** @noEscape */
+                        $block->getUrl("nsproduct/cron/updateproducts") ?>';
+            jQuery.ajax({
+                url: url,
+                data: {
+                    orderCron: 'run'
+                },
+                type: "POST",
+                async: false,
+            }).done(function(response) {
+                $(".update_products-cron-box-content").html("<span style='color:#008000; font-weight:bold'>Update Products cron job completed. </span>");
+                $("#update_products-cron-submit").text('Run Update Products Cron Job');
+                document.querySelector('#update_products-cron-submit').disabled = false;
+            });
+
+            //});            
+        });
+    });
+  
+</script>

@@ -1,0 +1,207 @@
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+// phpcs:disable Magento2.Templates.ThisInTemplate
+// @codingStandardsIgnoreFile
+
+/** @var \Magento\Sales\Block\Order\History $block */
+    
+$objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+$block = $objectManager->create('\Orders\Data\Block\Order\History');
+$orderStatus = $block->getAllOrderStatus();
+    
+?>
+<style>
+@media (min-width: 500px) {
+    .row:after {
+        content: " ";
+        display: table;
+        clear: both;
+    }
+
+    .row {
+    padding-top: 25px;
+    }
+    .column-half {
+        float: left;
+        width: 20%;
+        padding: 0 5px;
+        box-sizing: border-box;
+    }
+    .column-half-right {
+        float: right;
+        width: 20%;
+        box-sizing: border-box;
+    }
+}
+</style>
+<form method="GET" action="">
+
+<?php
+if(isset($_POST['search'])){
+    
+    
+}else{
+   $_orders = $block->getOrders();
+    echo $block->getChildHtml('info');
+   if ($_orders && count($_orders)) {
+       ?>
+              <div class="row">
+               <div class="column-half">
+              <input type="date" class="form-control" name="from" required="required" value="<?php if(isset($_GET['from'])){
+              echo date('Y-m-d',strtotime($_GET['from']));
+              }else{
+              echo date('Y-m-d'); }?>"/>
+              </div>
+               <div class="column-half">
+              <input type="date" class="form-control" name="to" required="required"  value="<?php if(isset($_GET['to'])){
+              echo date('Y-m-d',strtotime($_GET['to']));
+              }else{
+                  echo date('Y-m-d'); }?>"/>
+              </div>
+               <div class="column-half">
+              <button class="btn btn-primary" name="search" type="submit"><span class="glyphicon glyphicon-search"></span> Search</button>
+              </div>
+
+             <div class="column-half">
+             <label class="label" for="Sort By" style="display: block;margin: 0 10px;" >
+                 <span>Order Status</span>
+             </label>
+             </div>
+             <div class="column-half-right">
+                 <select name="status" title="Order Status" onchange="location = this.value;" >
+                     <option value="<?= $block->escapeUrl($block->getHistoryPageURL()) ?>">All</option>
+                     <?php foreach ($orderStatus as $orderStatusVal) : ?>
+                             <?php if($orderStatusVal['value']) : ?>
+                                 <?php
+                                 $selectedVal = '';
+                                 if ($block->getCurrentURL() == $block->getOrderStatusURL($orderStatusVal['value'])) {
+                                     $selectedVal = "selected='selected'";
+                                 }
+                                 ?>
+                                 <option value="<?= $block->escapeUrl($block->getOrderStatusURL($orderStatusVal['value'])) ?>"
+                                     <?= /* @noEscape */ $selectedVal ?>
+                                     >
+                                     <span>
+                                         <?= $block->escapeHtml(__($orderStatusVal['label'])) ?>
+                                     </span>
+                                 </option>
+                             <?php endif; ?>
+                     <?php endforeach; ?>
+                 </select>
+             </div>
+           </div>
+        <div class="table-wrapper orders-history">
+           <div class="field  required" style="display: flex;float: left;flex-direction: row;justify-content: center;align-items: center;">
+              
+               
+           </div>
+           
+           <table class="data table table-order-items history" id="my-orders-table">
+               <caption class="table-caption"><?= $block->escapeHtml(__('Orders')) ?></caption>
+               <thead>
+                   <tr>
+                       <th scope="col" class="col id"><?= $block->escapeHtml(__('Order #')) ?></th>
+                       <th scope="col" class="col date"><?= $block->escapeHtml(__('Date')) ?></th>
+                       <?= $block->getChildHtml('extra.column.header') ?>
+                       <th scope="col" class="col total"><?= $block->escapeHtml(__('Order Total')) ?></th>
+                       <th scope="col" class="col status"><?= $block->escapeHtml(__('Status')) ?></th>
+                       <th scope="col" class="col actions"><?= $block->escapeHtml(__('Action')) ?></th>
+                   </tr>
+               </thead>
+               <tbody>
+                   <?php
+                       
+                       foreach ($_orders as $_order) : ?>
+                       <tr>
+                           <td data-th="<?= $block->escapeHtml(__('Order #')) ?>" class="col id"><?= $block->escapeHtml($_order->getRealOrderId()) ?></td>
+                           <td data-th="<?= $block->escapeHtml(__('Date')) ?>" class="col date"><?= /* @noEscape */ $block->formatDate($_order->getCreatedAt()) ?></td>
+                           <?php $extra = $block->getChildBlock('extra.container'); ?>
+                           <?php if ($extra) : ?>
+                               <?php $extra->setOrder($_order); ?>
+                               <?= $extra->getChildHtml() ?>
+                           <?php endif; ?>
+                           <td data-th="<?= $block->escapeHtml(__('Order Total')) ?>" class="col total"><?= /* @noEscape */ $_order->formatPrice($_order->getGrandTotal()) ?></td>
+                           <td data-th="<?= $block->escapeHtml(__('Status')) ?>" class="col status"><?= $block->escapeHtml($_order->getStatusLabel()) ?></td>
+                           <td data-th="<?= $block->escapeHtml(__('Actions')) ?>" class="col actions">
+                               <a href="<?= $block->escapeUrl($block->getViewUrl($_order)) ?>" class="action view">
+                                   <span><?= $block->escapeHtml(__('View Order')) ?></span>
+                               </a>
+                               <?php if ($this->helper(\Magento\Sales\Helper\Reorder::class)->canReorder($_order->getEntityId())) : ?>
+                                   <a href="#" data-post='<?= /* @noEscape */
+                                   $this->helper(\Magento\Framework\Data\Helper\PostHelper::class)
+                                       ->getPostData($block->getReorderUrl($_order))
+                                   ?>' class="action order">
+                                       <span><?= $block->escapeHtml(__('Reorder')) ?></span>
+                                   </a>
+                               <?php endif ?>
+                           </td>
+                       </tr>
+                   <?php endforeach; ?>
+               </tbody>
+           </table>
+       </div>
+       <?php if ($block->getPagerHtml()) : ?>
+           <div class="order-products-toolbar toolbar bottom"><?= $block->getPagerHtml() ?></div>
+       <?php endif ?>
+   <?php } else { ?>
+       <div class="row">
+             <div class="column-half">
+            <input type="date" class="form-control" name="from" required="required" value="<?php if(isset($_GET['from'])){
+            echo date('Y-m-d',strtotime($_GET['from']));
+            }else{
+            echo date('Y-m-d'); }?>"/>
+            </div>
+             <div class="column-half">
+            <input type="date" class="form-control" name="to" required="required"  value="<?php if(isset($_GET['to'])){
+            echo date('Y-m-d',strtotime($_GET['to']));
+            }else{
+            echo date('Y-m-d'); }?>"/>
+            </div>
+             <div class="column-half">
+            <button class="btn btn-primary" name="search" type="submit"><span class="glyphicon glyphicon-search"></span> Search</button>
+            </div>
+
+           <div class="column-half">
+           <label class="label" for="Sort By" style="display: block;margin: 0 10px;" >
+               <span>Order Status</span>
+           </label>
+           </div>
+           <div class="column-half-right">
+               <select name="status" title="Order Status" onchange="location = this.value;" >
+                   <option value="<?= $block->escapeUrl($block->getHistoryPageURL()) ?>">All</option>
+                   <?php foreach ($orderStatus as $orderStatusVal) : ?>
+                           <?php if($orderStatusVal['value']) : ?>
+                               <?php
+                               $selectedVal = '';
+                               if ($block->getCurrentURL() == $block->getOrderStatusURL($orderStatusVal['value'])) {
+                                   $selectedVal = "selected='selected'";
+                               }
+                               ?>
+                               <option value="<?= $block->escapeUrl($block->getOrderStatusURL($orderStatusVal['value'])) ?>"
+                                   <?= /* @noEscape */ $selectedVal ?>
+                                   >
+                                   <span>
+                                       <?= $block->escapeHtml(__($orderStatusVal['label'])) ?>
+                                   </span>
+                               </option>
+                           <?php endif; ?>
+                   <?php endforeach; ?>
+               </select>
+           </div>
+       </div>
+       </br>
+       </br>
+       </br>
+       <div class="message info empty"><span><?= $block->escapeHtml($block->getEmptyOrdersMessage()) ?></span></div>
+       
+
+   <?php }
+}
+?>
+
+</form>
+

@@ -1,0 +1,51 @@
+<section class="admin__page-section">
+    <div class="admin__page-section-title">
+        <span class="title">
+            <?php /* @escapeNotVerified */ echo __('Locations Cron Job') ?>
+        </span>
+
+    </div>
+    <div class="admin__page-section-content">
+        <div class="order-information textfied" id="locations-cron-message">
+            <div class="box">
+                <div class="locations-cron-box-content">
+                    <p></p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="admin__page-section-item-content edit-checkoutfield-date" id="run-locations-cron-job-form">
+        <button id="locations-cron-submit">Run Locations Cron Job</button>
+    </div>
+    
+</section>
+<script type="text/javascript">
+    // locations cron job
+    document.querySelector('#locations-cron-submit').addEventListener('click', function() {
+        document.querySelector('#locations-cron-submit').innerHTML = 'Running...';
+        document.querySelector('#locations-cron-submit').disabled = true;
+        require([
+            'jquery'
+        ], function($) {
+            var url = '<?=
+                        /** @noEscape */
+                        $block->getUrl("nsproduct/cron/locations") ?>';
+            jQuery.ajax({
+                url: url,
+                data: {
+                    orderCron: 'run'
+                },
+                type: "POST",
+                async: false,
+            }).done(function(response) {
+                $(".locations-cron-box-content").html("<span style='color:#008000; font-weight:bold'>Locations cron job completed. </span>");
+                $("#locations-cron-submit").text('Run Locations Cron Job');
+                document.querySelector('#locations-cron-submit').disabled = false;
+            });
+
+            //});            
+        });
+    });
+   
+</script>
+</script>

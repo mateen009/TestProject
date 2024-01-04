@@ -1,0 +1,9 @@
+<?php /** @var $block Magenest\RentalSystem\Block\Product\Tab\Policy */
+$policy = $block->getPolicy();
+?>
+<?php if ($policy) : ?>
+    <br>
+    <div id="rental_policy-form" data-bind="scope: 'rental_policy-form'">
+        <?= $policy; ?>
+    </div>
+<?php endif ?>

@@ -1,0 +1,18 @@
+<schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                 xsi:noNamespaceSchemaLocation="urn:magento:framework:Setup/Declaration/Schema/etc/schema.xsd">
+    <table name="quote">
+        <column xsi:type="varchar" name="client_po" nullable="false" comment="Client PO#"/>
+        <column xsi:type="varchar" name="cost_center" comment="Cost Center"/>
+        <column xsi:type="boolean" name="customer_shipping" nullable="false"  comment="Customer Shipping"/>
+   </table>
+    <!-- <table name="sales_order">
+        <column xsi:type="varchar" name="client_po" padding="10" unsigned="true" nullable="false" comment="Client PO#"/>
+        <column xsi:type="varchar" name="cost_center" padding="10" unsigned="true" nullable="false" comment="Cost Center"/>
+        <column xsi:type="boolean" name="customer_shipping" nullable="false"  comment="Customer Shipping"/>
+   </table>
+    <table name="sales_order_grid">
+        <column xsi:type="varchar" name="client_po" padding="10" unsigned="true" nullable="false" comment="Client PO#"/>
+        <column xsi:type="varchar" name="cost_center" padding="10" unsigned="true" nullable="false" comment="Cost Center"/>
+        <column xsi:type="boolean" name="customer_shipping" nullable="false"  comment="Customer Shipping"/>
+   </table> -->
+</schema>

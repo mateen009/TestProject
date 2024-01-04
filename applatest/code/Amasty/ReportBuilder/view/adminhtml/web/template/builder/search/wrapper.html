@@ -1,0 +1,32 @@
+<section class="amrepbuilder-search-block">
+    <input class="amrepbuilder-input"
+           type="search"
+           pattern="[a-zA-Z0-9]+"
+           data-bind="
+                attr: {
+                    placeholder: $t($data.placeholder)
+                },
+                value: $data.value,
+                valueUpdate: 'afterkeydown'"/>
+    <!-- ko if: !$data.value().length -->
+        <!-- ko template: $data.templates.searchIcon --><!-- /ko -->
+    <!-- /ko -->
+    <!-- ko if: $data.value().length -->
+        <!-- ko template: {
+            name: $data.templates.button,
+            data: {
+                classes: '-icon -clear',
+                templatePath: $data.templates.closeIcon,
+                title: 'Clear field',
+                events: {
+                    click: function() {
+                        $data.value('');
+                    }
+                }
+            }
+        } -->
+        <!-- /ko -->
+    <!-- /ko -->
+</section>
+
+<!-- ko template: $data.templates.message --><!-- /ko -->

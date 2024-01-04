@@ -1,0 +1,28 @@
+<?php
+/**
+ * @var \Cminds\Oapm\Block\Info\Oapm $block
+ */
+?>
+<dl class="payment-method oapm">
+    <dt class="title"><?= $block->escapeHtml($block->getMethod()->getTitle()) ?></dt>
+    <?php if ($block->getInfo()->getAdditionalInformation()): ?>
+        <?php if ($block->getInfo()->getAdditionalInformation('recipient_name')): ?>
+            <dd class="content">
+                <strong><?= __('Recipient Name') ?></strong>
+                <?= $block->escapeHtml($block->getInfo()->getAdditionalInformation('recipient_name')) ?>
+            </dd>
+        <?php endif; ?>
+        <?php if ($block->getInfo()->getAdditionalInformation('recipient_email')): ?>
+            <dd class="content">
+                <strong><?= __('Recipient Email') ?></strong>
+                <?= $block->escapeHtml($block->getInfo()->getAdditionalInformation('recipient_email')) ?>
+            </dd>
+        <?php endif; ?>
+        <?php if ($block->getInfo()->getAdditionalInformation('recipient_note')): ?>
+            <dd class="content">
+                <strong><?= __('Note To Recipient') ?></strong>
+                <?= nl2br($block->escapeHtml($block->getInfo()->getAdditionalInformation('recipient_note'))) ?>
+            </dd>
+        <?php endif; ?>
+    <?php endif; ?>
+</dl>

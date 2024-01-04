@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body>
+           <referenceBlock name="top.search" remove="true"/>
+           <referenceBlock name="register-link" remove="true"/>
+           <referenceBlock name="minicart" remove="true"/>
+           <referenceBlock name="footer_links" remove="true"/>
+           <referenceBlock  name="customer.new"  remove="true"/>
+           <move element="navigation.sections" destination="header-wrapper" />
+           <referenceBlock name="authorization-link-login" remove="true"/>
+        
+           
+         <referenceBlock name="header.links">
+        	<block class="Magento\Framework\View\Element\Html\Link" name="contact-us-link" after="-">
+            	<arguments>
+                	<argument name="label" xsi:type="string" translate="true">Contact Us</argument>
+                	<argument name="path" xsi:type="string">contact</argument>
+            	</arguments>
+        	</block>
+            <block class="Magento\Store\Block\Switcher" name="store_language" as="store_language" template="Magento_Store::language.phtml">
+                
+            </block>
+    	</referenceBlock>
+        
+        <referenceBlock name="footer">
+        	 <block class="Magento\Cms\Block\Block" name="footer-content">
+                    <arguments>
+                        <argument name="block_id" xsi:type="string">footer-content</argument>
+                    </arguments>
+                </block>
+    	</referenceBlock>
+
+    
+    </body>
+</page>

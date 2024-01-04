@@ -1,0 +1,69 @@
+//
+//  Search Component
+//  ______________________________________________
+
+//
+//  Common
+//  ----------------------------------------------
+
+& when (@media-common = true) {
+    .amrepbuilder-search-block {
+        & {
+            .amrepbuilder-flex(none, center);
+
+            position: relative;
+            margin: 0 0 @amrepbuilder__indent__xl;
+            width: 100%;
+        }
+
+        &::placeholder {
+            color: #adadad;
+        }
+
+        .amrepbuilder-input {
+            & {
+                padding-right: 35px;
+                width: 100%;
+                border-color: @amrepbuilder-input__border-color;
+                appearance: auto;
+            }
+
+            &:hover,
+            &:focus,
+            &:active {
+                border-color: @amrepbuilder-color__hover;
+            }
+        }
+
+        .amrepbuilder-icon.-search,
+        .amrepbuilder-button.-clear {
+            position: absolute;
+            right: 8px;
+            fill: #5a5552;
+        }
+
+        .amrepbuilder-icon.-close path {
+            fill: #5a5552;
+        }
+    }
+
+    .amrepbuilder-search-message {
+        & {
+            .amrepbuilder-flex(none, center);
+
+            margin: 0;
+            padding: 17px;
+            width: 100%;
+            background: #ffe9c9;
+            font-size: 1.4rem;
+        }
+
+        .amrepbuilder-icon.-alert {
+            margin: 0 17px 0 0;
+        }
+    }
+
+    .amrepbuilder-wrapper mark {
+        background: #e8f5ff;
+    }
+}

@@ -1,0 +1,30 @@
+<label class="amrepbuilder-label amrepbuilder-select-block"
+       if="item['select_' + depsName] && item['select_' + depsName].options.length">
+    <button class="amrepbuilder-input"
+            type="button"
+            data-toggle="dropdown"
+            data-bind="
+                   afterRender: function(node) {
+                        $data.initDropdown(node);
+                   },
+                   i18n: item['select_' + depsName].label">
+    </button>
+    <ul class="amrepbuilder-options"
+        data-target="dropdown"
+        data-bind="foreach: { data: item['select_' + depsName].options }">
+        <li class="amrepbuilder-item"
+            data-bind="
+                   event: {
+                        click: function() {
+                            $parent.item['select_' + $parent.depsName].label(label);
+                            $parent.item['select_' + $parent.depsName].value(value);
+
+                            return true;
+                        }
+                   },
+                   i18n: label">
+        </li>
+    </ul>
+</label>
+
+<span ifnot="item['select_' + depsName] && item['select_' + depsName].options.length" data-bind="i18n: 'No options available'"></span>

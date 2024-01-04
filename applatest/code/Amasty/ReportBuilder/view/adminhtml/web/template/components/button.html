@@ -1,0 +1,16 @@
+<button data-bind="
+            attr: {
+                'type': $data.type ? $data.type : 'button',
+                'class': 'amrepbuilder-button ' + ($data.classes ? $data.classes : ''),
+                'title': $t($data.title)
+            },
+            event: $data.events ? $data.events : {},
+            css: $data.states ? $data.states : {},
+            visible: ($data.visibility === undefined) ? true : $data.visibility">
+    <!-- ko if: $data.templatePath -->
+        <!--ko template: $data.templatePath --><!-- /ko -->
+    <!-- /ko -->
+    <!-- ko if: $data.html -->
+        <span html="$data.html"></span>
+    <!-- /ko -->
+</button>

@@ -1,0 +1,71 @@
+//
+//  Sidebar Report Item Component
+//  ______________________________________________
+
+@amrepbuilder-report-item__color__current: #4d7cfe;
+@amrepbuilder-report-item__background: #f1f7ff;
+
+//
+//  Common
+//  ----------------------------------------------
+
+& when (@media-common = true) {
+    .amrepbuilder-report-item {
+        & {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 32px;
+            border-radius: 2px;
+        }
+
+        .amrepbuilder-actions {
+            display: none;
+            padding: 5px 5px 5px 0;
+        }
+
+        &:hover,
+        &:focus {
+            & {
+                background: @amrepbuilder-report-item__background;
+            }
+
+            .amrepbuilder-actions {
+                display: flex;
+            }
+        }
+
+        .amrepbuilder-button {
+            &.-icon {
+                display: inline-flex;
+                margin-left: 5px;
+                min-width: 20px;
+            }
+
+            &.-icon.-remove path {
+                transition: .3s ease-in;
+            }
+        }
+
+        .amrepbuilder-title {
+            overflow: hidden;
+            padding: 5px 0 5px 5px;
+            color: #363636;
+            text-decoration: none;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            font-weight: 400;
+            font-style: normal;
+            font-size: 1.6rem;
+            line-height: inherit;
+        }
+
+        &.-current .amrepbuilder-title {
+            cursor: default;
+        }
+
+        &.-current:not(:hover):not(:focus) .amrepbuilder-title {
+            color: @amrepbuilder-report-item__color__current;
+        }
+    }
+}

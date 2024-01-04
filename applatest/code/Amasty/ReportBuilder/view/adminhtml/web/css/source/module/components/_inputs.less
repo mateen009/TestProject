@@ -1,0 +1,38 @@
+//
+//  Inputs Component
+//  ______________________________________________
+
+//
+//  Variables
+//  ----------------------------------------------
+
+@amrepbuilder-input-color__hover: @amrepbuilder-color__hover;
+
+//
+//  Common
+//  ----------------------------------------------
+
+& when (@media-common = true) {
+    .amrepbuilder-checkbox {
+        width: 16px;
+        height: 16px;
+        cursor: pointer;
+    }
+
+    .amrepbuilder-input {
+        & {
+            flex-basis: 100%;
+            padding: @amrepbuilder__indent / 2 @amrepbuilder__indent;
+            height: 34px;
+            border: 1px solid #adadad;
+            border-radius: 1px;
+            background: #fff;
+            font-weight: 400;
+            font-size: 14px;
+        }
+
+        &:focus {
+            border-color: @amrepbuilder-input-color__hover;
+        }
+    }
+}

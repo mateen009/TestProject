@@ -1,0 +1,37 @@
+//
+//  Available Block Component
+//  ______________________________________________
+
+//
+//  Common
+//  ----------------------------------------------
+
+& when (@media-common = true) {
+    .amrepbuilder-available-block {
+        .amrepbuilder-columns-list,
+        .amrepbuilder-columns-list .amrepbuilder-column-block {
+            & {
+                &:extend(._am-hide all);
+            }
+
+            &.-disabled {
+                pointer-events: none;
+            }
+        }
+
+        .amrepbuilder-column-block {
+            .amrepbuilder-header {
+                .amrepbuilder-flex(none, center);
+            }
+
+            .amrepbuilder-title {
+                margin: 0 auto 0 0;
+            }
+        }
+
+        .amrepbuilder-column-toolbar,
+        .amrepbuilder-column-footer {
+            display: none;
+        }
+    }
+}

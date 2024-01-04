@@ -1,0 +1,113 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Setup/Declaration/Schema/etc/schema.xsd">
+    <table name="custom_advanceexchange_advanced_exchange" resource="default" engine="innodb" comment="custom_advanceexchange_advanced_exchange Table">
+		<column xsi:type="int" name="advanced_exchange_id" padding="10" unsigned="true" nullable="false" identity="true" comment="Entity Id"/>
+		<constraint xsi:type="primary" referenceId="PRIMARY">
+			<column name="advanced_exchange_id"/>
+		</constraint>
+		<column name="exchangetype" nullable="false" xsi:type="varchar" comment="ADVANCED EXCHANGE TYPE" length="255"/>
+		<column name="msgsku" nullable="true" xsi:type="varchar" comment="MSG SKU#" length="255"/>
+		<column name="msgdescription" nullable="true" xsi:type="text" comment="Description"/>
+		<column name="imeienrolled" nullable="true" xsi:type="smallint" comment="DEVICE IMEI ENROLLED/VALIDATED" identity="false"/>
+		<column name="deviceimei" nullable="true" xsi:type="varchar" comment="RETURN DEVICE IMEI / SERIAL#" length="255"/>
+		<column name="simofdevice" nullable="true" xsi:type="varchar" comment="SIM OF DEVICE" length="255"/>
+		<column name="returnshippinglabel" nullable="true" xsi:type="smallint" comment="REQUEST RETURN SHIPPING LABEL" identity="false"/>
+		<column name="submitterfirstname" nullable="true" xsi:type="varchar" comment="SUBMITTER FIRST NAME" length="255"/>
+		<column name="submitterlastname" nullable="true" xsi:type="varchar" comment="SUBMITTER LAST NAME" length="255"/>
+		<column name="submitteremail" nullable="true" xsi:type="varchar" comment="SUBMITTER EMAIL" length="255"/>
+		<column name="submitterphone" nullable="true" xsi:type="varchar" comment="SUBMITTER PHONE NUMBER" length="255"/>
+		<column name="costcenter" nullable="true" xsi:type="varchar" comment="COST CENTER/DEPARTMENT" length="255"/>
+		<column name="shiptoselect" nullable="true" xsi:type="varchar" comment="shiptoselect" length="255"/>
+		<column name="shiptoaddresslabel" nullable="true" xsi:type="varchar" comment="shiptoaddresslabel" length="255"/>
+		<column name="shiptoattention" nullable="true" xsi:type="varchar" comment="shiptoattention" length="255"/>
+		<column name="shiptostreet" nullable="true" xsi:type="varchar" comment="shiptostreet" length="255"/>
+		<column name="shiptostreet2" nullable="true" xsi:type="varchar" comment="shiptostreet2" length="255"/>
+		<column name="shiptocity" nullable="true" xsi:type="varchar" comment="shiptocity" length="255"/>
+		<column name="shiptostate" nullable="true" xsi:type="varchar" comment="shiptostate" length="255"/>
+		<column name="shiptozip" nullable="true" xsi:type="varchar" comment="shiptozip" length="255"/>
+		<column name="saveaddress" nullable="true" xsi:type="smallint" comment="saveaddress" identity="false"/>
+		<column name="shiplabelselect" nullable="true" xsi:type="varchar" comment="shiplabelselect" length="255"/>
+		<column name="shiplabelattention" nullable="true" xsi:type="varchar" comment="shiplabelattention" length="255"/>
+		<column name="shiplabelstreet" nullable="true" xsi:type="varchar" comment="shiplabelstreet" length="255"/>
+		<column name="shiplabelstreet2" nullable="true" xsi:type="varchar" comment="shiplabelstreet2" length="255"/>
+		<column name="shiplabelcity" nullable="true" xsi:type="varchar" comment="shiplabelcity" length="255"/>
+		<column name="shiplabelstate" nullable="true" xsi:type="varchar" comment="shiplabelstate" length="255"/>
+		<column name="shiplabelzip" nullable="true" xsi:type="varchar" comment="shiplabelzip" length="255"/>
+		<column name="sameasship" nullable="true" xsi:type="smallint" comment="sameasship" identity="false"/>
+		<column name="shippingaccountno" nullable="true" xsi:type="varchar" comment="shippingaccountno" length="255"/>
+		<column name="damagereason" nullable="true" xsi:type="varchar" comment="damagereason" length="255"/>
+		<column name="attachedfile" nullable="true" xsi:type="varchar" comment="attachedfile" length="255"/>
+		<column name="cid" nullable="true" xsi:type="varchar" comment="CustomerId" length="55"/>
+		<column name="internalid" nullable="true" xsi:type="int" comment="InternalId"/>
+		<column name="addedby" nullable="true" xsi:type="varchar" comment="AddedBy" length="55"/>
+		<column name="case_status" nullable="true" xsi:type="varchar" comment="Case Status" length="255"/>
+		<column name="approval_status" nullable="true" xsi:type="varchar" comment="Approval Status" length="255"/>
+
+		<column name="casenumber" nullable="true" xsi:type="int" comment="caseNumber"/>
+		<column name="startdate" nullable="true" xsi:type="varchar" comment="startDate"/>
+		<column name="createddate" nullable="true" xsi:type="varchar" comment="createdDate"/>
+		<column name="lastmodifieddate" nullable="true" xsi:type="varchar" comment="lastModifiedDate"/>
+		<column name="lastmessagedate" nullable="true" xsi:type="varchar" comment="lastMessageDate"/>
+		<column name="company_name" nullable="true" xsi:type="varchar" comment="Company Name"/>
+		<column name="subsidiary_nsid" nullable="true" xsi:type="int" comment="Subsidiary NsId"/>
+		<column name="subsidiary_name" nullable="true" xsi:type="varchar" comment="Subsidiary Name"/>
+		<column name="phone" nullable="true" xsi:type="varchar" comment="phone"/>
+		<column name="status_nsid" nullable="true" xsi:type="int" comment="Status NsId"/>
+		<column name="status_name" nullable="true" xsi:type="varchar" comment="Status Name"/>
+		<column name="assigned_nsid" nullable="true" xsi:type="int" comment="Assigned NsId"/>
+		<column name="assigned_name" nullable="true" xsi:type="varchar" comment="Assigned Name"/>
+		<column name="bill_me" nullable="true" xsi:type="varchar" comment="Bill Me"/>
+		<column name="bill_me_value" nullable="true" xsi:type="varchar" comment="Bill Me Value"/>
+		<column name="case_approved" nullable="true" xsi:type="varchar" comment="Case Approved"/>
+		<column name="case_approved_value" nullable="true" xsi:type="varchar" comment="Case Approved_value"/>
+		<column name="case_inbound_tracking" nullable="true" xsi:type="varchar" comment="Case Inbound Tracking"/>
+		<column name="case_inbound_tracking_value" nullable="true" xsi:type="varchar" comment="Case Inbound Tracking Value"/>
+		<column name="case_invoice" nullable="true" xsi:type="varchar" comment="Case Invoice"/>
+		<column name="case_invoice_nsid" nullable="true" xsi:type="varchar" comment="Case Invoice InternalId"/>
+		<column name="case_item_type" nullable="true" xsi:type="varchar" comment="Case Item Type"/>
+		<column name="case_item_type_value" nullable="true" xsi:type="varchar" comment="Case Item Type Value"/>
+		<column name="case_non_serialized_item" nullable="true" xsi:type="varchar" comment="Case Non Serialized Item"/>
+		<column name="case_non_serialized_item_value" nullable="true" xsi:type="varchar" comment="Case Non Serialized Item Value"/>
+		<column name="nci_email_customer" nullable="true" xsi:type="varchar" comment="Nci Email Customer"/>
+		<column name="nci_email_customer_value" nullable="true" xsi:type="varchar" comment="Nci Email Customer Value"/>
+		<!-- <column name="reported_fault_reasons" nullable="true" xsi:type="varchar" comment="Reported Fault Reasons"/> -->
+		<column name="reported_fault_reasons_nsid" nullable="true" xsi:type="varchar" comment="Reported Fault Reasons InternalId"/>
+		<column name="return_authorization" nullable="true" xsi:type="varchar" comment="Return Authorization"/>
+		<column name="return_authorization_nsid" nullable="true" xsi:type="varchar" comment="Return Authorization InternalId"/>
+		<column name="sales_order" nullable="true" xsi:type="varchar" comment="Sales Order"/>
+		<column name="sales_order_nsid" nullable="true" xsi:type="varchar" comment="Sales Order InternalId"/>
+		<column name="second_repair" nullable="true" xsi:type="varchar" comment="Second Repair"/>
+		<column name="second_repair_value" nullable="true" xsi:type="varchar" comment="Second Repair Value"/>
+		<column name="under_warranty" nullable="true" xsi:type="varchar" comment="Under Warranty"/>
+		<column name="under_warranty_value" nullable="true" xsi:type="varchar" comment="Under Warranty Value"/>
+
+
+		<column name="recordid" nullable="true" xsi:type="int" comment="RecordId"/>
+		 <constraint xsi:type="unique" referenceId="Custom_ADVANCEEXCHANGE_ADVANCED_EXCHANGE_RECORDID">
+            <column name="recordid"/>
+           
+        </constraint>
+
+	</table>
+    <table name="eligible_sku" resource="default" engine="innodb" comment="Eligible Sku">
+        <column xsi:type="int" name="id" padding="6" unsigned="false" nullable="false" identity="true" comment="ID"/>
+        <column xsi:type="int" name="product_id" nullable="false"  comment="Product Id"/>
+        <column xsi:type="int" name="customer_id" nullable="false"  comment="Customer Id"/>
+        <column xsi:type="varchar" name="sku" nullable="false"  comment="Sku"/>
+        <!-- <column xsi:type="smallint" name="qty" nullable="false"  comment="Quantity"/> -->
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="id"/>
+        </constraint>
+        <constraint xsi:type="unique" referenceId="ELIGIBLE_SKU_PRODUCT_ID_CUSTOMER_ID_SKU">
+            <column name="product_id"/>
+            <column name="customer_id"/>
+            <column name="sku"/>
+        </constraint>
+    </table>
+</schema>

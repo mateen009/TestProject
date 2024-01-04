@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+	<preference for="Magento\Framework\Mail\Template\TransportBuilder" type="AscentDigital\Reports\Model\Mail\Template\TransportBuilder" />
+	
+    
+    <!-- <type name="Magento\Framework\View\Element\UiComponent\DataProvider\CollectionFactory">
+		<arguments>
+			<argument name="collections" xsi:type="array">
+				<item name="order_inventory_report_listing_data_source" xsi:type="string">
+					OrderInventoryReportCollection
+				</item>
+			</argument>
+		</arguments>
+	</type>
+	<virtualType name="OrderInventoryReportCollection" type="AscentDigital\Reports\Ui\DataProvider\Item\Listing\Collection">
+		<arguments>
+			<argument name="mainTable" xsi:type="string">
+				sales_order_item
+			</argument>
+			<argument name="resourceModel" xsi:type="string">
+				AscentDigital\Reports\Model\ResourceModel\Item
+			</argument>
+		</arguments>
+	</virtualType> -->
+</config>

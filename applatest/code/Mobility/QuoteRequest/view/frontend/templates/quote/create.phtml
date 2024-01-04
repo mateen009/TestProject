@@ -1,0 +1,298 @@
+<?php
+
+/** 
+ * @var \Mobility\QuoteRequest\Block\Quote\Create $block 
+ * */
+$quoteRequest = $block->getCustomerQuoteRequestList();
+$isShippingAddress = $block->getCustomerDefaultShippingAddress();
+$cartQty = $block->getCartItemQty();
+?>
+<style type="text/css">
+    .required:after {
+        /* color: red; */
+        content: " * ";
+    }
+
+    .quote_request fieldset {
+        width: 75%;
+        float: left;
+    }
+
+    .quote_request .actions-toolbar {
+        float: right;
+        width: 25%;
+    }
+
+    .quote_request .actions-toolbar .primary {
+        display: table;
+        margin: 0 auto;
+        float: none;
+        width: 80%;
+        max-width: 240px;
+    }
+
+    .quote_request .actions-toolbar .primary button,
+    .quote_request .actions-toolbar .primary a {
+        width: 100%;
+        padding: 15px;
+        margin: 0 0 10px;
+    }
+</style>
+<form class="form quote_request" action="<?= $block->escapeUrl($block->getFormAction()) ?>" id="quote-request-form" method="post" data-hasrequired="<?= $block->escapeHtmlAttr(__('* Required Fields')) ?>" data-mage-init='{"validation":{}}' enctype="multipart/form-data">
+    <fieldset class="fieldset">
+        <?php if ($quoteRequest->getId()) : ?>
+            <input type="hidden" name="id" value="<?= $quoteRequest->getId() ?>">
+        <?php endif; ?>
+        <div class="field opportunity">
+            <!-- <label class="label" for="opportunity"><span><?= $block->escapeHtml(__('FirstNet Opportunity')) ?></span></label> -->
+            <div class="control">
+                <input name="opportunity" id="opportunity" title="<?= $block->escapeHtmlAttr(__('FirstNet Opportunity')) ?>" class="input-text" type="hidden" value="<?= $quoteRequest->getData('opportunity') ? $quoteRequest->getData('opportunity') : '' ?>" />
+            </div>
+        </div>
+        <div class="field quote_name">
+            <label class="label" for="quote_name"><span><?= $block->escapeHtml(__('Name of Quote')) ?></span></label>
+            <div class="control">
+                <input name="quote_name" id="quote_name" title="<?= $block->escapeHtmlAttr(__('Name of Quote')) ?>" class="input-text" type="text" value="<?= $quoteRequest->getData('quote_name') ? $quoteRequest->getData('quote_name') : '' ?>" readonly />
+            </div>
+        </div>
+        <div class="field attuid">
+            <label class="label" for="attuid"><span><?= $block->escapeHtml(__('ATTUID')) ?></span></label>
+            <div class="control">
+                <input name="attuid" id="attuid" title="<?= $block->escapeHtmlAttr(__('ATTUID')) ?>" class="input-text" type="text" readonly value="<?= $quoteRequest->getData('attuid') ? $quoteRequest->getData('attuid') : '' ?>" />
+            </div>
+        </div>
+        <div class="field salesforce_opportunity_id">
+            <label class="label" for="salesforce_opportunity_id"><span><?= $block->escapeHtml(__('Salesforce Opportunity ID')) ?></span></label>
+            <div class="control">
+                <input name="salesforce_opportunity_id" readonly id="salesforce_opportunity_id" title="<?= $block->escapeHtmlAttr(__('Salesforce Opportunity ID')) ?>" class="input-text" type="text" value="<?= $quoteRequest->getData('salesforce_opportunity_id') ? $quoteRequest->getData('salesforce_opportunity_id') : '' ?>" />
+            </div>
+        </div>
+        <div class="field demo_length">
+            <label class="label" for="demo_length"><span><?= $block->escapeHtml(__('Length of Demo')) ?></span></label>
+            <div class="control">
+                <select name="demo_length" id="demo_length" disabled>
+                    <option <?= $quoteRequest->getData('demo_length') == '30' ? 'selected' : '' ?> value="30">30 days</option>
+                    <option <?= $quoteRequest->getData('demo_length') == '45' ? 'selected' : '' ?> value="45">45 days</option>
+                    <option <?= $quoteRequest->getData('demo_length') == '60' ? 'selected' : '' ?> value="60">60 days</option>
+                    <option <?= $quoteRequest->getData('demo_length') == '61' ? 'selected' : '' ?> value="61">61+ days</option>
+                </select>
+            </div>
+        </div>
+        <div class="field agency_name">
+            <label class="label" for="agency_name"><span><?= $block->escapeHtml(__('Name of Agency')) ?></span></label>
+            <div class="control">
+                <input name="agency_name" id="agency_name" title="<?= $block->escapeHtmlAttr(__('Name of Agency')) ?>" class="input-text" type="text" value="<?= $quoteRequest->getData('agency_name') ? $quoteRequest->getData('agency_name') : '' ?>" readonly />
+            </div>
+        </div>
+        <div class="field discipline">
+            <label class="label" for="discipline"><span><?= $block->escapeHtml(__('Discipline')) ?></span></label>
+            <div class="control">
+                <input name="discipline" id="discipline" title="<?= $block->escapeHtmlAttr(__('Discipline')) ?>" class="input-text" type="text" value="<?= $quoteRequest->getData('discipline') ? $quoteRequest->getData('discipline') : '' ?>" readonly />
+            </div>
+        </div>
+        <div class="field">
+            <input type="radio" class="input-radio" id="primary" name="primary" disabled value="<?= $block->escapeHtml(__('Primary')) ?>" <?= $quoteRequest->getData('primary') == 'Primary' || $quoteRequest->getData('primary') == 'primary' ? ' checked=\"checked\"' : '' ?>>
+            <label class="label" for="primary"><span><?= $block->escapeHtml(__('Primary')) ?></span></label>
+        </div>
+        <div class="field">
+            <input type="radio" class="input-radio" id="primary" name="primary" disabled value="<?= $block->escapeHtml(__('FirstNet Extended Primary')) ?>" <?= $quoteRequest->getData('primary') == 'FirstNet Extended Primary' ? ' checked=\"checked\"' : '' ?>>
+            <label class="label" for="primary"><span><?= $block->escapeHtml(__('Extended Primary')) ?></span></label>
+        </div>
+        <div class="field customer_email">
+            <label class="label required" for="customer_email"><span><?= $block->escapeHtml(__('Customer Email Address')) ?></span></label>
+            <div class="control">
+                <input name="customer_email" required id="customer_email" title="<?= $block->escapeHtmlAttr(__('Customer Email Address')) ?>" class="input-text" type="text" value="<?= $quoteRequest->getData('customer_email') ? $quoteRequest->getData('customer_email') : '' ?>" />
+            </div>
+        </div>
+        <div class="field customer_phone">
+            <label class="label" for="customer_phone"><span><?= $block->escapeHtml(__('Customer Phone Number')) ?></span></label>
+            <div class="control">
+                <input name="customer_phone" id="customer_phone" title="<?= $block->escapeHtmlAttr(__('Customer Phone Number')) ?>" class="input-text" type="text" value="<?= $quoteRequest->getData('customer_phone') ? $quoteRequest->getData('customer_phone') : '' ?>" readonly />
+            </div>
+        </div>
+        <div class="field customer_name">
+            <label class="label" for="customer_name"><span><?= $block->escapeHtml(__('Customer Contact Name')) ?></span></label>
+            <div class="control">
+                <input name="customer_name" id="customer_name" title="<?= $block->escapeHtmlAttr(__('Customer Name')) ?>" class="input-text" type="text" value="<?= $quoteRequest->getData('customer_name') ? $quoteRequest->getData('customer_name') : '' ?>" readonly />
+            </div>
+        </div>
+        <div class="field agency_street">
+            <label class="label required" for="agency_street"><span><?= $block->escapeHtml(__('Agency Address (Street)')) ?></span></label>
+            <div class="control">
+                <input name="agency_street" required id="agency_street" title="<?= $block->escapeHtmlAttr(__('Agency Address (Street)')) ?>" class="input-text" type="text" value="<?= $quoteRequest->getData('agency_street') ? $quoteRequest->getData('agency_street') : '' ?>" />
+            </div>
+        </div>
+        <div class="field agency_city">
+            <label class="label required" for="agency_city"><span><?= $block->escapeHtml(__('Agency Address (City)')) ?></span></label>
+            <div class="control">
+                <input name="agency_city" required id="agency_city" title="<?= $block->escapeHtmlAttr(__('Agency Address (City)')) ?>" class="input-text" type="text" value="<?= $quoteRequest->getData('agency_city') ? $quoteRequest->getData('agency_city') : '' ?>" />
+            </div>
+        </div>
+        <div class="field agency_state">
+            <label class="label required" for="agency_state"><span><?= $block->escapeHtml(__('Agency Address (State)')) ?></span></label>
+            <div class="control">
+                <input name="agency_state" required id="agency_state" title="<?= $block->escapeHtmlAttr(__('Agency Address (State)')) ?>" class="input-text" type="text" value="<?= $quoteRequest->getData('agency_state') ? $quoteRequest->getData('agency_state') : '' ?>" />
+            </div>
+        </div>
+        <div class="field agency_zipcode">
+            <label class="label required" for="agency_zipcode"><span><?= $block->escapeHtml(__('Agency Zip Code')) ?></span></label>
+            <div class="control">
+                <input name="agency_zipcode" required id="agency_zipcode" title="<?= $block->escapeHtmlAttr(__('Agency Zip Code')) ?>" class="input-text" type="text" value="<?= $quoteRequest->getData('agency_zipcode') ? $quoteRequest->getData('agency_zipcode') : '' ?>" />
+            </div>
+        </div>
+        <div class="field opportunity_size">
+            <label class="label" for="opportunity_size"><span><?= $block->escapeHtml(__('Opportunity Size')) ?></span></label>
+            <div class="control">
+                <input name="opportunity_size" id="opportunity_size" title="<?= $block->escapeHtmlAttr(__('Opportunity Size')) ?>" class="input-text" type="text" value="<?= $quoteRequest->getData('opportunity_size') ? $quoteRequest->getData('opportunity_size') : '' ?>" readonly />
+            </div>
+        </div>
+        <div class="field opportunity_close_date">
+            <label class="label" for="opportunity_close_date"><span><?= $block->escapeHtml(__('Opportunity Close Date')) ?></span></label>
+            <div class="control">
+                <input type="date" name="opportunity_close_date" required placeholder="YYYY-MM-DD" id="opportunity_close_date" class="input-text required-entry datepicker" title="<?= $block->escapeHtmlAttr(__('Opportunity Close Date')) ?>" value="<?= $quoteRequest->getData('opportunity_close_date') ? $quoteRequest->getData('opportunity_close_date') : '' ?>" readonly>
+            </div>
+        </div>
+        <div class="field anticipated_demo_start_date">
+            <label class="label" for="anticipated_demo_start_date"><span><?= $block->escapeHtml(__('Anticipated Demo Start Date')) ?></span></label>
+            <div class="control">
+                <input type="date" name="anticipated_demo_start_date" required placeholder="YYYY-MM-DD" id="anticipated_demo_start_date" title="<?= $block->escapeHtmlAttr(__('Anticipated Demo Start Date')) ?>" class="input-text required-entry datepicker" value="<?= $quoteRequest->getData('anticipated_demo_start_date') ? $quoteRequest->getData('anticipated_demo_start_date') : '' ?>" readonly>
+            </div>
+        </div>
+
+        <legend class="legend"><span><?= $block->escapeHtml(__('Shipping Information')) ?></span></legend><br />
+
+        <div class="field">
+            <input type="radio" id="same-address" name="select_address" value="same" <?= $quoteRequest->getData('select_address') == 'same' ? ' checked=\"checked\"' : '' ?> onchange="sameAddress()">
+            <label for="same-address">Shipping address is same as Agency address</label>
+        </div>
+        <?php if ($isShippingAddress) { ?>
+            <div class="field">
+                <input type="radio" id="default-address" name="select_address" <?= $quoteRequest->getData('select_address') != 'same'  && $quoteRequest->getData('select_address') != 'new' ? ' checked=\"checked\"' : '' ?> value="default" onchange="sameAsDefaultAddress()">
+                <label for="same-address">Shipping address is same as Default address</label>
+            </div>
+        <?php } ?>
+        <?php
+        if ($quoteRequest->getData('select_address') != 'same'  && $quoteRequest->getData('select_address') != 'new' && $isShippingAddress) {
+        ?>
+            <div class="shipping_address">
+                <span id="agency_customer_name"><?= $isShippingAddress->getFirstname() ?></span><br>
+                <span id="agency_street_address"><?= $isShippingAddress->getStreet()[0] ?></span><br>
+                <span id="agency_city_state_region"><?= $isShippingAddress->getCity() . ', ' . $isShippingAddress->getRegion() . ' ' . $isShippingAddress->getPostcode() ?></span><br>
+                <span id="agency_country_name"><?= "United States" ?></span><br>
+                <span><a id="agency_customer_phone" href="tel:<?= $isShippingAddress->getTelephone() ?>"><?= $isShippingAddress->getTelephone() ?></a></span>
+            </div>
+        <?php
+        } else {
+        ?>
+            <div class="shipping_address">
+                <span id="agency_customer_name"><?= $quoteRequest->getData('customer_name') ? $quoteRequest->getData('customer_name') : '' ?></span><br>
+                <span id="agency_street_address"><?= $quoteRequest->getData('agency_street') ? $quoteRequest->getData('agency_street') : '' ?></span><br>
+                <span id="agency_city_state_region"><?= $quoteRequest->getData('agency_city') ? $quoteRequest->getData('agency_city') : ''  . ", " ?><?= $quoteRequest->getData('agency_state') ? $quoteRequest->getData('agency_state') : '' . " " ?> <?= $quoteRequest->getData('agency_zipcode') ? $quoteRequest->getData('agency_zipcode') : ''?></span><br>
+                <span id="agency_country_name"><?= "United States" ?></span><br>
+                <span><a id="agency_customer_phone" href="tel:<?= $quoteRequest->getData('customer_phone') ? $quoteRequest->getData('customer_phone') : '' ?>"><?= $quoteRequest->getData('customer_phone') ? $quoteRequest->getData('customer_phone') : '' ?></a></span>
+            </div>
+        <?php } ?>
+        <input name="previous_default_shipping" id="previous_default_shipping" type="hidden" value="<?= $quoteRequest->getData('previous_default_shipping') ? $quoteRequest->getData('previous_default_shipping') : '' ?>" />
+        <input name="previous_default_billing" id="previous_default_billing" type="hidden" value="<?= $quoteRequest->getData('previous_default_billing') ? $quoteRequest->getData('previous_default_billing') : '' ?>" />
+
+        <div class="field attachment">
+            <label class=label for=attachment><span><?= $block->escapeHtml(__('Attach File ')) ?></span> </label>
+            <?php if ($quoteRequest->getData('attachment')) { ?>
+                <a href="<?= $block->getAttachmentUrl() . $quoteRequest->getData('attachment') ?>" target="_blank">View PDF</a>
+            <?php } ?>
+            <div class=control>
+                <input name="attachment" id="attachment" title="<?= $block->escapeHtmlAttr(__('Attach File')) ?>" class="input-file" type="file" style="width:100%; margin-bottom: 15px;" />
+                <button type="submit" title="<?= $block->escapeHtmlAttr(__('Update Quote')) ?>" class="action submit primary">
+                    <span><?= $block->escapeHtml(__('Update Quote')) ?></span>
+                </button>
+            </div>
+
+        </div>
+    </fieldset>
+    <div class="actions-toolbar">
+        <div class="primary">
+            <?php if ($quoteRequest->getId()) : ?>
+
+                <?php if ($cartQty > 0) { ?>
+                    <button type="submit" title="<?= $block->escapeHtmlAttr(__('Convert To Order')) ?>" name="convert" class="action submit primary">
+                        <span><?= $block->escapeHtml(__('Convert To Order')) ?></span>
+                    </button>
+                <?php } else { ?>
+                    <a class="action primary checkout" href="<?= $block->getUrl('ordering.html') ?>">
+                        <span><?= $escaper->escapeHtml(__('Start Shopping')) ?></span>
+                    </a>
+                <?php } ?>
+
+                <button type="button" title="<?= $block->escapeHtmlAttr(__('Print Quote')) ?>" class="action submit primary" onClick="window.print()">
+                    <span><?= $block->escapeHtml(__('Print Quote')) ?></span>
+                </button>
+
+                <button type="submit" title="<?= $block->escapeHtmlAttr(__('Update Quote')) ?>" class="action submit primary">
+                    <span><?= $block->escapeHtml(__('Update Quote')) ?></span>
+                </button>
+                <!-- <a class="action primary checkout" href="
+                <?php
+                // echo $block->getUrl('quote/index/newquote') 
+                ?>
+                "> -->
+                <!-- <span>
+                        <?php
+                        // echo $escaper->escapeHtml(__('Create New Quote')) 
+                        ?>
+                    </span> -->
+                </a>
+            <?php else : ?>
+                <button type="submit" title="<?= $block->escapeHtmlAttr(__('Save as Quote')) ?>" class="action submit primary">
+                    <span><?= $block->escapeHtml(__('Save as Quote')) ?></span>
+                </button>
+
+            <?php endif; ?>
+        </div>
+    </div>
+
+</form>
+
+<script>
+    function sameAddress() {
+        require([
+                'jquery'
+            ],
+            function($) {
+                $("#agency_customer_name").text("<?= $quoteRequest->getData('customer_name') ? $quoteRequest->getData('customer_name') : '' ?>");
+                $("#agency_street_address").text("<?= $quoteRequest->getData('agency_street') ? $quoteRequest->getData('agency_street') : '' ?>");
+                $("#agency_city_state_region").text("<?= $quoteRequest->getData('agency_city') ? $quoteRequest->getData('agency_city') : ''  . ', ' ?><?= $quoteRequest->getData('agency_state') ? $quoteRequest->getData('agency_state') : '' . ' ' ?> <?= $quoteRequest->getData('agency_zipcode') ? $quoteRequest->getData('agency_zipcode') : ''?>");
+                $("#agency_country_name").text("<?= 'United States' ?>");
+                $("#agency_customer_phone").text("<?= $quoteRequest->getData('customer_phone') ? $quoteRequest->getData('customer_phone') : '' ?>");
+                $("#agency_customer_phone").attr("href", "tel:<?= $quoteRequest->getData('customer_phone') ? $quoteRequest->getData('customer_phone') : '' ?>")
+            });
+    }
+
+    function sameAsDefaultAddress() {
+        require([
+                'jquery'
+            ],
+            function($) {
+                <?php
+                if ($isShippingAddress) {
+                ?>
+                    $("#agency_customer_name").text('<?= $isShippingAddress->getFirstname() ?>');
+                    $("#agency_street_address").text('<?= $isShippingAddress->getStreet()[0] ?>');
+                    $("#agency_city_state_region").text("<?= $isShippingAddress->getCity() . ', ' . $isShippingAddress->getRegion() . ' ' . $isShippingAddress->getPostcode() ?>");
+                    $("#agency_country_name").text('<?= "United States" ?>');
+                    $("#agency_customer_phone").text('<?= $isShippingAddress->getTelephone() ?>');
+                    $("#agency_customer_phone").attr('href','tel:<?= $isShippingAddress->getTelephone() ?>');
+
+                <?php
+                } else {
+                ?>
+                    $("#agency_customer_name").text('');
+                    $("#agency_street_address").text('');
+                    $("#agency_city_state_region").text('');
+                    $("#agency_country_name").text('');
+                    $("#agency_customer_phone").text('');
+                <?php
+                }
+                ?>
+            });
+    }
+</script>

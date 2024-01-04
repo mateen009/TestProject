@@ -1,0 +1,21 @@
+<?php
+if ($block->getOrder()->getStoreId() == '2') {
+?>
+    <div>
+        <span style="display: block; margin-bottom:16px;">
+            <?= 'Customer Email: ' . $block->getOrder()->getAgencyEmail() ?>
+        </span>
+    </div>
+    <div>
+        <span style="display: block; margin-bottom:16px;">
+            <?= 'Agency Name: ' . $block->getOrder()->getAgencyName() ?>
+        </span>
+    </div>
+    <div>
+        <span style="display: block; margin-bottom:16px;">
+            <?= 'Sales Force Opportunity Number: ' . $block->getOrder()->getSalesForceOpportunityNumber() ?>
+        </span>
+    </div>
+<?php
+}
+?>

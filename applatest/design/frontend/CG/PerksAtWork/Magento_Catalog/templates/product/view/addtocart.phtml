@@ -1,0 +1,298 @@
+<style>
+  .pixel-service-popup-modal {
+    display: none;
+    /* Hidden by default */
+    position: fixed;
+    /* Stay in place */
+    z-index: 1;
+    /* Sit on top */
+    padding-top: 100px;
+    /* Location of the box */
+    left: 0;
+    top: 0;
+    width: 100%;
+    /* Full width */
+    height: 100%;
+    /* Full height */
+    overflow: auto;
+    /* Enable scroll if needed */
+    background-color: rgb(0, 0, 0);
+    /* Fallback color */
+    background-color: rgba(0, 0, 0, 0.4);
+    /* Black w/ opacity */
+    z-index: 1000;
+  }
+
+
+  /* Modal Content */
+  .pixel-service-popup-modal-contents {
+    position: relative;
+    background-color: #fefefe;
+    margin: auto;
+    padding: 0;
+    border: 1px solid #888;
+    width: 80%;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    -webkit-animation-name: animatetop;
+    -webkit-animation-duration: 0.4s;
+    animation-name: animatetop;
+    animation-duration: 0.4s
+  }
+
+  /* Add Animation */
+  @-webkit-keyframes animatetop {
+    from {
+      top: -300px;
+      opacity: 0
+    }
+
+    to {
+      top: 0;
+      opacity: 1
+    }
+  }
+
+  @keyframes animatetop {
+    from {
+      top: -300px;
+      opacity: 0
+    }
+
+    to {
+      top: 0;
+      opacity: 1
+    }
+  }
+
+  /* The Close Button */
+  .pixel-service-popup-close {
+    color: Black;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+  }
+
+  .pixel-service-popup-close:hover,
+  .pixel-service-popup-close:focus {
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
+  }
+
+  .pixel-service-popup-modal-header {
+    padding: 2px 16px;
+    /* background-color: #5cb85c; */
+    /* color: white; */
+  }
+
+  .pixel-service-popup-modal-body {
+    padding: 2px 16px;
+  }
+
+  /* .modal-footer {
+  padding: 2px 16px;
+  background-color: #5cb85c;
+  color: white;
+} */
+</style>
+
+
+<?php
+
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+/** @var $block \Magento\Catalog\Block\Product\View */
+?>
+<?php
+$objectManager =  \Magento\Framework\App\ObjectManager::getInstance();
+
+$storeManager = $objectManager->get('\Magento\Store\Model\StoreManagerInterface');
+
+$storeId = $storeManager->getStore()->getStoreId();
+$_product = $block->getProduct();
+$productType = $_product->getTypeId() ?>
+<?php $buttonTitle = __('Add to Cart'); ?>
+<?php if ($_product->isSaleable()) : ?>
+  <?php if ($productType == 'configurable' && $storeId == 7) : ?>
+    <h3> No activation-Device Only</h3>
+    <input type="radio" id="works-with-any-major-carriers" name="pixel_carrier_service" value="major_carrier">
+    <label for="works-with-any-major-carriers">Works with any major carrier</label><br>
+
+    <h3> Activation Assistance with the Selected Carrier </h3>
+
+    <input type="radio" id="google-fi" name="pixel_carrier_service" value="Google_Fi">
+    <label for="google-fi">Google Fi</label><br>
+
+    <input type="radio" id="verzion" name="pixel_carrier_service" value="Verzion">
+    <label for="verzion">Verzion</label><br>
+
+    <input type="radio" id="at&t" name="pixel_carrier_service" value="AT&T">
+    <label for="at&t">AT&T</label><br>
+
+  <?php endif; ?>
+
+  <div class="box-tocart">
+    <div class="fieldset">
+      <?php if ($block->shouldRenderQuantity()) : ?>
+        <div class="field qty">
+          <label class="label" for="qty"><span><?= $block->escapeHtml(__('Qty')) ?></span></label>
+
+          <div class="control">
+            <input type="number" name="qty" id="qty" min="1" value="1" title="<?= $block->escapeHtmlAttr(__('Qty')) ?>" class="input-text qty" data-validate="<?= $block->escapeHtml(json_encode($block->getQuantityValidators())) ?>" />
+          </div>
+        </div>
+      <?php endif; ?>
+      <div class="actions">
+
+
+
+        <?php
+        $customerSession = $objectManager->get('Magento\Customer\Model\Session');
+        $customerId = $customerSession->getCustomer()->getId();
+        $customerData = $objectManager->create('Magento\Customer\Model\Customer')->load($customerId);
+
+
+        $cusLoc = $customerData->getLocationId();
+        if (!empty($cusLoc)) {
+          $strCus = preg_split("/\,/", $cusLoc);
+          $proLoc = $_product['location_id'];
+          if ($proLoc != null) {
+            $strPro = explode(",", $proLoc);
+          }
+        }
+
+        $catArray = array("13", "58", "59", "60");
+        if (array_intersect($_product->getCategoryIds(), $catArray)) {
+          if (!empty($cusLoc)) {
+            if ($customerData->getLocationId() != '') {
+              if (count(array_intersect($strCus, $strPro)) >= 1) {
+
+                $connection = $objectManager->get('Magento\Framework\App\ResourceConnection')->getConnection('\Magento\Framework\App\ResourceConnection::DEFAULT_CONNECTION');
+                $quant = $connection->fetchCol("SELECT qty FROM items_details WHERE location_id IN (" . $cusLoc . ") AND item_id='" . $_product['entity_id'] . "'");
+
+
+                if (array_sum($quant) == 0) {
+        ?>
+                  <h2>
+                    <p style="color: tomato"><?php echo "No stock, Please contact CSM."; ?></p>
+                  </h2>
+                <?php
+                } else {
+                ?>
+                  <button type="submit" title="<?= $block->escapeHtmlAttr($buttonTitle) ?>" class="action primary tocart" id="product-addtocart-button" disabled>
+                    <span><?= $block->escapeHtml($buttonTitle) ?></span>
+                  </button>
+                <?php
+                }
+
+                ?>
+
+          <?php
+              }
+            }
+          }
+        } else {
+          ?>
+          <button type="submit" title="<?= $block->escapeHtmlAttr($buttonTitle) ?>" class="action primary tocart" id="product-addtocart-button" disabled>
+            <span><?= $block->escapeHtml($buttonTitle) ?></span>
+          </button>
+        <?php
+        }
+        ?>
+
+
+        <?= $block->getChildHtml('', true) ?>
+      </div>
+    </div>
+  </div>
+
+<?php endif; ?>
+<script type="text/x-magento-init">
+  {
+        "#product_addtocart_form": {
+            "Magento_Catalog/js/validate-product": {}
+        }
+    }
+</script>
+
+
+
+<!-- <h2>Animated Modal with Header and Footer</h2> -->
+
+<!-- Trigger/Open The Modal -->
+<!-- <button id="myBtn">Open Modal</button> -->
+
+<!-- The Modal -->
+<div id="pixel-service-popup-modal-id" class="pixel-service-popup-modal">
+  <!-- Modal content -->
+  <div class="pixel-service-popup-modal-contents">
+    <div class="pixel-service-popup-modal-header">
+      <span class="pixel-service-popup-close">&times;</span>
+      <h2>Activate Assistance With the Selected Carrier</h2>
+    </div>
+    <div class="pixel-service-popup-modal-body">
+      <p>please call at this number: ***-***-****</p>
+      <p>To activate the <span id="activation-service"></span> Service.</p>
+    </div>
+    <!-- <div class="modal-footer">
+      <h3>Modal Footer</h3>
+    </div> -->
+  </div>
+
+</div>
+
+<script>
+  // Get the modal
+  var modals = document.getElementById("pixel-service-popup-modal-id");
+
+
+  // Get the button that opens the modal
+  // var btn = document.getElementById("myBtn");
+
+  var google_fi_btn = document.getElementById("google-fi");
+  var verzion_btn = document.getElementById("verzion");
+  var atat_btn = document.getElementById("at&t");
+  var addtocart_btn = document.getElementById("product-addtocart-button");
+
+  // Get the <span> element that closes the modal
+  var span = document.getElementsByClassName("pixel-service-popup-close")[0];
+
+  // When the user clicks the At&T option, open the modal 
+  google_fi_btn.onclick = function() {
+    modals.style.display = "block";
+    document.getElementById('activation-service').innerHTML = 'Google Fi';
+  }
+
+  verzion_btn.onclick = function() {
+    modals.style.display = "block";
+    document.getElementById('activation-service').innerHTML = 'Verzion';
+  }
+  atat_btn.onclick = function() {
+    modals.style.display = "block";
+    document.getElementById('activation-service').innerHTML = 'AT&T';
+  }
+  // When the user clicks on <span> (x), close the modal
+  span.onclick = function() {
+    modals.style.display = "none";
+  }
+
+
+  // When the user clicks anywhere outside of the modal, close it
+  window.onclick = function(event) {
+    if (event.target == modal) {
+      modals.style.display = "none";
+    }
+  }
+</script>
+<!-- <script type="text/x-magento-init">
+  {
+        "#product_addtocart_form": {
+            "Magento_Catalog/product/view/validation": {
+                "radioCheckboxClosest": ".nested"
+            }
+        }
+    }
+</script> -->

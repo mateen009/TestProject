@@ -1,0 +1,231 @@
+<?xml version="1.0"?>
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" layout="2columns-left"
+    xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd"
+    
+    label="Customer My Account (All Pages)" design_abstraction="custom">
+    
+    <body>
+    
+    
+        <attribute name="class" value="account" />
+        <referenceContainer name="sidebar.main">
+        
+            <referenceBlock name="customer_account_navigation">
+                    <block class="AscentDigital\Reports\Block\Customer\Dashboard" 
+                        name="customer-account-navigation-dashboard" before="customer-account-navigation-account-link">
+                        <arguments>
+                        
+                            <argument name="path" xsi:type="string">
+                                customreports/firstnetreports/dashboard</argument>
+                            <argument name="label" xsi:type="string">Dashboard</argument>
+                            <argument name="sortOrder" xsi:type="number">500</argument>
+                            
+                        </arguments>
+                    </block>
+                </referenceBlock>
+               
+            <block class="Magento\Framework\View\Element\Template" name="sidebar.main.report_nav"
+                template="Magento_Theme::html/collapsible.phtml" after="-">
+                <arguments>
+                    <argument name="block_css" xsi:type="string">block-collapsible-nav</argument>
+                </arguments>
+                <block class="Magento\Customer\Block\Account\Navigation"
+                    name="customer_account__report_navigation" before="-">
+                    <arguments>
+                        <argument name="css_class" xsi:type="string">nav items</argument>
+                    </arguments>
+                    <block class="Magento\Customer\Block\Account\Delimiter"
+                        name="customer-account-navigation-delimiter-5"
+                        template="Magento_Customer::account/navigation-delimiter.phtml"
+                        before="customer-account-navigation-account-repot-link">
+                        <arguments>
+                            <argument name="sortOrder" xsi:type="number">1000</argument>
+                        </arguments>
+                    </block>
+                    <!-- <block class="AscentDigital\Reports\Block\Customer\Link"
+                        name="mobilecg__inventory_report_link">
+                        <arguments>
+                            <argument name="path" xsi:type="string">
+                                customreports/mobilecgreports/inventoryreport</argument>
+                            <argument name="label" xsi:type="string" translate="true">Inventory
+                                Report</argument>
+                            <argument name="sortOrder" xsi:type="number">995</argument>
+                        </arguments>
+                    </block> -->
+<!-- temporarily hiding Order Type Report from frontend side bar -->
+                    <!-- <block class="AscentDigital\Reports\Block\Customer\OrderType"
+                        name="mobilecg__ordertype_report_link">
+                        <arguments>
+                            <argument name="path" xsi:type="string">
+                                customreports/mobilecgreports/ordertypereport</argument>
+                            <argument name="label" xsi:type="string" translate="true">Order Type
+                                Report</argument>
+                            <argument name="sortOrder" xsi:type="number">1000</argument>
+                        </arguments>
+                    </block> -->
+
+                    <!-- <block class="AscentDigital\Reports\Block\Customer\AeReport"
+                        name="mobilecg__aereport_report_link">
+                        <arguments>
+                            <argument name="path" xsi:type="string">
+                                customreports/mobilecgreports/aereport</argument>
+                            <argument name="label" xsi:type="string" translate="true">A/E Report –
+                                YTD</argument>
+                            <argument name="sortOrder" xsi:type="number">1010</argument>
+                        </arguments>
+                    </block> -->
+<!-- temporarily hiding Repair Report from frontend side bar -->
+<!-- 
+                    <block class="AscentDigital\Reports\Block\Customer\RepairReport"
+                        name="mobilecg__repairreport_report_link">
+                        <arguments>
+                            <argument name="path" xsi:type="string">
+                                customreports/mobilecgreports/repairreport</argument>
+                            <argument name="label" xsi:type="string" translate="true">Repair Report</argument>
+                            <argument name="sortOrder" xsi:type="number">1020</argument>
+                        </arguments>
+                    </block> -->
+                     <block class="AscentDigital\Reports\Block\Customer\AEYTDReport"
+                        name="mobilecg__aereport_report_link">
+                        <arguments>
+                            <argument name="path" xsi:type="string">
+                                advanceexchange/manage/AEYTDReport</argument>
+                            <argument name="label" xsi:type="string" translate="true">A/E Report –
+                                YTD</argument>
+                            <argument name="sortOrder" xsi:type="number">1010</argument>
+                        </arguments>
+                    </block>
+
+                    <!-- <block class="AscentDigital\Reports\Block\Customer\AdvanceExchangeRequest"
+                        name="customer-account-navigation-advanced-exchange-report-link">
+                        <arguments>
+                            <argument name="path" xsi:type="string">advanceexchange</argument>
+                            <argument name="label" xsi:type="string" translate="true">Advanced Exchange Request</argument>
+                            <argument name="sortOrder" xsi:type="number">1050</argument>
+                        </arguments>
+                    </block> -->
+
+                    <block class="AscentDigital\Reports\Block\Customer\AdvanceExchangeGrid"
+                        name="customer-account-navigation-advanced-exchange-grid-link">
+                        <arguments>
+                            <argument name="path" xsi:type="string">advanceexchange/manage</argument>
+                            <argument name="label" xsi:type="string" translate="true">Manage Advanced Exchange Request</argument>
+                            <argument name="sortOrder" xsi:type="number">1060</argument>
+                        </arguments>
+                    </block>
+
+                    <block class="AscentDigital\Reports\Block\Customer\DemoOrdersLink"
+                        name="customer-account-navigation-demo-orders-link">
+                        <arguments>
+                            <argument name="path" xsi:type="string">
+                                customreports/firstnetreports/demoorders</argument>
+                            <argument name="label" xsi:type="string" translate="true">Orders Checked
+                                Out for Demo</argument>
+                            <argument name="sortOrder" xsi:type="number">990</argument>
+                        </arguments>
+                    </block>
+
+                    <block
+                        class="Mobility\SalesTeamManagement\Block\View\Element\Html\Link\BackOrder"
+                        name="customer-account-navigation-backorder-list-link">
+                        <arguments>
+                            <argument name="path" xsi:type="string">order/index/backorderindex</argument>
+                            <argument name="label" xsi:type="string" translate="true">Due Back
+                                Orders</argument>
+                            <argument name="sortOrder" xsi:type="number">985</argument>
+                        </arguments>
+                    </block>
+
+                    <block class="AscentDigital\Reports\Block\View\Element\Html\Link\SalesReport"
+                        name="customer-account-navigation-sales-by-sales-rep-link">
+                        <arguments>
+                            <argument name="path" xsi:type="string">
+                                customreports/salesmanager/salesreport</argument>
+                            <argument name="label" xsi:type="string" translate="true">Sales by Sales
+                                Rep</argument>
+                            <argument name="sortOrder" xsi:type="number">980</argument>
+                        </arguments>
+                    </block>
+
+                    <block
+                        class="AscentDigital\Reports\Block\View\Element\Html\Link\TotalSalesBySalesRep"
+                        name="customer-account-navigation-total-sales-by-sales-rep-link">
+                        <arguments>
+                            <argument name="path" xsi:type="string">
+                                customreports/firstnetreports/totalsales</argument>
+                            <argument name="label" xsi:type="string" translate="true">Total Sales by
+                                Sales Rep</argument>
+                            <argument name="sortOrder" xsi:type="number">978</argument>
+                        </arguments>
+                    </block>
+
+                    <block
+                        class="AscentDigital\Reports\Block\View\Element\Html\Link\OrderStatusReport"
+                        name="order-status-report">
+                        <arguments>
+                            <argument name="path" xsi:type="string">
+                                customreports/salesmanager/orderstatusreport</argument>
+                            <argument name="label" xsi:type="string" translate="true">Order Status
+                                Report</argument>
+                            <argument name="sortOrder" xsi:type="number">975</argument>
+                        </arguments>
+                    </block>
+
+                    <block
+                        class="AscentDigital\Reports\Block\View\Element\Html\Link\OrderDetailReport"
+                        name="customer-account-navigation-order-detail-report-link">
+                        <arguments>
+                            <argument name="path" xsi:type="string">
+                                customreports/salesmanager/orderdetailreport</argument>
+                            <argument name="label" xsi:type="string" translate="true">Order Detail
+                                Report</argument>
+                            <argument name="sortOrder" xsi:type="number">970</argument>
+                        </arguments>
+                    </block>
+
+                    <block
+                        class="AscentDigital\Reports\Block\View\Element\Html\Link\OrderFilterByItemReport"
+                        name="customer-account-navigation-order-filter-by-item-report-link">
+                        <arguments>
+                            <argument name="path" xsi:type="string">
+                                customreports/salesmanager/orderfilterbyitemreport</argument>
+                            <argument name="label" xsi:type="string" translate="true">Order By Item
+                                Report</argument>
+                            <argument name="sortOrder" xsi:type="number">980</argument>
+                        </arguments>
+                    </block>
+
+                    <block
+                        class="AscentDigital\Reports\Block\View\Element\Html\Link\OrderInventoryReport"
+                        name="customer-account-navigation-order-inventory-report-link">
+                        <arguments>
+                            <argument name="path" xsi:type="string">
+                                customreports/salesmanager/orderinventoryreport</argument>
+                            <argument name="label" xsi:type="string" translate="true">Order
+                                Inventory Report</argument>
+                            <argument name="sortOrder" xsi:type="number">990</argument>
+                        </arguments>
+                    </block>
+
+                    <block
+                        class="AscentDigital\Reports\Block\View\Element\Html\Link\LocationReport"
+                        name="customer-account-navigation-location-report-link">
+                        <arguments>
+                            <argument name="path" xsi:type="string">
+                                customreports/mobilecgreports/locationreport</argument>
+                            <argument name="label" xsi:type="string" translate="true">Location Inventory Report</argument>
+                            <argument name="sortOrder" xsi:type="number">990</argument>
+                        </arguments>
+                    </block>
+
+
+                    
+                </block>
+                
+            </block>
+            
+        </referenceContainer>
+        
+    </body>
+    
+</page>

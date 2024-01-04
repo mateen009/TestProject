@@ -1,0 +1,72 @@
+<style>
+h1 {
+  
+padding: 30px 30px 0px 0px;
+}
+</style>
+<?php
+$helper = $this->helper('AscentDigital\NetsuiteConnector\Helper\RMA');
+$data = $helper->getRMA();
+$id = $_GET['ae_id'];
+
+?>
+
+<h1 > Return Authorization </h1>
+<div class="row" >
+  <div class="column">
+    <p><b>Created Date: </b><?=$data->createdDate??null?></p>
+    <p><b>Last Modified Date: </b><?=$data->lastModifiedDate??null?></p>
+    <p><b>Entity Name: </b><?=$data->entity->name??null?></p>
+    <p><b>Tran Date: </b><?=$data->tranDate??null?></p>
+    <p><b>Tran Id: </b><?=$data->tranId??null?></p>
+    <p><b>Subsidiary: </b><?=$data->subsidiary->name??null?></p>
+    <p><b>Total Cost Estimate: </b><?=$data->totalCostEstimate??null?></p>
+    <p><b>Est Gross Profit: </b><?=$data->estGrossProfit??null?></p>
+
+    <h2> Billing Address </h2>
+
+    <p><b>Country: </b><?=$data->billingAddress->country??null?></p>
+    <p><b>Attention: </b><?=$data->billingAddress->attention??null?></p>
+    <p><b>Addressee: </b><?=$data->billingAddress->addressee??null?></p>
+    <p><b>AddrPhone: </b><?=$data->billingAddress->addrPhone??null?></p>
+    <p><b>Address 1: </b><?=$data->billingAddress->addr1??null?></p>
+    <p><b>City : </b><?=$data->billingAddress->city??null?></p>
+    <p><b>State : </b><?=$data->billingAddress->state??null?></p>
+    <p><b>Zip : </b><?=$data->billingAddress->zip??null?></p>
+    <p><b>AddrText : </b><?=$data->billingAddress->addrText??null?></p>
+
+    <p><b>Bill Address List : </b><?=$data->billAddressList->name??null?></p>
+    <p><b>Ship Address List : </b><?=$data->shipAddressList->name??null?></p>
+    <p><b>Ship Address : </b><?=$data->shipAddress??null?></p>
+    <p><b>SalesRep Name : </b><?=$data->salesRep->name??null?></p>
+    <p><b>ItemList Item : </b><?=$data->itemList->item [0]->item->name??null?></p>
+    <p><b>ItemList Class : </b><?=$data->itemList->item [0]->class->name??null?></p>
+    <p><b>ItemList Location : </b><?=$data->itemList->item [0]->location->name??null?></p>
+    <p><b>ItemList Tax Code : </b><?=$data->itemList->item [0]->taxCode->name??null?></p>
+
+    <p><b>Custcol Display Name : </b><?=$data->itemList->item [0]->customFieldList->customField[0]->scriptId??null?></p>
+    <?php
+     foreach($data->customFieldList->customField as $fir){?>
+      <?php if($fir->scriptId == 'custbody_account_note'){?>
+    <p><b>custbody_account_note : </b><?=$fir->value??null?></p>
+    <?php }if($fir->scriptId == 'custbody_adv_exch_type'){?>
+    <p><b>custbody_adv_exch_type : </b><?=$fir->value->name??null?></p>
+    <?php }if($fir->scriptId == 'custbody27'){?>
+    <p><b>custbody27 : </b><?=$fir->value??null?></p>
+    <?php }if($fir->scriptId == 'custbody23'){?>
+    <p><b>custbody23 : </b><?=$fir->value->name??null?></p>
+    <?php }if($fir->scriptId == 'custbody_sig_required_from_entity'){?>
+    <p><b>custbody_sig_required_from_entity : </b><?=$fir->value??null?></p>
+    <?php }if($fir->scriptId == 'custbody_adv_exch_imei'){?>
+    <p><b>custbody_adv_exch_imei : </b><?=$fir->value??null?></p>
+    <?php }if($fir->scriptId == 'custbody_linked_case'){?>
+    <p><b>custbody_linked_case : </b><?=$fir->value->name??null?></p>
+    <?php }if($fir->scriptId == 'custbody_esc_created_date'){?>
+    <p><b>custbody_esc_created_date : </b><?=$fir->value??null?></p>
+    <?php }if($fir->scriptId == 'custbody_esc_last_modified_date'){?>
+    <p><b>custbody_esc_last_modified_date : </b><?=$fir->value??null?></p>
+    <?php }}?>
+    
+   
+
+  </div> 

@@ -1,0 +1,58 @@
+<?xml version="1.0"?>
+
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:amasty:module:Amasty_ReportBuilder:etc/entity_scheme.xsd">
+    <amasty_report_builder_entities>
+        <entity name="customer" eav="true" primary="true">
+            <title>Customer</title>
+            <main_table>customer_entity</main_table>
+
+            <columns>
+                <column name="entity_id" primary="true" />
+                <column name="created_at" useForPeriod="true" />
+                <column name="group_id" columnType="default" />
+                <column name="rp_token" columnType="default">
+                    <hidden>true</hidden>
+                </column>
+                <column name="rp_token" columnType="default">
+                    <hidden>true</hidden>
+                </column>
+                <column name="password_hash" columnType="default">
+                    <hidden>true</hidden>
+                </column>
+                <column name="rp_token_created_at" columnType="default">
+                    <hidden>true</hidden>
+                </column>
+                <column name="website_id" columnType="default">
+                    <source_model>Amasty\ReportBuilder\Model\Source\Website</source_model>
+                </column>
+                <column name="group_id" columnType="default">
+                    <source_model>Magento\Customer\Model\Customer\Source\Group</source_model>
+                </column>
+                <column name="is_active">
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </column>
+                <column name="disable_auto_group_change">
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </column>
+            </columns>
+
+            <relations>
+                <relation name="customer_address" type="column">
+                    <column>entity_id</column>
+                    <reference_column>parent_id</reference_column>
+                    <relationship_type>one_to_many</relationship_type>
+                </relation>
+                <relation name="order" type="column">
+                    <column>entity_id</column>
+                    <reference_column>customer_id</reference_column>
+                    <relationship_type>one_to_many</relationship_type>
+                </relation>
+                <relation name="order_address" type="column">
+                    <column>entity_id</column>
+                    <reference_column>customer_id</reference_column>
+                    <relationship_type>one_to_many</relationship_type>
+                </relation>
+            </relations>
+        </entity>
+    </amasty_report_builder_entities>
+</config>

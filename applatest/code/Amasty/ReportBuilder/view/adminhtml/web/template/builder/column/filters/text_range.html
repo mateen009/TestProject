@@ -1,0 +1,41 @@
+<div class="amrepbuilder-column-filter -text-range -range">
+    <label class="amrepbuilder-label">
+        <span class="amrepbuilder-text" data-bind="i18n: 'From'"></span>
+        <input class="amrepbuilder-input -from"
+               data-bind="
+                    value: $data.filtration.value.from,
+                    event: {
+                       keyup: function() {
+                            $data.filtration.value.from(event.target.value)
+                       }
+                    }
+               "/>
+    </label>
+    <label class="amrepbuilder-label">
+        <span class="amrepbuilder-text" data-bind="i18n: 'To'"></span>
+        <input class="amrepbuilder-input -to"
+               data-bind="
+                   value: $data.filtration.value.to,
+                   event: {
+                       keyup: function() {
+                            $data.filtration.value.to(event.target.value);
+                       }
+                   }
+               "/>
+    </label>
+</div>
+
+<!-- ko template: {
+            name: $parent.templates.filterToolbar,
+            data: {
+                uiClass: $parent,
+                cancelListener: function() {
+                    $parent.clearRange($data);
+                },
+                applyListener: function() {
+                    $parent.applyFiltration($data);
+                },
+                applyStates: { '-disabled': $data.filtration.isEmpty }
+            }
+        } -->
+<!-- /ko -->

@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <preference for="Magento\Sales\Block\Order\History" type="Orders\Data\Block\Order\History" />
+
+    <virtualType name="Magento\Sales\Model\ResourceModel\Order\Grid" type="Magento\Sales\Model\ResourceModel\Grid">
+        <arguments>
+            <argument name="columns" xsi:type="array">
+                <item name="due_date" xsi:type="string">sales_order.due_date</item>
+                <item name="order_by" xsi:type="string">sales_order.order_by</item>
+            </argument>
+        </arguments>
+    </virtualType>
+    <preference for="Magento\Backend\Block\Dashboard\Grid" type="Orders\Data\Block\Dashboard\Grid"/>
+    <preference for="Magento\Backend\Block\Dashboard\Tab\Products\Ordered" type="Orders\Data\Block\Dashboard\Tab\Products\Ordered"/>
+    <preference for="Magento\Backend\Block\Dashboard\Sales" type="Orders\Data\Block\Sales"/>
+    <preference type="Orders\Data\Block\Product\ListProduct" for="Magento\Catalog\Block\Product\ListProduct"/>
+    <!-- <preference for="Magento\Theme\Block\Html\Topmenu" type="Orders\Data\Block\Topmenu" /> -->
+</config>

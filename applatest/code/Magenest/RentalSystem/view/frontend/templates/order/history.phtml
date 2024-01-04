@@ -1,0 +1,176 @@
+<?php
+/**
+ * Copyright © 2019 Magenest. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+?>
+<?php /** @var $block \Magenest\RentalSystem\Block\Order\History */ ?>
+
+<?php $_rents = $block->getRents(); ?>
+<?= $block->getChildHtml('info'); ?>
+<?php
+$i    = 0;
+$data = [];
+foreach ($_rents as $rent) {
+    $data[$i]['title'] = $rent->getData('title');
+    $data[$i]['start'] = str_replace(' ', 'T', $block->getTimeCalendar($rent->getData('start_time')));
+    $data[$i]['end']   = str_replace(' ', 'T', $block->getTimeCalendar($rent->getData('end_time')));
+    $data[$i]['url']   = $block->getOrderUrl($rent['order_id']);
+    $i++;
+}
+$event       = json_encode($data);
+$eventColors = $block->getCalendarEventColors();
+$statusArray = \Magenest\RentalSystem\Model\Order\Attribute\Source\Status::getOptionArray();
+
+//check enable calendar
+$calendar_value = $block->getDisplayCalendar();
+
+?>
+<?php if ($_rents && count($_rents)): ?>
+    <div id="calendar" style="display: <?= $block->escapeHtml($calendar_value) ?>"></div>
+    <input type="hidden" id="userRents" value='<?= $block->escapeHtml($event) ?>'/>
+    <input type="hidden" id="rentColors" value='<?= $block->escapeHtml($eventColors) ?>'/>
+    <div class="table-wrapper orders-history">
+        <table class="data table table-order-items history">
+            <thead>
+            <tr>
+                <th scope="col" class="col id"><?= $block->escapeHtml(__('Order #')) ?></th>
+                <th scope="col" class="col rental_product"><?= $block->escapeHtml(__('Rental Product')) ?></th>
+                <th scope="col" class="col price"><?= $block->escapeHtml(__('Price')) ?></th>
+                <th scope="col" class="col from"><?= $block->escapeHtml(__('From')) ?></th>
+                <th scope="col" class="col to"><?= $block->escapeHtml(__('To')) ?></th>
+                <th scope="col" class="col option"><?= $block->escapeHtml(__('Options')) ?></th>
+                <th scope="col" class="col delivery"><?= $block->escapeHtml(__('Delivery')) ?></th>
+                <th scope="col" class="col status"><?= $block->escapeHtml(__('Status')) ?></th>
+                <th scope="col" class="col action"><?= $block->escapeHtml(__('Action')) ?></th>
+            </tr>
+            </thead>
+            <tbody>
+            <?php foreach ($_rents as $rent): ?>
+                <tr>
+                    <td data-th="<?= $block->escapeHtml(__('Order #')) ?>" class="col id">
+                        <a href="<?= $block->escapeHtml($block->getOrderUrl($rent['order_id'])) ?>" class="action view">
+                            <span><?= $block->escapeHtml($rent['order_increment_id']) ?></span>
+                        </a>
+                    </td>
+                    <td data-th="<?= $block->escapeHtml(__('Rental Product')) ?>" class="col rental_product">
+                        <a href="<?= $block->escapeHtml($block->getProductUrl($rent['rental_id'])) ?>"
+                           class="action view">
+                            <span><?= $block->escapeHtml($rent['title']) ?></span>
+                        </a>
+                    </td>
+                    <td data-th="<?= $block->escapeHtml(__('Price')) ?>" class="col from">
+                        <?= $block->escapeHtml($block->getFormattedPrice($rent['price'])) ?>
+                    </td>
+                    <td data-th="<?= $block->escapeHtml(__('From')) ?>" class="col from">
+                        <?= $block->escapeHtml($block->getLocateTime($rent['start_time'])) ?>
+                    </td>
+                    <td data-th="<?= $block->escapeHtml(__('To')) ?>" class="col to">
+                        <?= $block->escapeHtml($block->getLocateTime($rent['end_time'])) ?>
+                    </td>
+                    <td data-th="<?= $block->escapeHtml(__('Options')) ?>" class="col option">
+                        <?= $block->escapeHtml($rent['information']) ?>
+                    </td>
+                    <td data-th="<?= $block->escapeHtml(__('Delivery')) ?>" class="col delivery">
+                        <?php $delivery_value = $rent->getData('delivery_value'); ?>
+                        <?= $block->escapeHtml(!empty($delivery_value) ? $delivery_value : '') ?>
+                    </td>
+                    <?php $action = ''; ?>
+                    <td data-th="<?= $block->escapeHtml(__('Status')) ?>" class="col status">
+                        <?= $block->escapeHtml($statusArray[$rent['status']] ?? __('Canceled')) ?>
+                    </td>
+                    <td data-th="<?= $block->escapeHtml(__('Action')) ?>" class="col status">
+                        <?php if ($rent['status'] == \Magenest\RentalSystem\Model\Status::DELIVERING) : ?>
+                            <button class="set_status" id="<?= $rent['order_item_id'] ?>" type="button"
+                                    value="<?= \Magenest\RentalSystem\Model\Status::DELIVERED ?>">
+                                <?= $block->escapeHtml(__('Set as Delivered')) ?>
+                            </button>
+                        <?php elseif ($rent['status'] == \Magenest\RentalSystem\Model\Status::DELIVERED): ?>
+                            <button class="set_status" onclick="" id="<?= $rent['order_item_id'] ?>" type="button"
+                                    value="<?= \Magenest\RentalSystem\Model\Status::RETURNING ?>">
+                                <?= $block->escapeHtml(__('Set as Returning')) ?>
+                            </button>
+                        <?php endif; ?>
+                    </td>
+                </tr>
+            <?php endforeach; ?>
+            </tbody>
+        </table>
+    </div>
+    <?php if ($block->getPagerHtml()): ?>
+        <div class="order-products-toolbar toolbar bottom custom-pager"><?= $block->getPagerHtml() ?></div>
+        <style>
+            .order-products-toolbar .limiter {
+                float: right;
+            }
+        </style>
+    <?php endif ?>
+<?php else: ?>
+    <div class="message info empty">
+        <span><?= $block->escapeHtml(__('You have not rented any products.')) ?></span>
+    </div>
+<?php endif ?>
+
+<?php
+$setRentalStatusUrl = $block->getUrl('rental/order/setStatus');
+$scriptString = <<<script
+    require([
+        'jquery',
+        'Magento_Ui/js/modal/confirm',
+        'Magento_Ui/js/modal/alert',
+        'rental_calendar',
+        'rental_fullcalendar',
+        'mage/translate'
+    ], function ($, confirmation, alert) {
+        $('.set_status').on('click', function (event) {
+            event.preventDefault();
+            var order_item_id = $(this).attr('id');
+            var status = $("#" + order_item_id).val();
+            var data = {'order_item_id': order_item_id, 'status': status};
+            var product = $(this).closest("tr").find(".rental_product").text();
+            var url = "{$setRentalStatusUrl}";
+            var delivery = $.mage.__('Returning');
+            if (status == 3) {
+                delivery = $.mage.__('Delivered');
+            }
+            var notification =
+                $.mage.__('Are you sure you want to set') + ' '+ product + ' ' +
+                $.mage.__('as') + ' ' + delivery + "?";
+            confirmation({
+                content: notification,
+                actions: {
+                    confirm: function () {
+                        $.ajax({
+                            type: "POST",
+                            url: url,
+                            data: data,
+                            success: function () {
+                                window.location.reload();
+                            },
+                            error: function () {
+                                alert({
+                                    title: $.mage.__('Error'),
+                                    content: $.mage.__('Request submission unsuccessful. ' +
+                                        'Please contact site owner for more information.'),
+                                    actions: {
+                                        always: function() {
+                                            window.location.reload();
+                                        }
+                                    }
+                                });
+                            }
+                        });
+                    },
+                    cancel: function () {
+                        return false;
+                    }
+                }
+            });
+            return false;
+        });
+    });
+script;
+?>
+<?= isset($secureRenderer)
+    ? $secureRenderer->renderTag('script', [], $scriptString, false)
+    : '<script>' . $scriptString . '</script>' ?>

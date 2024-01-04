@@ -1,0 +1,18 @@
+<!-- ko template: {
+    name: $data.templates.button,
+    data: {
+        states: {
+            '-asc': item.sortStatus() === 1,
+            '-desc': item.sortStatus() === 2
+        },
+        classes: '-clear -icon -sort',
+        templatePath: $data.templates.sortIcon,
+        title: 'Toggling sorting',
+        events: {
+            click: function() {
+                $data.toggleSort(item);
+            }
+        }
+    }
+} -->
+<!-- /ko -->

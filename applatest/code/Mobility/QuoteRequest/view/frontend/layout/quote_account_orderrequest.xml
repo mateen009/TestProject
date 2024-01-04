@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © 2019 Magenest. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <update handle="customer_account"/>
+    <body>
+        <referenceContainer name="content">
+            <block class="Mobility\QuoteRequest\Block\Quote\Account\Approval" name="mobility.quote.account.approval" template="Mobility_QuoteRequest::quote/account/orderrequest.phtml" cacheable="false">
+                <container name="mobility.quote.account.approval.info" as="info" label="My Order Request Info"/>
+            </block>
+            <block class="Magento\Customer\Block\Account\Dashboard" name="customer.account.link.back" template="account/link/back.phtml" cacheable="false"/>
+        </referenceContainer>
+    </body>
+</page>

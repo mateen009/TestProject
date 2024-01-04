@@ -1,0 +1,54 @@
+<section class="amrepbuilder-report-item"
+         data-bind="css: { '-current': entity.report_id === uiClass.currentReportId }">
+    <a class="amrepbuilder-title" data-bind="
+        attr: {
+            href: entity.report_id !== uiClass.currentReportId ? entity.view : null,
+            title: $t(entity.name)
+        },
+        i18n: entity.name
+    "></a>
+
+    <span class="amrepbuilder-actions">
+        <!-- ko template: {
+            name: uiClass.templates.button,
+            data: {
+                classes: '-clear -icon -edit',
+                templatePath: uiClass.templates.editIcon,
+                title: 'Edit',
+                events: {
+                    click: function () {
+                        uiClass.sidebarWrapper.setHref(entity.edit);
+                    }
+                }
+            }
+        } --><!-- /ko -->
+
+        <!-- ko template: {
+            name: uiClass.templates.button,
+            data: {
+                classes: '-clear -icon -copy',
+                templatePath: uiClass.templates.copyIcon,
+                title: 'Duplicate',
+                events: {
+                    click: function () {
+                        uiClass.sidebarWrapper.setHref(entity.duplicate);
+                    }
+                }
+            }
+        } --><!-- /ko -->
+
+        <!-- ko template: {
+            name: uiClass.templates.button,
+            data: {
+                classes: '-clear -icon -remove',
+                templatePath: uiClass.templates.removeIcon,
+                title: 'Delete',
+                events: {
+                    click: function () {
+                        uiClass.deleteEntity(entity.delete);
+                    }
+                }
+            }
+        } --><!-- /ko -->
+    </span>
+</section>

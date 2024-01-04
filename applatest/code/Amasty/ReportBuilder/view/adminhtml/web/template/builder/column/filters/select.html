@@ -1,0 +1,27 @@
+<div class="amrepbuilder-column-filter -select">
+    <!-- ko scope: "index = amasty_report_builder_select" -->
+        <!-- ko template: { name: $data.getTemplate(), data: { $data: $data, item: $parent, depsName: 'filtration' } } --><!-- /ko -->
+    <!-- /ko -->
+</div>
+
+<!-- ko if: $data.select_filtration && $data.select_filtration.options -->
+    <!-- ko template: {
+                name: $parent.templates.filterToolbar,
+                data: {
+                    uiClass: $parent,
+                    cancelListener: function() {
+                        $parent.select.clear($data, 'filtration');
+                        $data.isFilter(false);
+                        $data.isFooterActive(false);
+                        $data.filtration.isActive(false);
+                    },
+                    applyListener: function() {
+                        $data.isFilter(false);
+                        $data.isFooterActive(false);
+                        $data.filtration.isActive(true);
+                    },
+                    applyStates: { '-disabled': $data.select_filtration.value() === '' }
+                }
+            } -->
+    <!-- /ko -->
+<!-- /ko -->

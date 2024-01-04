@@ -1,0 +1,43 @@
+<?php
+$_order = $block->getOrder();
+?>
+<table class="email-items" cellspacing="0" cellpadding="10" border="0" width="650" style="border:1px solid #EAEAEA;text-align:left;">
+    <thead>
+        <tr>
+            <th class="item-info" bgcolor="#EAEAEA" style="font-size:13px; padding:3px 9px">
+                <?= __('Items') ?>
+            </th>
+            <th class="item-sku" bgcolor="#EAEAEA" style="font-size:13px; padding:3px 9px">
+                <?= __('Sku') ?>
+            </th>
+            <th class="item-qty" bgcolor="#EAEAEA" style="font-size:13px; padding:3px 9px">
+                <?= __('Qty') ?>
+            </th>
+           
+        </tr>
+    </thead>
+   
+        <tbody>
+           
+                <?php
+                foreach ($_order->getAllItems() as $_item) {
+                ?>
+                   <tr>
+                    <td class="col name" data-th="Product Name">
+                        <?php echo $_item->getName(); ?>
+                    </td>
+                   <td class="col sku" data-th="Product Sku">
+                    <?php echo $_item->getSku(); ?>
+                    </td>
+                    <td class="col qty" data-th="Qty">
+                    <?php echo number_format($_item->getQtyOrdered()); ?>
+                    </td>
+                    </tr>
+                    
+                <?php
+                }
+                ?>
+            
+        </tbody>
+   
+</table>

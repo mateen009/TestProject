@@ -1,0 +1,11 @@
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Event/etc/events.xsd">
+    <event name="amasty_customer_rma_created">
+        <observer name="amrmaautNewRma" instance="Amasty\RmaAutomation\Observer\Rma\RmaCreated" />
+    </event>
+    <event name="amasty_manager_rma_saved">
+        <observer name="amrmaautExistingRma" instance="Amasty\RmaAutomation\Observer\Rma\RmaChanged"/>
+    </event>
+    <event name="amasty_rma_status_automatically_changed">
+        <observer name="amrmaautExistingRma" instance="Amasty\RmaAutomation\Observer\Rma\RmaChanged"/>
+    </event>
+</config>

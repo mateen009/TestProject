@@ -1,0 +1,5 @@
+TradeCentric - PunchOut
+===========
+### 3.0.1 (2022-11-21)
+* Added displaying Module Version in the Admin
+* Added support for Module Version (version) sent back in the payload.

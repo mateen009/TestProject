@@ -1,0 +1,56 @@
+<?xml version="1.0"?>
+
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body>
+        <attribute name="class" value="-amreportbuilder-sidebar"/>
+        <attribute name="class" value="-amrepbuilder-opened"/>
+        <referenceContainer name="after.body.start">
+            <block class="Magento\Backend\Block\Template"
+                   template="Amasty_ReportBuilder::view/sidebar.phtml"
+                   name="amreportbuilder.report.sidebar"
+                   before="page.wrapper">
+                <arguments>
+                    <argument name="view_model" xsi:type="object">Amasty\ReportBuilder\ViewModel\Adminhtml\View\Sidebar</argument>
+                    <argument name="jsLayout" xsi:type="array">
+                        <item name="components" xsi:type="array">
+                            <item name="amrepbuilder_sidebar_wrapper" xsi:type="array">
+                                <item name="component" xsi:type="string">Amasty_ReportBuilder/js/components/sidebar/wrapper</item>
+                                <item name="uniq_name" xsi:type="string">sidebarWrapper</item>
+                            </item>
+                            <item name="amrepbuilder_sidebar_loader" xsi:type="array">
+                                <item name="component" xsi:type="string">Amasty_ReportBuilder/js/components/loader</item>
+                                <item name="uniq_name" xsi:type="string">loader</item>
+                            </item>
+                            <item name="amrepbuilder_sidebar_header" xsi:type="array">
+                                <item name="component" xsi:type="string">Amasty_ReportBuilder/js/components/sidebar/header</item>
+                            </item>
+                            <item name="amrepbuilder_sidebar_content" xsi:type="array">
+                                <item name="component" xsi:type="string">Amasty_ReportBuilder/js/components/sidebar/content</item>
+                            </item>
+                            <item name="amrepbuilder_sidebar_entity" xsi:type="array">
+                                <item name="component" xsi:type="string">Amasty_ReportBuilder/js/components/sidebar/entity</item>
+                            </item>
+                            <item name="amrepbuilder_sidebar_popup" xsi:type="array">
+                                <item name="component" xsi:type="string">Amasty_ReportBuilder/js/components/popup</item>
+                                <item name="uniq_name" xsi:type="string">popup</item>
+                            </item>
+                        </item>
+                    </argument>
+                </arguments>
+            </block>
+        </referenceContainer>
+        <referenceContainer name="content">
+            <block class="Magento\Backend\Block\Template"
+                   template="Amasty_ReportBuilder::view/toolbar.phtml"
+                   name="amreportbuilder.report.toolbar">
+                <arguments>
+                    <argument name="view_model" xsi:type="object">Amasty\ReportBuilder\ViewModel\Adminhtml\View\Toolbar</argument>
+                </arguments>
+            </block>
+
+            <uiComponent name="amreportbuilder_view_listing"/>
+        </referenceContainer>
+
+        <move element="page.title" destination="page.main.actions" before="-"/>
+    </body>
+</page>

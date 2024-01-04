@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+    <xs:element name="config">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="amasty_report_builder_entities">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="entity" type="entityType" minOccurs="0" />
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:complexType name="entityType">
+        <xs:annotation>
+            <xs:documentation>
+                Amasty Custom Report Builder Entity Declaration.
+            </xs:documentation>
+        </xs:annotation>
+        <xs:sequence minOccurs="0" maxOccurs="unbounded">
+            <xs:element type="xs:string" name="title" minOccurs="0" />
+            <xs:element type="xs:string" name="main_table" minOccurs="0" />
+            <xs:element type="xs:boolean" name="hidden" minOccurs="0" />
+
+            <xs:element name="columns" minOccurs="0">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="column" type="columnType" minOccurs="0" maxOccurs="unbounded" />
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+
+            <xs:element name="relations" minOccurs="0" >
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="relation" type="relationType" minOccurs="0" maxOccurs="unbounded" />
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+
+            <xs:element name="expressions" minOccurs="0">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="expression" type="expressionType" maxOccurs="unbounded" />
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+        </xs:sequence>
+        <xs:attribute name="name" type="xs:string" use="required" />
+        <xs:attribute name="eav" type="xs:boolean" />
+        <xs:attribute name="primary" type="xs:boolean" />
+    </xs:complexType>
+
+    <xs:complexType name="columnType">
+        <xs:annotation>
+            <xs:documentation>
+                Amasty Custom Report Builder Column Declaration.
+            </xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element type="xs:string" name="title" minOccurs="0" />
+            <xs:element type="xs:string" name="type" minOccurs="0" />
+            <xs:element type="xs:string" name="aggregation_type" minOccurs="0" />
+            <xs:element type="xs:string" name="source_model" minOccurs="0" />
+            <xs:element type="xs:string" name="ui_grid_class" minOccurs="0" />
+            <xs:element type="xs:string" name="hidden" minOccurs="0" />
+            <xs:element type="optionType" name="options" minOccurs="0" />
+            <xs:element type="xs:string" name="link" minOccurs="0" />
+            <xs:element type="xs:string" name="custom_expression" minOccurs="0" />
+        </xs:sequence>
+        <xs:attribute name="name" type="xs:string" use="required" />
+        <xs:attribute name="columnType">
+            <xs:simpleType>
+                <xs:restriction base="xs:string">
+                    <xs:enumeration value="default" />
+                    <xs:enumeration value="eav" />
+                    <xs:enumeration value="foreign" />
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="useForPeriod" type="xs:boolean" />
+        <xs:attribute name="frontendModel" type="xs:string" />
+        <xs:attribute name="primary" type="xs:boolean" />
+    </xs:complexType>
+
+    <xs:complexType name="relationType">
+        <xs:annotation>
+            <xs:documentation>
+                Amasty Custom Report Builder Relation Declaration.
+            </xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element type="xs:string" name="column" />
+            <xs:element type="xs:string" name="reference_column" />
+            <xs:element type="xs:string" name="relation_table" minOccurs="0" />
+            <xs:element type="xs:string" name="relation_column" minOccurs="0" />
+            <xs:element type="xs:string" name="relation_reference_column" minOccurs="0" />
+            <xs:element type="xs:string" name="relationship_type" minOccurs="0" />
+            <xs:element name="join_type" minOccurs="0">
+                <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                        <xs:enumeration value="inner" />
+                        <xs:enumeration value="left" />
+                        <xs:enumeration value="right" />
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+        </xs:sequence>
+        <xs:attribute name="name" type="xs:string" use="required" />
+        <xs:attribute name="type" type="xs:string" use="required" />
+    </xs:complexType>
+
+    <xs:complexType name="expressionType">
+        <xs:annotation>
+            <xs:documentation>
+                Amasty Custom Report Builder Expression Declaration.
+            </xs:documentation>
+        </xs:annotation>
+        <xs:simpleContent>
+            <xs:extension base="xs:string">
+                <xs:attribute name="name" type="xs:string" />
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
+
+    <xs:complexType name="optionType">
+        <xs:annotation>
+            <xs:documentation>
+                Amasty Custom Report Builder Option Declaration.
+            </xs:documentation>
+        </xs:annotation>
+        <xs:simpleContent>
+            <xs:extension base="xs:string">
+                <xs:attribute name="name" type="xs:string" use="required"/>
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
+</xs:schema>

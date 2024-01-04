@@ -1,0 +1,48 @@
+<section class="admin__page-section">
+    <div class="admin__page-section-title">
+        <span class="title">
+            <?php /* @escapeNotVerified */ echo __('Deleted Product Cron Job') ?>
+        </span>
+
+    </div>
+    <div class="admin__page-section-content">
+        <div class="order-information textfied" id="deleted-product-cron-message">
+            <div class="box">
+                <div class="deleted-product-cron-box-content">
+                    <p></p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="admin__page-section-item-content edit-checkoutfield-date" id="run-deleted-product-cron-job-form">
+        <button id="deleted-product-cron-submit">Run Deleted Product Cron Job</button>
+    </div>
+</section>
+<script type="text/javascript">
+    // order importing cron job
+    document.querySelector('#deleted-product-cron-submit').addEventListener('click', function() {
+        document.querySelector('#deleted-product-cron-submit').innerHTML = 'Running...';
+        document.querySelector('#deleted-product-cron-submit').disabled = true;
+        require([
+            'jquery'
+        ], function($) {
+            var url = '<?=
+                        /** @noEscape */
+                        $block->getUrl("nsproduct/cron/deletedproduct") ?>';
+            jQuery.ajax({
+                url: url,
+                data: {
+                    orderCron: 'run'
+                },
+                type: "POST",
+                async: false,
+            }).done(function(response) {
+                $(".deleted-product-cron-box-content").html("<span style='color:#008000; font-weight:bold'>Deleted Product cron job completed. </span>");
+                $("#deleted-product-cron-submit").text('Run Deleted Product Cron Job');
+                document.querySelector('#deleted-product-cron-submit').disabled = false;
+            });
+
+            //});            
+        });
+    });
+</script>

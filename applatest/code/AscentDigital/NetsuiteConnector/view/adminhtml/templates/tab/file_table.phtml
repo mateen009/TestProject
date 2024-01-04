@@ -1,0 +1,106 @@
+<style>
+   .row-submit{
+    display: inline-block;
+   } 
+   .browse-wrap{
+    display: inline-block;
+   }
+</style>
+<?php
+$customerFiles = $block->getCustomerFiles();
+// $deleteParameter = $_GET['delete'];
+// print_r($deleteParameter);die('mateen');
+// $deleteRow = $block->rowDelete();
+// $mediaUrl = $this ->_storeManager->getStore()->getBaseUrl(\Magento\Framework\UrlInterface::URL_TYPE_MEDIA);
+
+if (1) {
+?>
+    <section class="admin__page-section order-view-account-information">
+        <div class="admin__page-section-title">
+            <span class="title"><b><?= $block->escapeHtml(__('Upload File')) ?></b></span>
+        </div>
+        <div class="admin__page-section-content">
+            <div class="admin__page-section-item order-information">
+                <?php /* Customer Files */ ?>
+
+                <div class="admin__page-section-item-content">
+                    <form id="frm_attachment" name="frm_attachment" method="post" enctype="multipart/form-data" action="<?php echo $this->getUrl('nsproduct/customer/customerfileupload'); ?>">
+                        <div class="browse-wrap">
+                        <input name="form_key" type="hidden" value="<?php  echo $block->getFormKey() ?>" />
+                            <input id="attachment" name="csutomer_attachment" type="file" value="">
+                            <input id="attachment" name="csutomer_id" type="hidden" value="<?php echo $block->getCustomerId()?>">
+
+                        </div>
+
+                        <div class="row-submit">
+                            <button type="submit" id="uploadAttachment" class="btn btn-primary"><?php echo __('Submit'); ?></button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="admin__page-section order-view-account-information">
+        <div class="admin__page-section-title">
+            <span class="title"><?= $block->escapeHtml(__('Customer Files')) ?></span>
+        </div>
+        <div class="admin__page-section-content">
+            <div class="admin__page-section-item order-information">
+                <?php /* Customer Files */ ?>
+
+                <div class="admin__page-section-item-content">
+                    <table class="admin__table-secondary order-information-table">
+                        <?php foreach($customerFiles as $customerFile){?>
+                        <tr>
+                            
+                            <th><a href="<?= 'https://caad034362.nxcli.net/media/' ?>mobility_customer/attachment/<?= $customerFile->getFileName() ?>" id="show_file" name="show_file" target="_blank"><?= $block->escapeHtml(__($customerFile->getFileName())) ?></a></th>
+                            <td><a href="<?= $this->getUrl('nsproduct/customer/customerfileupload').'?delete='.$customerFile->getId()?> ">Delete</a></td>
+                        </tr>
+                       <?php }?> 
+                    </table>
+                </div>
+            </div>
+    </section>
+<?php
+} else { ?>
+    <div class="admin__page-section-content">
+        <div class="admin__page-section-item order-information">
+            No Quote found for this order.
+        </div>
+    </div>
+<?php
+}
+?>
+
+<script type="text/javascript">
+    require(
+        [
+            "jquery",
+        ],
+        function($) {
+            $("input[type=file]").change(function() {
+                var formData = new FormData();
+                var file_obj = document.getElementById("filepath");
+
+                formData.append('filepath', file_obj.files[0]);
+                const a = document.querySelector('#show_file');
+                alert(formData);
+                $.ajax({
+                    url: '<?= $this->getUrl('nsproduct/customer/customerfileupload'); ?>',
+                    type: 'form',
+                    enctype: 'multipart/form-data',
+                    data: formData,
+                    showLoader: true,
+                    contentType: false,
+                    processData: false,
+                    success: function(response) {
+                        alert('Uploaded successfully');
+                        document.getElementById("show_file").style.visibility = "visible";
+                        // a.href = '<?= '' //$finalUrl
+                                        ?>'+'media/orders/attachment/'+response;
+                    },
+                });
+            });
+
+        })
+</script>

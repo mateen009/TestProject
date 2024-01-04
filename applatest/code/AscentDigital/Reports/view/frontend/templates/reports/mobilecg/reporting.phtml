@@ -1,0 +1,220 @@
+<style>
+    * {
+        box-sizing: border-box;
+    }
+
+    .row {
+        margin-left: -5px;
+        margin-right: -5px;
+    }
+
+    .column {
+        float: left;
+        width: 50%;
+        padding: 5px;
+    }
+
+    /* Clearfix (clear floats) */
+    .row::after {
+        content: "";
+        clear: both;
+        display: table;
+    }
+
+    table {
+        border-collapse: collapse;
+        border-spacing: 0;
+        width: 100%;
+        border: 1px solid #ddd;
+    }
+
+    th,
+    td {
+        text-align: left;
+        padding: 16px;
+    }
+
+    tr:nth-child(even) {
+        background-color: #f2f2f2;
+    }
+</style>
+<?php
+$objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+$storeManager = $objectManager->get('\Magento\Store\Model\StoreManagerInterface');
+$baseUrl = $storeManager->getStore()->getBaseUrl();
+ $locationInventoryReport = $block->getLocationInventoryMobilityReport();
+$data = $block->getAdvanceExchangeRecords();
+$aeYtdReport = $block->getAeYtdMobilityReport();
+ $aeYtdReportByType = $block->getAeYtdMobilityReportByType();
+ $aEYtdRecords = $block->getAeYtdRecords();
+?>
+<div class="row">
+    <div class="column">
+        <div class="row">
+            <div class="column">
+              <div> 
+                 <h3>Location Inventory Report</h3>
+                
+              </div>
+            </div>
+           
+        </div>
+
+        <table>
+            <tr>
+                <th>Id</th>
+                <th>Item Name</th>
+                <th>Location Id</th>
+                <th>Quantity</th>
+
+            </tr>
+            <?php
+            foreach ($locationInventoryReport as $loc): ?>
+                <tr>
+                    <td data-th="<?= $block->escapeHtml(__('Id')) ?>" class="col id"><?= $loc->getId() ?></td>
+                    <td data-th="<?= $block->escapeHtml(__('Item Name')) ?>" class="col itemname"><?= $block->getProductName($loc->getItemId()) ?></td>
+                    <td data-th="<?= $block->escapeHtml(__('Location Id')) ?>" class="col loc_id"><?= $loc->getLocationId() ?></td>
+                    <td data-th="<?= $block->escapeHtml(__('Quantity')) ?>" class="col loc_id"><?= $loc->getQty() ?></td>
+                   
+                </tr>
+            <?php endforeach; ?>
+            
+        </table>
+        <a class="column" href="<?= $this->getUrl('customreports/mobilecgreports/locationreport/') ?>">View All</a>
+    </div>
+    <div class="column">
+        <div class="row">
+            <div class="column">
+              <div> 
+                 <h3>Advanced Exchange Report</h3>
+                
+              </div>
+            </div>
+           
+        </div>
+
+        <table>
+            <tr>
+                <th>MSG Sku#</th>
+                <th>First Name</th>
+                <th>Email</th>
+
+            </tr>
+            <?php
+            foreach ($data as $advance): ?>
+                <tr>
+                    <td data-th="<?= $block->escapeHtml(__('MSG Sku#')) ?>" class="col id"><?= $advance->getMsgsku() ?></td>
+                    <td data-th="<?= $block->escapeHtml(__('First Name')) ?>" class="col itemname"><?= $advance->getSubmitterfirstname() ?></td>
+                    <td data-th="<?= $block->escapeHtml(__('Email')) ?>" class="col loc_id"><?= $advance->getSubmitteremail() ?></td>
+                   
+                </tr>
+            <?php endforeach; ?>
+            
+        </table>
+        <a class="column" href="<?= $this->getUrl('advanceexchange/manage/') ?>">View All</a>
+    </div>
+    
+
+<!-- </div> -->
+<div class="column">
+        <div class="row">
+            <div class="column">
+              <div> 
+                 <h3>A/E Report - YTD</h3>
+                
+              </div>
+            </div>
+           
+        </div>
+
+        <table>
+            <tr>
+                <th>MSG Sku#</th>
+                <th>First Name</th>
+                <th>Email</th>
+
+            </tr>
+            <?php
+            foreach ($aEYtdRecords as $ae): ?>
+                <tr>
+                    <td data-th="<?= $block->escapeHtml(__('MSG Sku#')) ?>" class="col id"><?= $ae['msgsku'] ?></td>
+                    <td data-th="<?= $block->escapeHtml(__('First Name')) ?>" class="col itemname"><?=$ae['submitterfirstname'] ?></td>
+                    <td data-th="<?= $block->escapeHtml(__('Email')) ?>" class="col loc_id"><?= $ae['submitteremail'] ?></td>
+                   
+                </tr>
+                <?php endforeach; ?>
+        </table>
+        <a class="column" href="<?= $this->getUrl('advanceexchange/manage/AEYTDReport/') ?>">View All</a>
+    </div>
+    
+
+</div>
+
+
+
+<!-- <div class="row">
+<div class="column">
+        <div class="row">
+            <div class="column">
+                <h3>A/E Report – YTD</h3>
+                
+            </div>
+            
+        </div>
+
+        <table>
+           <?php  if(!$aeYtdReportByType){
+             ?>
+             
+             <thead>
+                <tr>
+                <th>Sheet Name</th>
+                <th>Order Type</th>
+                <th>Order Quantity</th>
+                <th>Notes</th>
+            </tr>
+            </thead>
+            <tbody>
+            <?php foreach ($aeYtdReport as $type => $quantity): ?>
+                <tr>
+                    
+                    <td class="col id"><a href="<?=$baseUrl?>customreports/mobilecgreports/aereport?otype=<?=$type?>" target="_blank">View Order Portal</a></td>
+                    <td class="col id"><?= ucwords($type) ?></td>
+                    <td class="col id"><?= $quantity ?></td>
+                    <td class="col id"></td>
+                   
+                </tr>
+            <?php endforeach; ?>
+            </tbody>
+                <?php
+            }else{?>
+                        <thead>
+                            <tr>
+                  
+                                <th scope="col" class="col total"><?= $block->escapeHtml(__('Order #')) ?></th>
+                                <th scope="col" class="col total"><?= $block->escapeHtml(__('Order Type')) ?></th>
+                                <th scope="col" class="col total"><?= $block->escapeHtml(__('Order Status')) ?></th>
+                                <th scope="col" class="col total"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php
+                            foreach ($aeYtdReportByType as $order) : //echo "<pre>";print_r($order->getData());die();?>
+                                <tr>
+                                    <td class="col id"><?= $order->getIncrementId() ?></td>
+                                    <td class="col id"><?= ucwords($order->getOrderType()) ?></td>
+                                    <td class="col id"><?= $order->getStatus() ?></td>
+                                    <td class="col id"><a href="<?=$baseUrl?>sales/order/view/order_id/<?=$order->getEntityId()?>" target="_blank">View Order</a></td>
+                                </tr>
+                            <?php endforeach; ?>
+                        </tbody>
+            <?php       
+            }
+            ?>
+            
+            
+        </table>
+        <a class="column" href="<?= $this->getUrl('customreports/mobilecgreports/aereport/') ?>">View All</a>
+    </div>
+    
+    </div> -->

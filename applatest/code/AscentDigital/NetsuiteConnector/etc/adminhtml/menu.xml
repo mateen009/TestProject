@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+	<menu>
+		<add id="AscentDigital_NetsuiteConnector::menu" title="NetSuite Connector" module="AscentDigital_NetsuiteConnector" translate="title" sortOrder="69" resource="AscentDigital_NetsuiteConnector::menu" />
+		<add id="AscentDigital_NetsuiteConnector::ns_products" title="NetSuite Products Import" module="AscentDigital_NetsuiteConnector" translate="title" sortOrder="10" action="nsproduct/product/add" parent="AscentDigital_NetsuiteConnector::menu" resource="AscentDigital_NetsuiteConnector::rs_ns_products" />
+		<add id="AscentDigital_NetsuiteConnector::cron_jobs" title="NetSuite Cron Jobs" module="AscentDigital_NetsuiteConnector" translate="title" sortOrder="20" action="nsproduct/cron/crontabs" parent="AscentDigital_NetsuiteConnector::menu" resource="AscentDigital_NetsuiteConnector::rs_cron_jobs" />
+		<add id="AscentDigital_NetsuiteConnector::location" title="Location Inventory Report" module="AscentDigital_NetsuiteConnector" translate="title" sortOrder="30" action="nsproduct/product/locationdetails" parent="AscentDigital_NetsuiteConnector::menu" resource="AscentDigital_NetsuiteConnector::rs_ns_products" />
+		
+	</menu>
+</config>

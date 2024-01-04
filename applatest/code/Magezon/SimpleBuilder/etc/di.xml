@@ -1,0 +1,127 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Magezon
+ *
+ * This source file is subject to the Magezon Software License, which is available at https://www.magezon.com/license
+ * Do not edit or add to this file if you wish to upgrade the to newer versions in the future.
+ * If you wish to customize this module for your needs.
+ * Please refer to https://www.magezon.com for more information.
+ *
+ * @category  Magezon
+ * @package   Magezon_SimpleBuilder
+ * @copyright Copyright (C) 2020 Magezon (https://www.magezon.com)
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+	<type name="Magezon\SimpleBuilder\Data\Elements">
+		<arguments>
+			<argument name="elements" xsi:type="array">
+				<item name="row" xsi:type="array">
+					<item name="name" xsi:type="string" translate="true">Row</item>
+					<item name="class" xsi:type="string">Magezon\SimpleBuilder\Data\Element\Row</item>
+					<item name="element" xsi:type="string">Magezon_Builder/js/builder/element/row</item>
+					<item name="template" xsi:type="string">Magezon_Builder::element/row.phtml</item>
+					<item name="sortOrder" xsi:type="number">10</item>
+					<item name="icon" xsi:type="string">fas mgz-fa-plus</item>
+					<item name="icon_styles" xsi:type="array">
+						<item name="background-color" xsi:type="string">#3590fc</item>
+					</item>
+					<item name="allowed_types" xsi:type="string">column</item>
+					<item name="children" xsi:type="string">column</item>
+					<item name="description" xsi:type="string">Place content elements inside the row</item>
+					<item name="is_collection" xsi:type="boolean">true</item>
+				</item>
+				<item name="column" xsi:type="array">
+					<item name="name" xsi:type="string" translate="true">Column</item>
+					<item name="class" xsi:type="string">Magezon\SimpleBuilder\Data\Element\Column</item>
+					<item name="block" xsi:type="string">Magezon\SimpleBuilder\Block\Element\Column</item>
+					<item name="element" xsi:type="string">Magezon_Builder/js/builder/element/column</item>
+					<item name="template" xsi:type="string">Magezon_Builder::element/list.phtml</item>
+					<item name="sortOrder" xsi:type="number">20</item>
+					<item name="excluded_types" xsi:type="string">column</item>
+					<item name="modalVisible" xsi:type="boolean">false</item>
+					<item name="resizable" xsi:type="boolean">true</item>
+					<item name="is_collection" xsi:type="boolean">true</item>
+					<item name="icon" xsi:type="string">mgz-icon mgz-icon-column</item>
+					<item name="icon_styles" xsi:type="array">
+						<item name="background-color" xsi:type="string">#3590fc</item>
+					</item>
+				</item>
+				<item name="text" xsi:type="array">
+					<item name="name" xsi:type="string" translate="true">Text Block</item>
+					<item name="class" xsi:type="string">Magezon\SimpleBuilder\Data\Element\Text</item>
+					<item name="element" xsi:type="string">Magezon_Builder/js/builder/element/text</item>
+					<item name="toolbar" xsi:type="string">Magezon_Builder/js/builder/element/text/toolbar</item>
+					<item name="template" xsi:type="string">Magezon_Builder::element/text.phtml</item>
+					<item name="sortOrder" xsi:type="number">20</item>
+					<item name="icon" xsi:type="string">fas mgz-fa-font</item>
+					<item name="icon_styles" xsi:type="array">
+						<item name="background-color" xsi:type="string">#3590fc</item>
+					</item>
+					<item name="description" xsi:type="string">A block of text with WYSIWYG editor</item>
+				</item>
+				<item name="heading" xsi:type="array">
+					<item name="name" xsi:type="string" translate="true">Heading</item>
+					<item name="class" xsi:type="string">Magezon\SimpleBuilder\Data\Element\Headding</item>
+					<item name="block" xsi:type="string">Magezon\Builder\Block\Element\Heading</item>
+					<item name="element" xsi:type="string">Magezon_Builder/js/builder/element/heading</item>
+					<item name="templateUrl" xsi:type="string">Magezon_Builder/js/templates/builder/element/heading.html</item>
+					<item name="toolbar" xsi:type="string">Magezon_Builder/js/builder/element/heading/toolbar</item>
+					<item name="template" xsi:type="string">Magezon_Builder::element/heading.phtml</item>
+					<item name="sortOrder" xsi:type="number">40</item>
+					<item name="icon" xsi:type="string">fas mgz-fa-heading</item>
+					<item name="icon_styles" xsi:type="array">
+						<item name="background-color" xsi:type="string">transparent</item>
+						<item name="color" xsi:type="string">#3590fc</item>
+						<item name="font-size" xsi:type="string">26px</item>
+					</item>
+					<item name="description" xsi:type="string">Create stylish title headings</item>
+				</item>
+				<item name="single_image" xsi:type="array">
+					<item name="name" xsi:type="string" translate="true">Single Image</item>
+					<item name="class" xsi:type="string">Magezon\SimpleBuilder\Data\Element\SingleImage</item>
+					<item name="element" xsi:type="string">Magezon_Builder/js/builder/element/single-image</item>
+					<item name="template" xsi:type="string">Magezon_SimpleBuilder::element/single_image.phtml</item>
+					<item name="sortOrder" xsi:type="number">110</item>
+					<item name="icon" xsi:type="string">mgz-builder-single_image-icon</item>
+					<item name="description" xsi:type="string">Single image with CSS animation</item>
+					<item name="requiredFields" xsi:type="array">
+						<item name="image" xsi:type="boolean">true</item>
+					</item>
+				</item>
+				<item name="site_logo" xsi:type="array">
+					<item name="name" xsi:type="string" translate="true">Site Logo</item>
+					<item name="class" xsi:type="string">Magezon\SimpleBuilder\Data\Element\SiteLogo</item>
+					<item name="block" xsi:type="string">Magezon\SimpleBuilder\Block\Element\SiteLogo</item>
+					<item name="template" xsi:type="string">Magezon_SimpleBuilder::element/site_logo.phtml</item>
+					<item name="sortOrder" xsi:type="number">650</item>
+					<item name="icon" xsi:type="string">far mgz-fa-image</item>
+					<item name="icon_styles" xsi:type="array">
+						<item name="background-color" xsi:type="string">#95ca24</item>
+					</item>
+					<item name="description" xsi:type="string">Display current logo of your store</item>
+				</item>
+				<item name="separator" xsi:type="array">
+					<item name="name" xsi:type="string" translate="true">Separator</item>
+					<item name="class" xsi:type="string">Magezon\SimpleBuilder\Data\Element\Separator</item>
+					<item name="block" xsi:type="string">Magezon\SimpleBuilder\Block\Element\Separator</item>
+					<item name="element" xsi:type="string">Magezon_Builder/js/builder/element/separator</item>
+					<item name="templateUrl" xsi:type="string">Magezon_Builder/js/templates/builder/element/separator.html</item>
+					<item name="toolbar" xsi:type="string">Magezon_Builder/js/builder/element/separator/toolbar</item>
+					<item name="template" xsi:type="string">Magezon_Builder::element/separator.phtml</item>
+					<item name="sortOrder" xsi:type="number">50</item>
+					<item name="icon" xsi:type="string">mgz-icon mgz-icon-divider</item>
+					<item name="icon_styles" xsi:type="array">
+						<item name="background-color" xsi:type="string">transparent</item>
+						<item name="color" xsi:type="string">#53576b</item>
+						<item name="font-size" xsi:type="string">26px</item>
+					</item>
+					<item name="group" xsi:type="string">content</item>
+					<item name="description" xsi:type="string">Horizontal separator line</item>
+					<item name="demo_link" xsi:type="string">http://192.168.1.107/magezon/pagebuilder/separator</item>
+				</item>
+			</argument>
+		</arguments>
+	</type>
+</config>

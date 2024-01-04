@@ -1,0 +1,131 @@
+<section class="admin__page-section">
+    <div class="admin__page-section-title">
+        <span class="title">
+            <?php /* @escapeNotVerified */ echo __('Order Cron Job') ?>
+        </span>
+
+    </div>
+    <div class="admin__page-section-content">
+        <div class="order-information textfied" id="order-cron-message">
+            <div class="box">
+                <div class="order-cron-box-content">
+                    <p></p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="admin__page-section-item-content edit-checkoutfield-date" id="run-order-cron-job-form">
+        <button id="order-cron-submit">Run Order Cron Job</button>
+    </div>
+
+    <div class="admin__page-section-content">
+        <div class="order-information textfied" id="so-number-cron-message">
+            <div class="box">
+                <div class="so-number-cron-box-content">
+                    <p></p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="admin__page-section-item-content edit-checkoutfield-date" id="run-so-number-cron-job-form">
+        <button id="so-number-cron-submit">Run SO Number Cron Job</button>
+    </div>
+    <div class="admin__page-section-content">
+        <div class="order-information textfied" id="import-all-orders-message">
+            <div class="box">
+                <div class="import-all-orders-box-content">
+                    <p></p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="admin__page-section-item-content edit-checkoutfield-date" id="import-all-orders-form">
+        <button id="import-all-orders-submit">Import All orders </button>
+    </div>
+</section>
+<script type="text/javascript">
+    // order importing cron job
+    document.querySelector('#order-cron-submit').addEventListener('click', function() {
+        document.querySelector('#order-cron-submit').innerHTML = 'Running...';
+        document.querySelector('#order-cron-submit').disabled = true;
+        require([
+            'jquery',
+            'mage/validation',
+            'mage/translate',
+            'jquery/ui'
+        ], function($) {
+            var url = '<?=
+                        /** @noEscape */
+                        $block->getUrl("nsproduct/cron/order") ?>';
+            jQuery.ajax({
+                url: url,
+                data: {
+                    orderCron: 'run'
+                },
+                type: "POST",
+                async: false,
+            }).done(function(response) {
+                $(".order-cron-box-content").html("<span style='color:#008000; font-weight:bold'>Order cron job completed. </span>");
+                $("#order-cron-submit").text('Run Order Cron Job');
+                document.querySelector('#order-cron-submit').disabled = false;
+            });
+
+            //});            
+        });
+    });
+
+    // get so number cron job
+    document.querySelector('#so-number-cron-submit').addEventListener('click', function() {
+        document.querySelector('#so-number-cron-submit').innerHTML = 'Running...';
+        document.querySelector('#so-number-cron-submit').disabled = true;
+        require([
+            'jquery',
+            'mage/validation',
+            'mage/translate',
+            'jquery/ui'
+        ], function($) {
+            var url = '<?=
+                        /** @noEscape */
+                        $block->getUrl("nsproduct/cron/sonumber") ?>';
+            jQuery.ajax({
+                url: url,
+                data: {
+                    orderCron: 'run'
+                },
+                type: "POST",
+                async: false,
+            }).done(function(response) {
+                $(".so-number-cron-box-content").html("<span style='color:#008000; font-weight:bold'>SO Number cron job completed. </span>");
+                $("#so-number-cron-submit").text('Run SO Number Cron Job');
+                document.querySelector('#so-number-cron-submit').disabled = false;
+            });
+
+            //});            
+        });
+    });
+    document.querySelector('#import-all-orders-submit').addEventListener('click', function() {
+        document.querySelector('#import-all-orders-submit').innerHTML = 'Running...';
+        document.querySelector('#import-all-orders-submit').disabled = true;
+        require([
+            'jquery'
+        ], function($) {
+            var url = '<?=
+                        /** @noEscape */
+                        $block->getUrl("nsproduct/cron/getallorders") ?>';
+            jQuery.ajax({
+                url: url,
+                data: {
+                    orderCron: 'run'
+                },
+                type: "POST",
+                async: false,
+            }).done(function(response) {
+                $(".import-all-orders-box-content").html("<span style='color:#008000; font-weight:bold'>Import All Orders completed. </span>");
+                $("#import-all-orders-submit").text('Import All Orders');
+                document.querySelector('#import-all-orders-submit').disabled = false;
+            });
+
+            //});            
+        });
+    });
+</script>

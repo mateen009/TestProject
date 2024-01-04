@@ -1,0 +1,15 @@
+<?php
+/** @var \Magento\Framework\View\Element\Template $block */
+/** @var \Magento\Framework\Escaper $escaper */
+?>
+
+<?= $escaper->escapeHtml(__('The following columns used in the report are no longer available:')) ?>
+<br />
+<?php foreach ($block->getData('invalid_columns') as $entityName => $columns): ?>
+    <?php foreach ($columns as $columnName): ?>
+        <?= $escaper->escapeHtml(sprintf('%s (%s)', $columnName, $entityName)) ?>
+        <br />
+    <?php endforeach; ?>
+<?php endforeach; ?>
+<?= $escaper->escapeHtml(__('In order to view the report please re-save it.')) ?>
+

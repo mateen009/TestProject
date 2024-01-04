@@ -1,0 +1,15 @@
+<ul class="amrepbuilder-columns-list"
+    if="entity.columns"
+    data-bind="
+        foreach: { data: Object.keys(entity.columns()), as: 'key' },
+        css: { '-active': ( entity.isActive() || uiClass.isSearched() )  }">
+    <!-- ko template: {
+                name: $parent.uiClass.columnTmpl,
+                data: {
+                    item: $parent.entity.columns()[key],
+                    entity: $parent.entity,
+                    uiClass: $parent.uiClass
+                }
+    } -->
+    <!-- /ko -->
+</ul>

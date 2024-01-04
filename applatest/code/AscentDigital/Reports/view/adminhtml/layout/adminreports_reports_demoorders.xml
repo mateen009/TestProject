@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body>
+        <referenceContainer name="content">
+             <block class="AscentDigital\Reports\Block\Adminhtml\Reports\DemoOrders" name="demo-checkout-orders" template="AscentDigital_Reports::demo_orders.phtml" />
+			<block class="AscentDigital\Reports\Block\Adminhtml\Reports\Graph\DemoOrders" name="demo-checkout-orders-graph" template="Amasty_ReportBuilder::graph/demo_orders_graph.phtml" />
+        </referenceContainer>
+    </body>
+</page>

@@ -1,0 +1,17 @@
+{
+    "name": "mobility/module-quote-request",
+    "description": "Mobility Quote Reguest and Approval",
+    "type": "magento2-module",
+    "version": "1.0.1",
+    "license": [
+        "OSL-3.0"
+    ],
+    "autoload": {
+        "files": [
+            "registration.php"
+        ],
+        "psr-4": {
+            "Mobility\\QuoteRequest\\": ""
+        }
+    }
+}

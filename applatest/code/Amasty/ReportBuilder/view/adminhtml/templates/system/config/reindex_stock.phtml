@@ -1,0 +1,13 @@
+<?php
+/**
+ * @var \Amasty\ReportBuilder\Block\Adminhtml\System\Config\ReindexStock $block
+ * @var \Magento\Framework\Escaper $escaper
+ */
+?>
+
+<button class="scalable" type="button" id="<?= $escaper->escapeHtml($block->getHtmlId()) ?>" data-mage-init='{"Amasty_ReportBuilder/js/system/config/reindexstock":{
+    "url": "<?= $escaper->escapeUrl($block->getAjaxUrl()) ?>",
+    "failedText": "<?= $escaper->escapeHtmlAttr(__('Error adding cronjob to the queue')) ?>",
+    "validation": {}}}'>
+    <span class="button-label"><?= $escaper->escapeHtml($block->getButtonLabel()) ?></span>
+</button>

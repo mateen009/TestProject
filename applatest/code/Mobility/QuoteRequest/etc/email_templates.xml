@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Email:etc/email_templates.xsd">
+    <template id="mobilitiy_quote_request_new_email_template" label="New Quote Request" file="quote_requested.html" type="html" module="Mobility_QuoteRequest" area="frontend"/>
+    <template id="mobilitiy_quote_request_approved_email_template" label="Approved Quote Request" file="quote_approved.html" type="html" module="Mobility_QuoteRequest" area="frontend"/>
+    <template id="mobilitiy_quote_request_rejected_email_template" label="Rejected Quote Request" file="quote_rejected.html" type="html" module="Mobility_QuoteRequest" area="frontend"/>
+    <template id="quoterequest_email_requested_template" label="New Quote Request" file="quote_requested.html" type="html" module="Mobility_QuoteRequest" area="frontend"/>
+    <template id="quoterequest_email_approved_template" label="Approved Quote Request" file="quote_approved.html" type="html" module="Mobility_QuoteRequest" area="frontend"/>
+    <template id="quoterequest_email_rejected_template" label="Rejected Quote Request" file="quote_rejected.html" type="html" module="Mobility_QuoteRequest" area="frontend"/>
+</config>

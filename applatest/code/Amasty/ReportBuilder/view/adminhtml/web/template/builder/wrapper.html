@@ -1,0 +1,9 @@
+<!-- ko if: $data.isVisible() -->
+<section class="amrepbuilder-wrapper">
+        <!-- ko foreach: $data.elems() -->
+            <!-- ko ifnot: $data.isDisabled -->
+                <!-- ko template: getTemplate() --><!-- /ko -->
+            <!-- /ko -->
+        <!-- /ko -->
+</section>
+<!-- /ko -->

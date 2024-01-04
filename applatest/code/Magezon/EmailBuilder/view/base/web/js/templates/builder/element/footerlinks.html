@@ -1,0 +1,12 @@
+<div class="mgz-email-footer-links">
+    <div class="footer-links-detail" ng-repeat="footer in element.footer_links">
+        <h3>{{ footer.main_title }}</h3>
+        <ul>
+            <li ng-repeat="item in footer.footer_link">
+                <a href="#" class="footer-link">
+                    <span>{{ getLinkParams(item.child_link).title }}</span>
+                </a>
+            </li>
+        </ul>
+    </div>
+</div>

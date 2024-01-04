@@ -1,0 +1,39 @@
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+?>
+
+<?php
+/** @var \Magenest\RentalSystem\Pricing\Render\FinalPriceBox $block */
+
+/** ex: \Magento\Catalog\Pricing\Price\RegularPrice */
+/** @var \Magento\Framework\Pricing\Price\PriceInterface $priceModel */
+$priceModel = $block->getPriceType('regular_price');
+
+/** ex: \Magento\Catalog\Pricing\Price\FinalPrice */
+/** @var \Magento\Framework\Pricing\Price\PriceInterface $finalPriceModel */
+$finalPriceModel = $block->getPriceType('final_price');
+$idSuffix        = $block->getIdSuffix() ? $block->getIdSuffix() : '';
+$schema          = $block->getZone() == 'item_view';
+?>
+<?php if (!$block->isPDP() && !empty($periodString = $block->getInitialPeriod())): ?>
+    <?= $periodString . ': '; ?>
+<?php endif; ?>
+<?= $block->renderAmount($finalPriceModel->getAmount(), [
+    'price_id'          => $block->getPriceId('product-price-' . $idSuffix),
+    'price_type'        => 'finalPrice',
+    'include_container' => true,
+    'schema'            => $schema
+]); ?>
+<?php if ($block->hasAdditionalPeriod() && !$block->isPDP()) : ?>
+    <?= $block->renderAmount($finalPriceModel->getCustomAmount($block->getRentalPrice()['additional_price']), [
+            'display_label'     => ' + ',
+            'price_id'          => $block->getPriceId('product-price-additional-' . $idSuffix),
+            'price_type'        => 'finalPrice',
+            'include_container' => true,
+            'schema'            => $schema
+        ]) . $block->getAdditionalPeriod(); ?>
+<?php endif; ?>
+

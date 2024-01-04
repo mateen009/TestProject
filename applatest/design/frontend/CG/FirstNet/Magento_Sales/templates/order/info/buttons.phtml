@@ -1,0 +1,62 @@
+<?php
+
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+// phpcs:disable Magento2.Templates.ThisInTemplate
+?>
+<?php
+
+$om = \Magento\Framework\App\ObjectManager::getInstance();
+$customerSession = $om->get('Magento\Customer\Model\Session');
+$this->storeManager = $om->get('\Magento\Store\Model\StoreManagerInterface');
+$baseUrl = $this->storeManager->getStore()->getBaseUrl();
+$this->_customerRepositoryInterface = $om->create('Magento\Customer\Api\CustomerRepositoryInterface');
+$customerId = $customerSession->getCustomerID(); //get all data of customerData
+$customer = $this->_customerRepositoryInterface->getById($customerId);
+$isCustomerType = $customer->getCustomAttribute('Customer_Type');
+if ($isCustomerType) {
+    $customer_type = (int)$isCustomerType->getValue();
+}
+$blockOrder = $om->create('\Mobility\QuoteRequest\Block\Order\OrderApprovalHistory');
+
+$storeManager = $om->get('\Magento\Store\Model\StoreManagerInterface');
+$url = $storeManager->getStore()->getBaseUrl();
+$finalUrl = str_replace("firstnet", "", $url);
+$attachment = $block->getOrder()->getAttachment();
+?>
+
+<div class="actions">
+
+    <?php $_order = $block->getOrder() ?>
+    <?php
+    if ($customer_type == '3' && ($blockOrder->getApprovalStatus1($_order->getEntityId()) == 'rejected' || $blockOrder->getApprovalStatus1($_order->getEntityId()) == 'requested')) {
+    ?>
+
+        <a href="<?= $baseUrl . 'orderapproval/order/approved/?order_id=' . $_order->getId() . '&status=approved' ?>">
+            <span><?= $block->escapeHtml(__('Approve')) ?></span>
+        </a>
+    <?php
+
+    } else if ($customer_type == '4' && ($blockOrder->getApprovalStatus2($_order->getEntityId()) == 'rejected' || $blockOrder->getApprovalStatus2($_order->getEntityId()) == 'requested')) {
+
+    ?>
+
+        <a href="<?= $baseUrl . 'orderapproval/order/approved/?order_id=' . $_order->getId() . '&status=approved' ?>">
+            <span><?= $block->escapeHtml(__('Approve')) ?></span>
+        </a>
+    <?php
+    }
+    ?>
+    <?php
+    if (!empty($attachment)) {
+    ?>
+        <a href="<?= $finalUrl ?>media/orders/attachment/<?= $attachment ?>" id="show_file" name="show_file" target="_blank">View PDF</a>
+        <br>
+    <?php } ?>
+    <a href="<?= $block->escapeUrl($block->getPrintUrl($_order)) ?>" class="action print" target="_blank" rel="noopener">
+        <span><?= $block->escapeHtml(__('Print Order')) ?></span>
+    </a>
+</div>

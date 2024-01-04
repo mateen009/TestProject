@@ -1,0 +1,17 @@
+<?php
+ $_order = $block->getOrder();
+ $oid = $_order->getId();
+ $baseUrl = $block->getBaseUrl();
+ $objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+ $customerSession = $objectManager->create('Magento\Customer\Model\Session');
+ $customerType = $customerSession->getCustomer()->getData('Customer_Type');
+ $approval1 = $_order->getData('approval_1_status');
+ $approval2 = $_order->getData('approval_2_status');
+ $approval3 = $_order->getData('approval_3_status');
+ $customerApproval = $_order->getData('customer_approval_status');
+ $customerApprovalToken = $_order->getData('customer_approval_token');
+ //echo $customerApprovalToken." : ".$approval1." : ".$approval2." : ".$approval3."</br>";
+
+if($customerType == 1 && $customerApproval != 'approved' && $approval1 == 'approved' && $approval2 == 'approved' && $approval3 == 'approved') {
+  echo "<a href=".$baseUrl."orderapproval/order/emailapproval?order_id=".$oid."&cb=sr&token=".$customerApprovalToken."&approval=customer>Resend Customer Approval Email</a>";
+}

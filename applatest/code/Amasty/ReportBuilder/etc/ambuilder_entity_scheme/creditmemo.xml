@@ -1,0 +1,43 @@
+<?xml version="1.0"?>
+
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:amasty:module:Amasty_ReportBuilder:etc/entity_scheme.xsd">
+    <amasty_report_builder_entities>
+        <entity name="creditmemo" primary="true">
+            <title>Creditmemo</title>
+            <main_table>sales_creditmemo</main_table>
+
+            <columns>
+                <column name="entity_id" primary="true" />
+                <column name="created_at" useForPeriod="true"/>
+                <column name="email_sent">
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </column>
+                <column name="send_email">
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </column>
+                <column name="customer_note_notify">
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </column>
+            </columns>
+
+            <relations>
+                <relation name="creditmemo_item" type="column">
+                    <column>entity_id</column>
+                    <reference_column>parent_id</reference_column>
+                    <relationship_type>one_to_many</relationship_type>
+                </relation>
+                <relation name="order" type="column">
+                    <column>order_id</column>
+                    <reference_column>entity_id</reference_column>
+                    <relationship_type>one_to_one</relationship_type>
+                </relation>
+                <relation name="invoice" type="column">
+                    <column>invoice_id</column>
+                    <reference_column>entity_id</reference_column>
+                    <relationship_type>one_to_many</relationship_type>
+                </relation>
+            </relations>
+        </entity>
+    </amasty_report_builder_entities>
+</config>

@@ -1,0 +1,358 @@
+<style>
+     @media (min-width: 500px) {
+        .row:after {
+            content: " ";
+            display: table;
+            clear: both;
+        }
+        .optdel {
+               display: none !important;
+           }
+        .row {
+            padding-top: 25px;
+        }
+
+        .multiselect-dropdown span.maxselected {
+            width: 100px;
+        }
+        .column_total {
+            font-weight: bold;
+            
+        }
+        
+        .column-half {
+            float: left;
+            width: 20%;
+            padding: 0 5px;
+            box-sizing: border-box;
+        }
+
+        .column-half-right {
+            float: right;
+            width: 20%;
+            box-sizing: border-box;
+        }
+
+        .button-import {
+            white-space: nowrap;
+            margin-left: 10px;
+        }
+
+        .input-box {
+            white-space: nowrap;
+            margin-left: 10px;
+        }
+        .button-pdf {
+            white-space: nowrap;
+            margin-left: 10px;
+        }
+        
+        .btn-primary{
+            white-space: nowrap;
+            margin-left: 10px;
+        }
+        .search-box {
+            position: relative !important;
+            line-height: 28px;
+        } 
+        .result {
+            position: absolute;
+            z-index: 999;
+            top: 100%;
+            left: -1%;
+            background: white;
+            width: 113%;
+            box-sizing: border-box;
+        }.result p:hover{background-color: lightgrey;}
+    }
+</style>
+<form method="GET" action="">
+
+    <?php
+    $objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+
+    $orderStatus = $block->getAllOrderStatus();
+
+    $blockViewOrder =  $objectManager->create('\Magento\Sales\Block\Order\History');
+    // $quoteRequests = $blockCustomer->getCustomerQuoteRequestList();
+    if (isset($_POST['search'])) {
+    } else {
+        $_orders = $block->getOrders();
+        echo $block->getChildHtml('info');
+        if ($_orders && count($_orders)) {
+    ?>
+            <div class="row">
+                <div class="column-half">
+                    <input type="date" class="form-control" name="from" value="<?php if(isset($_GET['from']) && !empty($_GET['from'])){
+                     echo $_GET['from'];
+                    }else{
+                    echo '';
+                    }?>"/>
+                </div>
+                <div class="column-half">
+                    <input type="date" class="form-control" name="to" value="<?php if(isset($_GET['to']) && !empty($_GET['to'])){
+                     echo $_GET['to'];
+                    }else{
+                    echo '';
+                    }?>"/>
+                </div>
+                <?php if($block->getCustomerType()!=1){
+                                  
+                                  ?>
+                
+                              <div class="column-half">
+                                 <div class="input-box" style="clear: both;">
+                                 <div class="modelno-repeat">
+                                 <div class="search-box">
+                                 <input type="text" name="email" id="modeldata" style="width:185px"  autocomplete="off" placeholder="Sales Rep email..." title="" value="<?php if(isset($_GET['email']) && !empty($_GET['email'])){
+                                     echo $_GET['email'];
+                                 }else{
+                                     echo '';
+                                 }?>" data-validate="{required:true}"  class="input-text required-entry"/>
+                                 <i class="fa fa-plus add_fields"></i>
+                                 <div class="result"></div>
+                                 </div>
+                                 </div>
+                                 </div>
+                              
+                               </div>
+                              <?php
+                                  
+                              }
+                              ?>
+                <div class="column-half">
+                    <button class="btn btn-primary" name="search" type="submit"><span class="glyphicon glyphicon-search"></span> Search</button>
+                </div>
+
+                <div class="column-half">
+                    
+                    <select name="status" title="Order Status" onchange="location = this.value;">
+                        <option value="<?= $block->escapeUrl($block->getHistoryPageURL()) ?>">All</option>
+                        <?php foreach ($orderStatus as $orderStatusVal) : ?>
+                            <?php if ($orderStatusVal['value']) : ?>
+                                <?php
+                                $selectedVal = '';
+                                if ($block->getCurrentURL() == $block->getOrderStatusURL($orderStatusVal['value'])) {
+                                    $selectedVal = "selected='selected'";
+                                }
+                                ?>
+                                <option value="<?= $block->escapeUrl($block->getOrderStatusURL($orderStatusVal['value'])) ?>" <?= /* @noEscape */ $selectedVal ?>>
+                                    <span>
+                                        <?= $block->escapeHtml(__($orderStatusVal['label'])) ?>
+                                    </span>
+                                </option>
+                            <?php endif; ?>
+                        <?php endforeach; ?>
+                    </select>
+                </div>
+            </div>
+            <div class="table-wrapper orders-history">
+                <div class="field  required" style="display: flex;float: left;flex-direction: row;justify-content: center;align-items: center;">
+
+
+                </div>
+
+                <table class="data table table-order-items history" id="my-orders-table">
+                    <caption class="table-caption"><?= $block->escapeHtml(__('Orders')) ?></caption>
+                    <thead>
+                        <tr>
+                            <th scope="col" class="col id"><?= $block->escapeHtml(__('Order #')) ?></th>
+                            <th scope="col" class="col date"><?= $block->escapeHtml(__('Date')) ?></th>
+                            <th scope="col" class="col date"><?= $block->escapeHtml(__('Email')) ?></th>
+                            <?= $block->getChildHtml('extra.column.header') ?>
+                            <th scope="col" class="col total"><?= $block->escapeHtml(__('Order Total')) ?></th>
+                            <th scope="col" class="col status"><?= $block->escapeHtml(__('SM Appr Status')) ?></th>
+                            <th scope="col" class="col status"><?= $block->escapeHtml(__('TM Appr Status')) ?></th>
+                            <th scope="col" class="col status"><?= $block->escapeHtml(__('EM Appr Status')) ?></th>
+                            <th scope="col" class="col status"><?= $block->escapeHtml(__('C-Appr Status')) ?></th>
+                            <th scope="col" class="col actions"><?= $block->escapeHtml(__('Action')) ?></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php
+
+                        foreach ($_orders as $_order) : ?>
+                            <tr>
+                                <td data-th="<?= $block->escapeHtml(__('Order #')) ?>" class="col id"><?= $block->escapeHtml($_order->getRealOrderId()) ?></td>
+                                <td data-th="<?= $block->escapeHtml(__('Date')) ?>" class="col date"><?php if($_order->getCustomerTs()!=null){
+                                echo  date('m/d/y', strtotime($_order->getCustomerTs()));
+                                } ?></td>
+                                <td data-th="<?= $block->escapeHtml(__('Email')) ?>" class="col id"><?= $_order->getCustomerEmail() ?></td>
+                                <?php $extra = $block->getChildBlock('extra.container'); ?>
+                                <?php if ($extra) : ?>
+                                    <?php $extra->setOrder($_order); ?>
+                                    <?= $extra->getChildHtml() ?>
+                                <?php endif; ?>
+                                <td data-th="<?= $block->escapeHtml(__('Order Total')) ?>" class="col total"><?= /* @noEscape */ $_order->formatPrice($_order->getGrandTotal()) ?></td>
+                                <?php if (!empty($_order->getApproval1Token())) { ?>
+                                    <td data-th="<?= $block->escapeHtml(__('Approval Staus 1')) ?>" class="col status"><?= $block->escapeHtml($_order->getApproval1Status()) ?></td>
+                                <?php } else { ?>
+                                    <td data-th="<?= $block->escapeHtml(__('Approval Staus 1')) ?>" class="col status"><?= $block->escapeHtml('N/A') ?></td>
+                                <?php } ?>
+                                <?php if (!empty($_order->getApproval2Token())) { ?>
+                                    <td data-th="<?= $block->escapeHtml(__('Approval Staus 2')) ?>" class="col status"><?= $block->escapeHtml($_order->getApproval2Status()) ?></td>
+                                <?php } else { ?>
+                                    <td data-th="<?= $block->escapeHtml(__('Approval Staus 2')) ?>" class="col status"><?= $block->escapeHtml('N/A') ?></td>
+                                <?php } ?>
+                                <?php if (!empty($_order->getApproval3Token())) { ?>
+                                    <td data-th="<?= $block->escapeHtml(__('Approval Staus 3')) ?>" class="col status"><?= $block->escapeHtml($_order->getApproval3Status()) ?></td>
+                                <?php } else { ?>
+                                    <td data-th="<?= $block->escapeHtml(__('Approval Staus 3')) ?>" class="col status"><?= $block->escapeHtml('N/A') ?></td>
+                                <?php } ?>
+                                <td data-th="<?= $block->escapeHtml(__('Customer Approval Status')) ?>" class="col status"><?= $block->escapeHtml($_order->getCustomerApprovalStatus()) ?></td>
+                                <td scope="col" class="col action">
+                                    <?php
+                                    if ($block->getCustomerType() == 3) {
+                                        if (!empty($_order->getNsSoNumber())) {
+                                            echo "SO#: " . $_order->getNsSoNumber() . "|";
+                                        } elseif ($block->getApprovalStatus1($_order->getEntityId()) == 'requested') { ?>
+                                            <a href="/orderapproval/order/approved?order_id=<?php echo $_order->getEntityId() ?>&status=approved"><?= 'Approve' ?></a> |
+                                        <?php } else if ($block->getApprovalStatus1($_order->getEntityId()) == 'rejected') { ?>
+                                            <a href="/orderapproval/order/approved?order_id=<?php echo $_order->getEntityId() ?>&status=approved"><?= 'Approve' ?></a> |
+                                        <?php } else {
+                                            echo __(" - ");
+                                        }
+                                    } elseif ($block->getCustomerType() == 5) {
+                                        if (!empty($_order->getNsSoNumber())) {
+                                            echo "SO#: " . $_order->getNsSoNumber() . "|";
+                                        } elseif ($_order->getApproval3Status() == 'requested') { ?>
+                                            <a href="/orderapproval/order/approved?order_id=<?php echo $_order->getEntityId() ?>&status=approved"><?= 'Approve' ?></a> |
+                                        <?php } else if ($_order->getApproval3Status() == 'rejected') { ?>
+                                            <a href="/orderapproval/order/approved?order_id=<?php echo $_order->getEntityId() ?>&status=approved"><?= 'Approve' ?></a> |
+                                        <?php } else {
+                                            echo __(" - ");
+                                        }
+                                    } else if ($block->getCustomerType() == 4) {
+                                        if (!empty($_order->getNsSoNumber())) {
+                                            echo "SO#: " . $_order->getNsSoNumber() . "|";
+                                        } elseif ($block->getApprovalStatus2($_order->getEntityId()) == 'requested') { ?>
+                                            <a href="/orderapproval/order/approved?order_id=<?php echo $_order->getEntityId() ?>&status=approved"><?= 'Approve' ?></a> |
+                                        <?php } else if ($block->getApprovalStatus2($_order->getEntityId()) == 'rejected') { ?>
+                                            <a href="/orderapproval/order/approved?order_id=<?php echo $_order->getEntityId() ?>&status=approved"><?= 'Approve|' ?></a> |
+                                    <?php } else {
+                                            echo __(" - ");
+                                        }
+                                    } else {
+                                        echo __(" - ");
+                                    }
+                                    ?>
+
+
+                                    <a href="<?= $blockViewOrder->escapeUrl($blockViewOrder->getViewUrl($_order)) ?>" class="action view">
+                                        <span><?= $block->escapeHtml(__('View Order')) ?></span>
+                                    </a>
+
+                                </td>
+                            </tr>
+                        <?php endforeach; ?>
+                    </tbody>
+                </table>
+            </div>
+            <?php if ($block->getPagerHtml()) : ?>
+                <div class="order-products-toolbar toolbar bottom"><?= $block->getPagerHtml() ?></div>
+            <?php endif ?>
+        <?php } else { ?>
+            <div class="row">
+                <div class="column-half">
+                    <input type="date" class="form-control" name="from" value="<?php if(isset($_GET['from']) && !empty($_GET['from'])){
+                     echo $_GET['from'];
+                    }else{
+                    echo '';
+                    }?>"/>
+                </div>
+                <div class="column-half">
+                    <input type="date" class="form-control" name="to" value="<?php if(isset($_GET['to']) && !empty($_GET['to'])){
+                     echo $_GET['to'];
+                    }else{
+                    echo '';
+                    }?>"/>
+                </div>
+               <?php if($block->getCustomerType()!=1){
+                                 
+                                 ?>
+               
+                             <div class="column-half">
+                                <div class="input-box" style="clear: both;">
+                                <div class="modelno-repeat">
+                                <div class="search-box">
+                                <input type="text" name="email" id="modeldata" style="width:185px"  autocomplete="off" placeholder="Sales Rep email..." title="" value="<?php if(isset($_GET['email']) && !empty($_GET['email'])){
+                                    echo $_GET['email'];
+                                }else{
+                                    echo '';
+                                }?>" data-validate="{required:true}"  class="input-text required-entry"/>
+                                <i class="fa fa-plus add_fields"></i>
+                                <div class="result"></div>
+                                </div>
+                                </div>
+                                </div>
+                             
+                              </div>
+                             <?php
+                                 
+                             }
+                             ?>
+
+
+                <div class="column-half">
+                    <button class="btn btn-primary" name="search" type="submit"><span class="glyphicon glyphicon-search"></span> Search</button>
+                </div>
+
+                <div class="column-half">
+                    
+                    <select name="status" title="Order Status" onchange="location = this.value;">
+                        <option value="<?= $block->escapeUrl($block->getHistoryPageURL()) ?>">All</option>
+                        <?php foreach ($orderStatus as $orderStatusVal) : ?>
+                            <?php if ($orderStatusVal['value']) : ?>
+                                <?php
+                                $selectedVal = '';
+                                if ($block->getCurrentURL() == $block->getOrderStatusURL($orderStatusVal['value'])) {
+                                    $selectedVal = "selected='selected'";
+                                }
+                                ?>
+                                <option value="<?= $block->escapeUrl($block->getOrderStatusURL($orderStatusVal['value'])) ?>" <?= /* @noEscape */ $selectedVal ?>>
+                                    <span>
+                                        <?= $block->escapeHtml(__($orderStatusVal['label'])) ?>
+                                    </span>
+                                </option>
+                            <?php endif; ?>
+                        <?php endforeach; ?>
+                    </select>
+                </div>
+            </div>
+            </br>
+            </br>
+            </br>
+            <div class="message info empty"><span><?= $block->escapeHtml($block->getEmptyOrdersMessage()) ?></span></div>
+
+
+    <?php }
+    }
+    ?>
+</form>
+<script type="text/javascript">
+    require(['jquery'], function($) {
+        jQuery(document).ready(function () {
+                               
+        jQuery('.search-box input[type="text"]').on("keyup input", function () {
+                                   /* Get input value on change */
+         var inputVal = jQuery(this).val();
+         var resultDropdown = jQuery(this).siblings(".result");
+         if (inputVal.length==3) {
+         jQuery.get("https://caad034362.nxcli.net/firstnet/order/index/index", {search: inputVal}).done(function (data) {
+         // Display the returned data in browser
+          resultDropdown.html(data);
+          });
+         } else {
+          resultDropdown.empty();
+         }
+         });
+
+        // Set search input value on click of result item
+        jQuery(document).on("click", ".result p", function () {
+          jQuery(this).parents(".search-box").find('input[type="text"]').val(jQuery(this).text());
+          jQuery(this).parent(".result").empty();
+       });
+                               
+       })
+    })
+</script>

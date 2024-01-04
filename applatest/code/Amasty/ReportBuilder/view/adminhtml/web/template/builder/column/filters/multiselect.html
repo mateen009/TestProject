@@ -1,0 +1,48 @@
+<div class="amrepbuilder-column-filter">
+    <label class="amrepbuilder-label amrepbuilder-select-block -multiselect">
+        <button class="amrepbuilder-input"
+                type="button"
+                data-toggle="dropdown"
+                data-bind="
+                       afterRender: function(node) {
+                            $parent.initDropdown(node);
+                       }">
+            <ul class="amrepbuilder-list" data-bind="foreach: $data.filtration.value">
+                <li class="amrepbuilder-item" if="$data.isChecked">
+                    <span class="amrepbuilder-text" data-bind="i18n: $data.title"></span>
+                    <span class="amrepbuilder-button -clear"
+                          data-bind="event: {
+                                click: function() {
+                                    event.stopPropagation();
+                                    $data.isChecked(false);
+                                }
+                          }">
+                    </span>
+                </li>
+            </ul>
+        </button>
+        <ul class="amrepbuilder-options" data-target="dropdown" data-bind="foreach: $data.filtration.value">
+            <li class="amrepbuilder-item">
+                <input class="amrepbuilder-checkbox"
+                       type="checkbox"
+                       data-bind="checked: $data.isChecked">
+                <span class="amrepbuilder-text" data-bind="i18n: $data.title"></span>
+            </li>
+        </ul>
+    </label>
+</div>
+
+<!-- ko template: {
+            name: $parent.templates.filterToolbar,
+            data: {
+                uiClass: $parent,
+                cancelListener: function() {
+                    $parent.clearMultiselect($data);
+                },
+                applyListener: function() {
+                    $parent.applyFiltration($data);
+                },
+                applyStates: { '-disabled': $data.filtration.isEmpty }
+            }
+        } -->
+<!-- /ko -->

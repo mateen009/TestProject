@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body>
+        <referenceContainer name="content">
+             <block class="AscentDigital\Reports\Block\Adminhtml\Reports\DueOrders" name="due-back-orders" template="AscentDigital_Reports::due_orders.phtml" />
+             <block class="AscentDigital\Reports\Block\Adminhtml\Reports\Graph\DueBackOrders" name="due-back-report-graph" template="Amasty_ReportBuilder::graph/due_back_orders_graph.phtml" />
+        </referenceContainer>
+    </body>
+</page>

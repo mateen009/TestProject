@@ -1,0 +1,49 @@
+<?php
+
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+use Magento\Checkout\Block\Onepage\Link;
+use Magento\Framework\Escaper;
+
+/**
+ * @var Link $block
+ * @var Escaper $escaper
+ */
+$helper = $this->helper(\Mobility\QuoteRequest\Helper\Data::class);
+?>
+<?php if ($block->isPossibleOnepageCheckout() && $helper->isEnabled()): ?>
+    <?php if ($helper->isFirstNet()) { ?>
+        <a style="margin-bottom:10px" class="action primary checkout<?= ($block->isDisabled()) ? ' disabled' : '' ?>"
+            href="<?= $block->getUrl('quote') ?>">
+            <span>
+                <?= $escaper->escapeHtml(__('View Quote')) ?>
+            </span>
+        </a>
+
+        <a style="margin-bottom:10px" class="action primary checkout<?= ($block->isDisabled()) ? ' disabled' : '' ?>"
+            href="<?= $block->getUrl('ordering.html') ?>">
+            <span>
+                <?= $escaper->escapeHtml(__('Continue Shopping')) ?>
+            </span>
+        </a>
+
+    <?php }
+    // if (1) {
+    if (!$helper->isAriba() && !$helper->isMobility()) {
+        ?>
+        <button type="button" data-role="proceed-to-checkout" title="<?= $escaper->escapeHtmlAttr(__('Proceed to Checkout')) ?>"
+            data-mage-init='{
+                "Magento_Checkout/js/proceed-to-checkout":{
+                    "checkoutUrl":"<?= $escaper->escapeJs($block->getCheckoutUrl()) ?>"
+                }
+            }' class="action primary checkout<?= ($block->isDisabled()) ? ' disabled' : '' ?>" <?php if ($block->isDisabled()): ?> disabled="disabled" <?php endif; ?>>
+            <span>
+                <?= $escaper->escapeHtml(__('Proceed to Checkout')) ?>
+            </span>
+        </button>
+        <?php
+    }
+endif ?>

@@ -1,0 +1,6 @@
+<?xml version="1.0" ?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+	<menu>
+		<add id="Custom_AdvanceExchange::custom_advanceexchange_advanced_exchange" title="Advanced Exchange" module="Custom_AdvanceExchange" sortOrder="40" parent="AscentDigital_NetsuiteConnector::menu" resource="Magento_Backend::content" action="custom_advanceexchange/advancedexchange/index"/>
+	</menu>
+</config>

@@ -1,0 +1,113 @@
+{
+  "name": "Orders Overview per period",
+  "main_entity": "order",
+  "store_ids": {"0": "0"},
+  "is_use_period": "1",
+  "chart_axis_x": "order.created_at",
+  "chart_axis_y": "order.grand_total",
+  "display_chart": "1",
+  "columns": {
+    "created_at": {
+      "column_id": "order.created_at",
+      "is_date_filter": "0",
+      "filter": "",
+      "visibility": "1",
+      "position": "0",
+      "order": "2"
+    },
+    "discount_amount": {
+      "column_id": "order.discount_amount",
+      "is_date_filter": "0",
+      "filter": "",
+      "visibility": "1",
+      "position": "6",
+      "order": "0"
+    },
+    "grand_total": {
+      "column_id": "order.grand_total",
+      "is_date_filter": "0",
+      "filter": "",
+      "visibility": "1",
+      "position": "12",
+      "order": "0"
+    },
+    "shipping_amount": {
+      "column_id": "order.shipping_amount",
+      "is_date_filter": "0",
+      "filter": "",
+      "visibility": "1",
+      "position": "7",
+      "order": "0"
+    },
+    "order.status": {
+      "column_id": "order.status",
+      "is_date_filter": "0",
+      "filter": "",
+      "visibility": "1",
+      "position": "1",
+      "order": "0"
+    },
+    "order.subtotal": {
+      "column_id": "order.subtotal",
+      "is_date_filter": "0",
+      "filter": "",
+      "visibility": "1",
+      "position": "5",
+      "order": "0"
+    },
+    "order.tax_amount": {
+      "column_id": "order.tax_amount",
+      "is_date_filter": "0",
+      "filter": "",
+      "visibility": "1",
+      "position": "8",
+      "order": "0"
+    },
+    "order.total_paid": {
+      "column_id": "order.total_paid",
+      "is_date_filter": "0",
+      "filter": "",
+      "visibility": "1",
+      "position": "11",
+      "order": "0"
+    },
+    "order.total_refunded": {
+      "column_id": "order.total_refunded",
+      "is_date_filter": "0",
+      "filter": "",
+      "visibility": "1",
+      "position": "10",
+      "order": "0"
+    },
+    "order_item.name": {
+      "column_id": "order_item.name",
+      "is_date_filter": "0",
+      "filter": "",
+      "visibility": "1",
+      "position": "3",
+      "order": "0"
+    },
+    "order_item.product_type": {
+      "column_id": "order_item.product_type",
+      "is_date_filter": "0",
+      "filter": "",
+      "visibility": "1",
+      "position": "4",
+      "order": "0"
+    },
+    "order_item.sku": {
+      "column_id": "order_item.sku",
+      "is_date_filter": "0",
+      "filter": "",
+      "visibility": "1",
+      "position": "2",
+      "order": "0"
+    }
+  },
+  "scheme": {
+    "order_item": {
+      "source_entity": "order",
+      "entity": "order_item"
+    }
+  }
+}

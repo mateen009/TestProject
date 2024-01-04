@@ -1,0 +1,165 @@
+{
+  "name": "Product Performance (best performers: over 500{currency} revenue from Complete orders)",
+  "main_entity": "catalog_product",
+  "store_ids": {"0": "0"},
+  "is_use_period": "",
+  "chart_axis_x": "",
+  "chart_axis_y": "",
+  "display_chart": "0",
+  "columns": {
+    "catalog_product.entity_id": {
+      "column_id": "catalog_product.entity_id",
+      "is_date_filter": "0",
+      "filter": "",
+      "visibility": "1",
+      "position": "0",
+      "order": "2"
+    },
+    "catalog_product.name": {
+      "column_id": "catalog_product.name",
+      "is_date_filter": "0",
+      "filter": "",
+      "visibility": "1",
+      "position": "1",
+      "order": "0"
+    },
+    "catalog_product.price": {
+      "column_id": "catalog_product.price",
+      "is_date_filter": "0",
+      "filter": "",
+      "visibility": "1",
+      "position": "2",
+      "order": "0"
+    },
+    "catalog_product.sku": {
+      "column_id": "catalog_product.sku",
+      "is_date_filter": "0",
+      "filter": "",
+      "visibility": "1",
+      "position": "3",
+      "order": "0"
+    },
+    "catalog_product.manufacturer": {
+      "column_id": "catalog_product.manufacturer",
+      "is_date_filter": "0",
+      "filter": "",
+      "visibility": "1",
+      "position": "4",
+      "order": "0"
+    },
+    "order_item.qty_backordered": {
+      "column_id": "order_item.qty_backordered",
+      "is_date_filter": "0",
+      "filter": "",
+      "visibility": "1",
+      "position": "5",
+      "order": "0"
+    },
+    "order_item.qty_canceled": {
+      "column_id": "order_item.qty_canceled",
+      "is_date_filter": "0",
+      "filter": "",
+      "visibility": "1",
+      "position": "6",
+      "order": "0"
+    },
+    "order_item.qty_invoiced": {
+      "column_id": "order_item.qty_invoiced",
+      "is_date_filter": "0",
+      "filter": "",
+      "visibility": "1",
+      "position": "7",
+      "order": "0"
+    },
+    "order_item.qty_ordered": {
+      "column_id": "order_item.qty_ordered",
+      "is_date_filter": "0",
+      "filter": "",
+      "visibility": "1",
+      "position": "8",
+      "order": "0"
+    },
+    "order_item.qty_refunded": {
+      "column_id": "order_item.qty_refunded",
+      "is_date_filter": "0",
+      "filter": "",
+      "visibility": "1",
+      "position": "9",
+      "order": "0"
+    },
+    "order_item.qty_shipped": {
+      "column_id": "order_item.qty_shipped",
+      "is_date_filter": "0",
+      "filter": "",
+      "visibility": "1",
+      "position": "10",
+      "order": "0"
+    },
+    "order_item.tax_amount": {
+      "column_id": "order_item.tax_amount",
+      "is_date_filter": "0",
+      "filter": "",
+      "visibility": "1",
+      "position": "11",
+      "order": "0"
+    },
+    "order_item.discount_amount": {
+      "column_id": "order_item.discount_amount",
+      "is_date_filter": "0",
+      "filter": "",
+      "visibility": "1",
+      "position": "12",
+      "order": "0"
+    },
+    "order_item.amount_refunded": {
+      "column_id": "order_item.amount_refunded",
+      "is_date_filter": "0",
+      "filter": "",
+      "visibility": "1",
+      "position": "13",
+      "order": "0"
+    },
+    "order_item.row_total": {
+      "column_id": "order_item.row_total",
+      "is_date_filter": "0",
+      "filter": "",
+      "visibility": "1",
+      "position": "14",
+      "order": "0"
+    },
+    "order_item.row_invoiced": {
+      "column_id": "order_item.row_invoiced",
+      "is_date_filter": "0",
+      "filter": "",
+      "visibility": "1",
+      "position": "15",
+      "order": "0"
+    },
+    "order_item.row_total_incl_tax": {
+      "column_id": "order_item.row_total_incl_tax",
+      "is_date_filter": "0",
+      "filter": "{\"from\":\"500\",\"to\":\"\"}",
+      "visibility": "1",
+      "position": "16",
+      "order": "0"
+    },
+    "order.status": {
+      "column_id": "order.status",
+      "is_date_filter": "0",
+      "filter": "{\"value\":\"complete\"}",
+      "visibility": "1",
+      "position": "17",
+      "order": "0"
+    }
+  },
+  "scheme": {
+    "order_item": {
+      "source_entity": "catalog_product",
+      "entity": "order_item"
+    },
+    "order": {
+      "source_entity": "order_item",
+      "entity": "order"
+    }
+  }
+}

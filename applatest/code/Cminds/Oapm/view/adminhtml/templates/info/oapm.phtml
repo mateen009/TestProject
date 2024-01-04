@@ -1,0 +1,20 @@
+<?php
+/**
+ * @var \Cminds\Oapm\Block\Info\Oapm $block
+ */
+?>
+<div class="order-payment-method-name"><?= $block->escapeHtml($block->getMethod()->getTitle()) ?></div>
+<table class="data-table admin__table-secondary">
+    <tr>
+        <th><?= $block->escapeHtml(__('Recipient Name')) ?>:</th>
+        <td><?= $block->escapeHtml($block->getInfo()->getData('additional_information/recipient_name')) ?></td>
+    </tr>
+    <tr>
+        <th><?= $block->escapeHtml(__('Recipient Email')) ?>:</th>
+        <td><?= $block->escapeHtml($block->getInfo()->getData('additional_information/recipient_email')) ?></td>
+    </tr>
+    <tr>
+        <th><?= $block->escapeHtml(__('Note To Recipient')) ?>:</th>
+        <td><?= $block->escapeHtml($block->getInfo()->getData('additional_information/recipient_note')) ?></td>
+    </tr>
+</table>

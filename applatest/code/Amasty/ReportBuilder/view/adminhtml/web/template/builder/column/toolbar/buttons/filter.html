@@ -1,0 +1,20 @@
+<!-- ko template: {
+    name: $data.templates.button,
+    data: {
+        classes: '-clear -icon -filter',
+        states: {
+            '-filtered': item.filtration.isActive(),
+            '-disabled': item.name === 'store_id' || item.isDate(),
+            '-active': item.isFilter()
+        },
+        templatePath: $data.templates.filterIcon,
+        title: 'Sorting By Filter',
+        events: {
+            click: function() {
+                item.isFooterActive(!item.isFooterActive());
+                item.isFilter(!item.isFilter());
+            }
+        }
+    }
+} -->
+<!-- /ko -->

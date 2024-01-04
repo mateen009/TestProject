@@ -1,0 +1,17 @@
+<!-- ko template: {
+    name: $data.templates.button,
+    data: {
+        states: {
+            '-visible': item.isVisible
+        },
+        classes: '-clear -icon -visibility' + (item.position < 2 && $data.chosenOptions.elems().length < 3 || !item.position ? ' -disabled' : ''),
+        templatePath: $data.templates.visibilityIcon,
+        title: 'Toggling visibility',
+        events: {
+            click: function() {
+                item.isVisible() ? item.isVisible(false) : item.isVisible(true);
+            }
+        }
+    }
+} -->
+<!-- /ko -->

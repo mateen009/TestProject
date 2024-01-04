@@ -1,0 +1,27 @@
+<div class="amrepbuilder-column-filter -select">
+    <!-- ko scope: "index = amasty_report_builder_select" -->
+        <!-- ko template: { name: $data.getTemplate(), data: { $data: $data, item: $parent, depsName: 'aggregation' } } --><!-- /ko -->
+    <!-- /ko -->
+</div>
+
+<!-- ko if: $data.select_aggregation && $data.select_aggregation.options -->
+    <!-- ko template: {
+                name: $parent.templates.filterToolbar,
+                data: {
+                    uiClass: $parent,
+                    cancelListener: function() {
+                        $parent.select.clear($data, 'aggregation');
+                        $data.isAggregation(false);
+                        $data.isFooterActive(false);
+                        $data.aggregation.isActive(false);
+                    },
+                    applyListener: function() {
+                        $data.isAggregation(false);
+                        $data.isFooterActive(false);
+                        $data.aggregation.isActive(true);
+                    },
+                    applyStates: { '-disabled': !$data.select_aggregation.value() }
+                }
+            } -->
+    <!-- /ko -->
+<!-- /ko -->

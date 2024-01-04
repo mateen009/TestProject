@@ -1,0 +1,14 @@
+<section class="amrepbuilder-available-block">
+    <!-- ko template: { name: headerTmpl, $data: $data } --><!-- /ko-->
+
+    <!-- ko scope: "index = component_search" -->
+        <!-- ko template: $data.getTemplate() --><!-- /ko -->
+    <!-- /ko -->
+
+    <!-- ko if: $data.elems().length -->
+        <!-- ko foreach: $data.elems() -->
+            <!--ko template: getTemplate()--><!-- /ko -->
+        <!-- /ko -->
+    <!-- /ko -->
+</section>
+

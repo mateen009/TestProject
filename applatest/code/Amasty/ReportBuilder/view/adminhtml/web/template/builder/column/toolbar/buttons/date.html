@@ -1,0 +1,18 @@
+<!-- ko template: {
+    name: $data.templates.button,
+    data: {
+        states: {
+            '-filtered': item.isDate,
+            '-disabled': item.frontend_model !== 'dateRange'
+        },
+        classes: '-clear -icon -date',
+        templatePath: $data.templates.calendarIcon,
+        title: 'Sorting By Date',
+        events: {
+            click: function() {
+                $data.toggleDate(item);
+            }
+        }
+    }
+} -->
+<!-- /ko -->

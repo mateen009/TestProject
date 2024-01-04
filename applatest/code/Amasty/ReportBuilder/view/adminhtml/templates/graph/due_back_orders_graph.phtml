@@ -1,0 +1,106 @@
+<?php
+$dueBackCurrentDate = $block->dueBackCurrentDate();
+$dueBackLateOrders=$block->dueBackLateOrders();
+$returnStatusPartial = $block->returnStatusPartial();
+$returnStatusNo = $block->returnStatusNo();
+// print_r($dueCount);
+
+?>
+<script>
+    requirejs(['jquery', 'amcharts'], function($, amcharts) {
+        am4core.ready(function() {
+            var width = 150;
+            // Themes begin
+            am4core.useTheme(am4themes_animated);
+            // Themes end
+
+            // Create chart instance
+            var chart = am4core.create("chartdiv", am4charts.XYChart);
+            chart.scrollbarX = new am4core.Scrollbar();
+
+            // Add data
+            chart.data = [];
+
+            // Set data
+            // var data = [];
+           
+                chart.data.push({
+                    x_axes: "<?= 'Due' ?>",
+                    value: <?= $dueBackCurrentDate['orders'] ?>
+                });
+                chart.data.push({
+                    x_axes: "<?= 'Late' ?>",
+                    value: <?= $dueBackLateOrders['orders'] ?>
+                });
+                chart.data.push({
+                    x_axes: "<?= 'Partial' ?>",
+                    value: <?= $returnStatusPartial['orders']  ?>
+                });
+                chart.data.push({
+                    x_axes: "<?= 'NO' ?>",
+                    value: <?= $returnStatusNo['orders']  ?>
+                });
+          
+
+            // Create axes
+            var categoryAxis = chart.xAxes.push(new am4charts.CategoryAxis());
+            categoryAxis.renderer.grid.template.location = 0;
+            categoryAxis.dataFields.category = "x_axes";
+            categoryAxis.renderer.minGridDistance = 30;
+            categoryAxis.fontSize = 11;
+            var labelX = categoryAxis.renderer.labels.template;
+            labelX.maxWidth = width;
+            labelX.truncate = true;
+            labelX.wrap = true;
+            labelX.tooltipText = "{x_axes}";
+            labelX.dy = 5;
+
+            var valueAxis = chart.yAxes.push(new am4charts.ValueAxis());
+            valueAxis.renderer.minWidth = 50;
+
+            // Create series
+            var series = chart.series.push(new am4charts.ColumnSeries());
+            series.sequencedInterpolation = true;
+            series.dataFields.valueY = "value";
+            series.dataFields.categoryX = "x_axes";
+            series.tooltipText = "[{categoryX}: bold]{valueY}[/]";
+            series.columns.template.strokeWidth = 0;
+
+            series.tooltip.pointerOrientation = "vertical";
+
+            series.columns.template.column.cornerRadiusTopLeft = 10;
+            series.columns.template.column.cornerRadiusTopRight = 10;
+            series.columns.template.column.fillOpacity = 0.8;
+
+            // on hover, make corner radiuses bigger
+            var hoverState = series.columns.template.column.states.create("hover");
+            hoverState.properties.cornerRadiusTopLeft = 0;
+            hoverState.properties.cornerRadiusTopRight = 0;
+            hoverState.properties.fillOpacity = 1;
+
+            series.columns.template.adapter.add("fill", function(fill, target) {
+                return chart.colors.getIndex(target.dataItem.index);
+
+            });
+
+// Cursor
+chart.cursor = new am4charts.XYCursor();
+
+}); // end am4core.ready()
+
+       
+
+});
+</script>
+<style>
+    #chartdiv {
+        width: 100%;
+        height: 500px;
+    }
+</style>
+<hr>
+<h1>Due Back Orders Chart</h1>
+<div id="chartdiv"></div>
+
+
+

@@ -1,0 +1,34 @@
+<?php
+/**
+ * @var \Magenest\BookingReservation\Block\Adminhtml\System\Config\ColorPickerJs $block
+ * @var \Magento\Framework\View\Helper\SecureHtmlRenderer $secureRenderer
+ */
+$fieldId = $block->getFieldId();
+$fieldValue = $block->getFieldValue();
+$scriptString = <<<script
+    require(["jquery"], function ($) {
+        $(document).ready(function () {
+            $("#{$fieldId}")
+                .css("backgroundColor", "#{$fieldValue}")
+                .colpick({
+                    layout: "hex",
+                    submit: 0,
+                    colorScheme: "dark",
+                    color: "#{$fieldValue}",
+                    onChange: function (hsb,hex,rgb,el,bySetColor) {
+                        $(el).css("background-color", "#" + hex);
+                        if(!bySetColor) {
+                            $(el).val(hex);
+                        }
+                    }
+                })
+                .keyup(function() {
+                    $(this).colpickSetColor(this.value);
+                });
+        });
+    });
+script;
+?>
+<?= isset($secureRenderer)
+    ? $secureRenderer->renderTag('script', ['type' => 'text/javascript'], $scriptString, false)
+    : '<script>' . $scriptString . '</script>' ?>

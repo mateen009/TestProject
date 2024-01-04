@@ -1,0 +1,103 @@
+<?php if(!$block->isLoggedIn()): ?>
+	<div class="login-overlay">
+		<div class="login-register-popup">
+			<div class="response-msg"></div>
+			<div class="login-container">
+				<form class="popup-login-form" method="POST" action="">
+					<div class="container">
+						<label><b><?php echo __('Email') ?></b></label>
+						<input type="email" placeholder="<?php echo __('Enter Email') ?>" name="username" required>
+
+						<label><b><?php echo __('Password') ?></b></label>
+						<input type="password" placeholder="<?php echo __('Enter Password') ?>" name="password" required>
+
+						<button class="action login primary" type="submit"><?php echo __('Login') ?></button>
+					</div>
+
+					<div class="container" style="background-color:#f1f1f1">
+						<button title="<?php echo __('Click to close') ?>" type="button" class="cancelbtn"><?php echo __('Cancel') ?></button>
+						<span class="psw"><a href="<?php echo $block->getUrl('customer/account/forgotpassword') ?>"><?php echo __('Forgot Password?') ?></a></span>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+
+	<script type="text/javascript">
+		require(['jquery'], function($) {
+			var headerElem = $('.panel.header');
+			var loginLink = headerElem.find('.authorization-link').children('a');
+			var loginOverlay = $('.login-overlay');
+			var loginBox = $('.login-overlay').find('.popup-login-form');
+			var loginButton = $('.popup-login-form').find('button[type=submit]');
+			var loginUrl = "<?php echo $block->getUrl('customerlogin/ajax/login') ?>";
+
+			// Texts
+			var loginText = "<?php echo __('Login') ?>";
+			var loggingText = "<?php echo __('Please Wait...') ?>";
+
+			// setTimeout(function(){
+			// 	loginOverlay.show();
+			// 	loginBox.show();
+			// }, 2000);
+			
+			loginLink.click(function(e){
+				e.preventDefault(e);
+				loginOverlay.show();
+				loginBox.show();
+			});
+
+			$('.cancelbtn').click(function(){
+				loginOverlay.hide();
+				loginBox.hide();
+			});
+
+			$('.login-link a').click(function(e){
+				e.preventDefault(e);
+				loginBox.show();
+			});
+
+			$('.popup-login-form').submit(function(){
+				loginButton.text(loggingText);
+				loginButton.attr("disabled", "disabled");
+				var formData = getFormData($(this));
+				$.ajax({
+		            type: "POST",
+		            url: loginUrl,
+		            data: formData,
+		            dataType: "json",
+		            success: function(data) {
+		                showResponse(data);
+		                if(data.errors) {
+		                	loginButton.text(loginText);
+		                	loginButton.removeAttr('disabled');
+		                } else {
+		                	window.location.href = data.redirectUrl;
+		                }
+		            }
+		        });
+				return false;
+			});
+
+			function getFormData(formElem){
+			    var unindexed_array = formElem.serializeArray();
+			    var indexed_array = {};
+
+			    jQuery.map(unindexed_array, function(n, i){
+			        indexed_array[n['name']] = n['value'];
+			    });
+
+			    return indexed_array;
+			}
+
+			function showResponse(data) {
+				if(data.errors) {
+					$('.response-msg').html("<div class='error'>"+data.message+"</div>");
+				} else {
+					$('.response-msg').html("<div class='success'>"+data.message+"</div>");
+				}
+				setTimeout(function(){ $('.response-msg').html(null); }, 5000);
+			}
+		});
+	</script>
+<?php endif; ?>

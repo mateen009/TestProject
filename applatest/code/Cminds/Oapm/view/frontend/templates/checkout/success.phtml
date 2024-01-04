@@ -1,0 +1,46 @@
+<?php /** @var $block \Magento\Checkout\Block\Onepage\Success */
+    
+    $objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+    $storeManager = $objectManager->get('\Magento\Store\Model\StoreManagerInterface');
+    $storeId = $storeManager->getStore()->getStoreId();
+?>
+<?php if($block->getIsApprovalRequired()){
+ ?>
+
+<div class="checkout-success">
+    <?php if ($block->getOrderId()):?>
+            <p><?= __('The approving manager will be sent a notification.' )?></p>
+    <?php endif;?>
+
+    <?= $block->getAdditionalInfoHtml() ?>
+
+    <div class="actions-toolbar">
+        <div class="primary">
+            <a class="action primary continue" href="<?= /* @escapeNotVerified */ $block->getContinueUrl() ?>"><span><?= __('Continue Shopping') ?></span></a>
+        </div>
+    </div>
+</div>
+<?php
+
+}else{
+    ?>
+<div class="checkout-success">
+    <div class="checkout-success">
+        <?php if ($block->getOrderId()):?>
+                <!-- <p><?php // __('Your payment request has been forwarded to %1.', $block->escapeHtml($block->getPayerEmail())) ?></p>
+                <p><?php // __('Please remember to check your email for confirmation, once the transaction has been completed.') ?></p> -->
+                <p>This order has been submitted</p>
+        <?php endif;?>
+
+        <?= $block->getAdditionalInfoHtml() ?>
+
+        <div class="actions-toolbar">
+            <div class="primary">
+                <a class="action primary continue" href="<?= /* @escapeNotVerified */ $block->getContinueUrl() ?>"><span><?= __('Continue Shopping') ?></span></a>
+            </div>
+        </div>
+    </div>
+<?php
+}
+
+?>

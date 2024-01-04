@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <preference for="Mobility\QuoteRequest\Api\Data\QuoteRequestInterface" type="Mobility\QuoteRequest\Model\QuoteRequest" />
+    <preference for="Mobility\QuoteRequest\Api\QuoteRequestRepositoryInterface" type="Mobility\QuoteRequest\Model\QuoteRequestRepository" />
+    <preference for="Mobility\QuoteRequest\Model\MailInterface" type="Mobility\QuoteRequest\Model\Mail" />
+    <preference for="Mobility\QuoteRequest\Model\ConfigInterface" type="Mobility\QuoteRequest\Model\Config" />
+    <preference for="Magento\Sales\Block\Order\History" type="Mobility\QuoteRequest\Block\Order\OrderApprovalHistory" />
+    <type name="Mobility\QuoteRequest\Model\Session">
+        <arguments>
+            <argument name="storage" xsi:type="object">Mobility\QuoteRequest\Model\Session\Storage</argument>
+        </arguments>
+    </type>
+</config>

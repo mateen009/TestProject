@@ -1,0 +1,7 @@
+<section class="amrepbuilder-content"
+         if="$data.sidebarData.items.length"
+         data-bind="foreach: $data.sidebarData.items">
+    <!-- ko scope: "index = amrepbuilder_sidebar_entity" -->
+        <!-- ko template: { name: $data.getTemplate(), data: { entity: $parent, uiClass: $data } } --><!-- /ko -->
+    <!-- /ko -->
+</section>

@@ -1,0 +1,304 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<form xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd">
+    <argument name="data" xsi:type="array">
+        <item name="js_config" xsi:type="array">
+            <item name="provider" xsi:type="string">
+                amreportbuilder_report_form.amasty_reportbuilder_report_form_data_source
+            </item>
+            <item name="deps" xsi:type="string">
+                amreportbuilder_report_form.amasty_reportbuilder_report_form_data_source
+            </item>
+            <item name="component" xsi:type="string">Amasty_ReportBuilder/js/components/form</item>
+        </item>
+        <item name="label" xsi:type="string" translate="true">Edit Report</item>
+        <item name="config" xsi:type="array">
+            <item name="dataScope" xsi:type="string">data</item>
+            <item name="namespace" xsi:type="string">amasty_reportbuilder_report_form</item>
+            <item name="uniq_name" xsi:type="string">form</item>
+        </item>
+        <item name="template" xsi:type="string">templates/form/collapsible</item>
+        <item name="buttons" xsi:type="array">
+            <item name="back" xsi:type="array">
+                <item name="name" xsi:type="string">back</item>
+                <item name="label" xsi:type="string" translate="true">Back</item>
+                <item name="class" xsi:type="string">back</item>
+                <item name="url" xsi:type="string">*/*/</item>
+            </item>
+            <item name="save" xsi:type="string">Amasty\ReportBuilder\Ui\Component\Form\Buttons\Report\SaveButton</item>
+            <item name="reset" xsi:type="string">Amasty\ReportBuilder\Ui\Component\Form\Buttons\Report\ResetButton</item>
+            <item name="view" xsi:type="string">Amasty\ReportBuilder\Ui\Component\Form\Buttons\Report\ViewButton</item>
+            <item name="save_and_continue" xsi:type="string">
+                Amasty\ReportBuilder\Ui\Component\Form\Buttons\Report\SaveAndContinueButton
+            </item>
+            <item name="delete" xsi:type="string">Amasty\ReportBuilder\Ui\Component\Form\Buttons\Report\DeleteButton</item>
+            <item name="duplicate" xsi:type="string">Amasty\ReportBuilder\Ui\Component\Form\Buttons\Report\DuplicateButton</item>
+        </item>
+    </argument>
+
+    <dataSource name="amasty_reportbuilder_report_form_data_source">
+        <argument name="dataProvider" xsi:type="configurableObject">
+            <argument name="class" xsi:type="string">Amasty\ReportBuilder\Ui\DataProvider\Form\Report\DataProvider
+            </argument>
+            <argument name="name" xsi:type="string">amasty_reportbuilder_report_form_data_source</argument>
+            <argument name="primaryFieldName" xsi:type="string">report_id</argument>
+            <argument name="requestFieldName" xsi:type="string">report_id</argument>
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="submit_url" xsi:type="url" path="amreportbuilder/report/save"/>
+                </item>
+            </argument>
+        </argument>
+        <argument name="data" xsi:type="array">
+            <item name="js_config" xsi:type="array">
+                <item name="component" xsi:type="string">Magento_Ui/js/form/provider</item>
+            </item>
+        </argument>
+    </dataSource>
+
+    <fieldset name="general">
+        <argument name="data" xsi:type="array">
+            <item name="config" xsi:type="array">
+                <item name="label" xsi:type="string" translate="true">General</item>
+                <item name="collapsible" xsi:type="boolean">false</item>
+                <item name="opened" xsi:type="boolean">true</item>
+            </item>
+        </argument>
+
+        <field name="report_id">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="visible" xsi:type="boolean">false</item>
+                    <item name="dataType" xsi:type="string">text</item>
+                    <item name="formElement" xsi:type="string">input</item>
+                    <item name="dataScope" xsi:type="string">report_id</item>
+                    <item name="sortOrder" xsi:type="string">10</item>
+                </item>
+            </argument>
+        </field>
+
+        <field name="name">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="label" xsi:type="string" translate="true">Name</item>
+                    <item name="visible" xsi:type="boolean">true</item>
+                    <item name="dataType" xsi:type="string">text</item>
+                    <item name="formElement" xsi:type="string">input</item>
+                    <item name="dataScope" xsi:type="string">name</item>
+                    <item name="sortOrder" xsi:type="string">30</item>
+                    <item name="validation" xsi:type="array">
+                        <item name="required-entry" xsi:type="boolean">true</item>
+                    </item>
+                </item>
+            </argument>
+        </field>
+
+        <field name="main_entity">
+            <argument name="data" xsi:type="array">
+                <item name="options" xsi:type="object">Amasty\ReportBuilder\Model\Source\Entity</item>
+                <item name="config" xsi:type="array">
+                    <item name="dataType" xsi:type="string">string</item>
+                    <item name="label" xsi:type="string" translate="true">Main Entity</item>
+                    <item name="formElement" xsi:type="string">select</item>
+                    <item name="dataScope" xsi:type="string">main_entity</item>
+                    <item name="component" xsi:type="string">Amasty_ReportBuilder/js/components/main-entity</item>
+                    <item name="sortOrder" xsi:type="string">40</item>
+                    <item name="validation" xsi:type="array">
+                        <item name="required-entry" xsi:type="boolean">true</item>
+                    </item>
+                    <item name="uniq_name" xsi:type="string">mainEntity</item>
+                </item>
+            </argument>
+        </field>
+    </fieldset>
+
+    <container name="amasty_report_builder">
+        <argument name="data" xsi:type="array">
+            <item name="config" xsi:type="array">
+                <item name="component" xsi:type="string">Amasty_ReportBuilder/js/builder/wrapper</item>
+                <item name="uniq_name" xsi:type="string">builder</item>
+            </item>
+        </argument>
+        <component name="chosen_column_toolbar">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="isDisabled" xsi:type="boolean">true</item>
+                    <item name="component" xsi:type="string">Amasty_ReportBuilder/js/builder/toolbar</item>
+                    <item name="uniq_name" xsi:type="string">toolbar</item>
+                </item>
+            </argument>
+        </component>
+        <component name="amasty_report_builder_select">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="isDisabled" xsi:type="boolean">true</item>
+                    <item name="component" xsi:type="string">Amasty_ReportBuilder/js/components/select</item>
+                    <item name="uniq_name" xsi:type="string">select</item>
+                </item>
+            </argument>
+        </component>
+        <component name="chosen_column_header">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="isDisabled" xsi:type="boolean">true</item>
+                    <item name="component" xsi:type="string">Amasty_ReportBuilder/js/builder/chosen_options/columns/header</item>
+                    <item name="uniq_name" xsi:type="string">columnHeader</item>
+                </item>
+            </argument>
+        </component>
+        <container name="component_search">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="isDisabled" xsi:type="boolean">true</item>
+                    <item name="component" xsi:type="string">Amasty_ReportBuilder/js/builder/search</item>
+                    <item name="uniq_name" xsi:type="string">search</item>
+                </item>
+            </argument>
+        </container>
+
+        <container name="available_options">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="component" xsi:type="string">uiComponent</item>
+                    <item name="headerTmpl" xsi:type="string">Amasty_ReportBuilder/builder/header</item>
+                    <item name="columnToolbarTmpl" xsi:type="string">Amasty_ReportBuilder/builder/column/toolbar</item>
+                    <item name="template" xsi:type="string">Amasty_ReportBuilder/builder/available_options/wrapper
+                    </item>
+                    <item name="title" xsi:type="string">Available options</item>
+                    <item name="descr" xsi:type="string">To activate the widget, drag (or double-click) the column you
+                        need to the edit field on the right
+                    </item>
+                </item>
+            </argument>
+
+            <container name="entities_list">
+                <argument name="data" xsi:type="array">
+                    <item name="config" xsi:type="array">
+                        <item name="component" xsi:type="string">Amasty_ReportBuilder/js/builder/available_options/wrapper</item>
+                        <item name="uniq_name" xsi:type="string">entitiesList</item>
+                    </item>
+                </argument>
+            </container>
+        </container>
+
+        <container name="chosen_options">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="component" xsi:type="string">Amasty_ReportBuilder/js/builder/chosen_options/wrapper</item>
+                    <item name="uniq_name" xsi:type="string">chosenOptions</item>
+                </item>
+            </argument>
+        </container>
+    </container>
+
+    <fieldset>
+        <argument name="data" xsi:type="array">
+            <item name="config" xsi:type="array">
+                <item name="label" xsi:type="boolean">false</item>
+                <item name="additionalClasses" xsi:type="string">amrebuilder-axis-fieldset</item>
+                <item name="collapsible" xsi:type="boolean">true</item>
+                <item name="opened" xsi:type="boolean">true</item>
+            </item>
+        </argument>
+
+        <field name="is_use_period">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="dataType" xsi:type="string">boolean</item>
+                    <item name="formElement" xsi:type="string">checkbox</item>
+                    <item name="prefer" xsi:type="string">toggle</item>
+                    <item name="dataScope" xsi:type="string">is_use_period</item>
+                    <item name="label" xsi:type="string" translate="true">Use Periods</item>
+                    <item name="valueMap" xsi:type="array">
+                        <item name="true" xsi:type="boolean">true</item>
+                        <item name="false" xsi:type="boolean">false</item>
+                    </item>
+                    <item name="default" xsi:type="boolean">false</item>
+                    <item name="tooltip" xsi:type="array">
+                        <item name="description" xsi:type="string" translate="true">
+                            If enabled, the period column will replace the main entity id column,
+                            and periods switcher will be available on the report view page.
+                        </item>
+                    </item>
+                    <item name="uniq_name" xsi:type="string">isUsePeriod</item>
+                </item>
+            </argument>
+        </field>
+
+        <field name="store_ids">
+            <argument name="data" xsi:type="array">
+                <item name="options" xsi:type="object">Magento\Cms\Ui\Component\Listing\Column\Cms\Options</item>
+                <item name="config" xsi:type="array">
+                    <item name="dataType" xsi:type="string">int</item>
+                    <item name="label" xsi:type="string" translate="true">Store View</item>
+                    <item name="formElement" xsi:type="string">multiselect</item>
+                    <item name="source" xsi:type="string">page</item>
+                    <item name="validation" xsi:type="array">
+                        <item name="required-entry" xsi:type="boolean">true</item>
+                    </item>
+                    <item name="uniq_name" xsi:type="string">storeIds</item>
+                </item>
+            </argument>
+        </field>
+
+        <field name="display_chart">
+            <argument name="data" xsi:type="array">
+                <item name="options" xsi:type="object">Magento\Config\Model\Config\Source\Yesno</item>
+                <item name="config" xsi:type="array">
+                    <item name="dataType" xsi:type="string">boolean</item>
+                    <item name="formElement" xsi:type="string">checkbox</item>
+                    <item name="prefer" xsi:type="string">toggle</item>
+                    <item name="label" xsi:type="string" translate="true">Display Linear Chart</item>
+                    <item name="valueMap" xsi:type="array">
+                        <item name="true" xsi:type="boolean">true</item>
+                        <item name="false" xsi:type="boolean">false</item>
+                    </item>
+                    <item name="default" xsi:type="boolean">false</item>
+                    <item name="uniq_name" xsi:type="string">displayChart</item>
+                </item>
+            </argument>
+        </field>
+
+        <field name="chart_axis_x">
+            <argument name="data" xsi:type="array">
+                <item name="options" xsi:type="object">Amasty\ReportBuilder\Model\Source\ChartAxis</item>
+                <item name="config" xsi:type="array">
+                    <item name="dataType" xsi:type="string">string</item>
+                    <item name="label" xsi:type="string" translate="true">X-axis</item>
+                    <item name="formElement" xsi:type="string">select</item>
+                    <item name="dataScope" xsi:type="string">chart_axis_x</item>
+                    <item name="validation" xsi:type="array">
+                        <item name="required-entry" xsi:type="boolean">true</item>
+                    </item>
+                    <item name="uniq_name" xsi:type="string">axisXSelect</item>
+                </item>
+            </argument>
+        </field>
+
+        <field name="chart_axis_y">
+            <argument name="data" xsi:type="array">
+                <item name="options" xsi:type="object">Amasty\ReportBuilder\Model\Source\ChartAxis</item>
+                <item name="config" xsi:type="array">
+                    <item name="dataType" xsi:type="string">string</item>
+                    <item name="label" xsi:type="string" translate="true">Y-axis</item>
+                    <item name="formElement" xsi:type="string">select</item>
+                    <item name="dataScope" xsi:type="string">chart_axis_y</item>
+                    <item name="validation" xsi:type="array">
+                        <item name="required-entry" xsi:type="boolean">true</item>
+                    </item>
+                    <item name="uniq_name" xsi:type="string">axisYSelect</item>
+                </item>
+            </argument>
+        </field>
+    </fieldset>
+
+    <container name="amasty_report_builder_popup">
+        <argument name="data" xsi:type="array">
+            <item name="config" xsi:type="array">
+                <item name="component" xsi:type="string">Amasty_ReportBuilder/js/components/popup</item>
+                <item name="uniq_name" xsi:type="string">popup</item>
+            </item>
+        </argument>
+    </container>
+</form>

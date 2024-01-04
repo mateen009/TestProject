@@ -1,0 +1,7 @@
+<?php
+/** @var \Magento\Backend\Block\Template $block */
+/** @var \Amasty\ReportBuilder\ViewModel\Adminhtml\View\Toolbar $viewModel */
+$viewModel = $block->getData('view_model');
+?>
+
+<?= /* @noEscape */ $viewModel->getFormHtml() ?>

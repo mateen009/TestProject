@@ -1,0 +1,52 @@
+<?php
+/**
+ * @var \Cminds\Oapm\Block\Form\Oapm $block
+ * @see \Cminds\Oapm\Block\Form\Oapm
+ */
+?>
+<?php $methodCode = $block->escapeHtml($block->getMethodCode()); ?>
+<?php if ($block->canShowForm()): ?>
+	<fieldset class="fieldset items <?= $methodCode ?>" id="payment_form_<?= $methodCode ?>" style="display: none">
+		<div>
+			<?php // __("Don't have approval to pay for this? Forward this purchase to someone else for approval and paymentsss.") ?>
+			<?= __("Once the transaction is completed, you will receive confirmation by email.") ?>
+		</div>
+		<div class="field recipient_name required">
+			<label for="recipient_name" class="label"><span><?= __('Recipient Name') ?></span></label>
+			<div class="control">
+				<input type="text" id="recipient_name" name="payment[recipient_name]" title="<?= __('Recipient Name') ?>"
+					   class="input-text required-entry"
+					   value="<?= $block->escapeHtml($block->getInfoData('recipient_name')) ?>" />
+			</div>
+		</div>
+		<div class="field recipient_email required">
+			<label for="recipient_email" class="label"><span><?= __('Recipient Email') ?></span></label>
+			<div class="control">
+				<input type="text" id="recipient_email" name="payment[recipient_email]" title="<?= __('Recipient Email') ?>"
+					   class="input-text required-entry"
+					   value="<?= $block->escapeHtml($block->getInfoData('recipient_email')) ?>" />
+			</div>
+		</div>
+		<div class="field recipient_note required">
+			<label for="recipient_note" class="label"><span><?= __('Note To Recipient') ?></span></label>
+			<div class="control">
+				<textarea id="recipient_note" name="payment[recipient_note]" title="<?= __('Note To Recipient') ?>"
+						  class="required-entry" rows="5" cols="25">
+					<?= $block->escapeHtml($block->getInfoData('recipient_note')) ?>
+				</textarea>
+			</div>
+		</div>
+	</fieldset>
+<?php else: ?>
+	<fieldset class="fieldset items <?= $methodCode ?>" id="payment_form_<?= $methodCode ?>" style="display: none">
+		<div class="field recipient_note required">
+			<label for="recipient_note" class="label"><span><?= __('Note To Recipient') ?></span></label>
+			<div class="control">
+				<textarea id="recipient_note" name="payment[recipient_note]" title="<?= __('Note To Recipient') ?>"
+						  class="required-entry" rows="5" cols="25">
+					<?= $block->escapeHtml($block->getInfoData('recipient_note')) ?>
+				</textarea>
+			</div>
+		</div>
+	</fieldset>
+<?php endif; ?>

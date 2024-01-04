@@ -1,0 +1,92 @@
+<style>
+.collapsible {
+  background-color: #fff;
+  color: black;
+  cursor: pointer;
+  padding: 18px;
+  width: 100%;
+  border: none;
+  text-align: left;
+  outline: none;
+  font-size: 15px;
+} */
+
+.active, .collapsible:hover {
+  background-color: lightblue;
+}
+.collapsible:after {
+  content: '\002B';
+  color: gray;
+  font-weight: bold;
+  float: right;
+  margin-left: 5px;
+}
+.active:after {
+  content: "\2212";
+}
+ .content-faq {
+  padding: 18px 18px;
+  display: none;
+  overflow: hidden;
+  background-color: #f1f1f1;
+}
+#faq{
+margin-top: 15px;
+}
+</style>
+
+
+<h1 id="faq"> FAQ </h1>
+<button type="button" class="collapsible">Lorem ipsum dolor sit amet, consectetur adipiscing elit?</button>
+<div class="content-faq">
+  <p>Quisque mattis justo felis, at tincidunt mi ultrices ut. Nam efficitur efficitur vestibulum. Mauris ultricies magna a lacinia interdum. Quisque pretium luctus mauris, ac ultricies nunc gravida ut. Cras efficitur lorem commodo rutrum aliquam. Suspendisse lobortis dui at lacus ornare, in dignissim nisi tincidunt. Morbi a urna lorem. Nullam vel bibendum odio. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Aenean ultrices dapibus velit, et rutrum ex. Vestibulum aliquam varius blandit. Nunc mattis urna non sodales rhoncus. Nulla sollicitudin in diam a scelerisque.</p>
+</div>
+
+
+<button type="button" class="collapsible">Nunc at quam et ex eleifend vestibulum eget vitae turpis?</button>
+<div class="content-faq">
+  <p>Nulla sit amet suscipit tortor. Morbi maximus leo massa, vel dignissim mi mollis non. In hac habitasse platea dictumst. Aliquam pulvinar semper mauris, vitae dignissim ante feugiat sed. Fusce tempus justo eu nibh pellentesque viverra. Ut tristique massa nunc, vitae iaculis velit volutpat suscipit. Fusce porttitor dolor dui, id sagittis nulla porta quis. Nulla auctor eros nec facilisis bibendum.</p>
+</div>
+<button type="button" class="collapsible">Nulla laoreet laoreet erat?</button>
+<div class="content-faq">
+  <p>Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Maecenas ut dui pretium, tristique nibh ac, semper diam. In at ornare mi. Sed sed felis sit amet nibh efficitur pulvinar eget sit amet justo. Etiam interdum erat vel tortor sodales pharetra. Maecenas vitae tristique arcu. Donec sapien nulla, fringilla vel libero sed, tincidunt dignissim nisl. Fusce consectetur orci luctus, tempor mauris id, tempor justo. Curabitur eget felis et quam fermentum sollicitudin. Suspendisse efficitur nunc ac nisi finibus, ac congue elit feugiat. Maecenas vitae suscipit magna, nec fringilla sapien. Praesent accumsan laoreet libero eget suscipit. Praesent condimentum pretium nibh id mollis.</p>
+</div>
+<button type="button" class="collapsible">Proin ac erat sit amet justo malesuada finibus ac sed sapien?</button>
+<div class="content-faq">
+  <p>Morbi finibus tincidunt sollicitudin. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras ut erat enim. Sed viverra sed diam a consectetur. Nunc rutrum, odio ac semper ullamcorper, velit libero pharetra tellus, vitae viverra lorem nisi et ligula. Proin efficitur, odio nec tempor aliquet, ante magna cursus metus, vitae molestie erat risus eget lectus. Praesent nunc est, pharetra id finibus venenatis, sodales ac sem. Ut augue ligula, semper quis vehicula in, viverra ac libero. Integer non justo ligula. Mauris tincidunt iaculis risus sit amet feugiat. Ut tincidunt venenatis mi vel ullamcorper. Nullam interdum tortor ac vulputate hendrerit. Proin condimentum erat efficitur magna tempor, quis pellentesque dolor maximus. Morbi sed tincidunt risus. Morbi nec laoreet erat, eu volutpat velit.</p>
+</div>
+<button type="button" class="collapsible">Pellentesque vehicula lectus ligula, quis egestas magna laoreet non?</button>
+<div class="content-faq">
+  <p>Aliquam ut iaculis dolor. Proin a feugiat ipsum, quis ultrices erat. Etiam a massa volutpat, varius justo at, blandit odio. Cras vehicula, tortor eget bibendum viverra, velit velit convallis lacus, ut semper erat arcu non odio. Fusce vel sollicitudin lectus, placerat molestie risus. Nullam tincidunt sapien ut consectetur dictum. Sed vulputate feugiat erat, ac mollis lorem pretium consectetur. Curabitur dapibus gravida odio a accumsan. Cras porta leo commodo, aliquet diam eu, porta dui. Pellentesque ultricies, dolor nec congue efficitur, risus libero scelerisque est, a consectetur eros nisl a mauris. Maecenas nunc tellus, vulputate sit amet mauris sit amet, dignissim tristique enim. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Praesent ac neque eget dolor lacinia ornare.</p>
+</div>
+<button type="button" class="collapsible">Nunc felis diam, accumsan vel molestie id, ornare eget mauris?</button>
+<div class="content-faq">
+  <p>Vestibulum risus eros, semper eu imperdiet ut, pellentesque sit amet arcu. Nulla eleifend mi vulputate velit consectetur, at dictum libero elementum. Pellentesque sed finibus felis. Praesent non ullamcorper est, et tincidunt sem. Nulla sodales accumsan nibh, quis accumsan ipsum lacinia sit amet. Etiam vel ipsum quis ex semper dictum. Sed dignissim justo ac congue facilisis. In eget sapien turpis. Duis non viverra nisl, eget placerat orci. Suspendisse sollicitudin id felis vel lacinia. Cras neque elit, scelerisque a mauris et, ornare condimentum metus. Praesent tempus, nibh ut convallis viverra, ligula nulla semper elit, vel ullamcorper orci ligula eu odio. Sed vitae dui ac sapien maximus commodo sit amet ut dui. Sed sed massa id quam semper sagittis vel non ipsum. Sed eget odio id massa semper molestie ut ut elit.</p>
+</div>
+<button type="button" class="collapsible">Cras egestas orci in enim ullamcorper, quis porttitor orci efficitur. Mauris nec maximus tellus?</button>
+<div class="content-faq">
+  <p>Donec cursus urna et elit consectetur lobortis non vel urna. Aliquam erat volutpat. Morbi auctor fermentum arcu. Ut lobortis gravida felis non suscipit. Pellentesque sit amet consequat metus, nec egestas sem. Proin mollis sem ut nunc bibendum tempus. Nunc accumsan rhoncus nunc vitae egestas. Sed volutpat, nisi sit amet mattis tincidunt, sapien felis dictum metus, eu auctor urna quam nec quam. In eu dui at arcu condimentum ullamcorper. Curabitur laoreet eros gravida varius porttitor.</p>
+</div>
+<button type="button" class="collapsible">Fusce dapibus sapien quis nulla dictum, nec sodales dolor auctor?</button>
+<div class="content-faq">
+  <p>Nulla facilisi. Aliquam ut elementum lacus, vitae imperdiet enim. Praesent et nisl id eros luctus facilisis. Praesent lorem tortor, sollicitudin luctus mi sagittis, bibendum tristique nisl. Aliquam laoreet interdum mi. Etiam vitae dolor iaculis, congue odio eget, suscipit arcu. Quisque justo massa, molestie nec nunc lobortis, varius tincidunt lorem. Praesent condimentum auctor sapien, malesuada auctor ex varius eget. Cras ex eros, pellentesque a augue pharetra, eleifend eleifend ex. Nam sed diam justo. Curabitur in nisl nisl. In hac habitasse platea dictumst. Etiam dictum porttitor ante in faucibus. Phasellus nisl felis, aliquet ac lobortis vel, convallis ac eros. Nullam id mattis risus.</p>
+</div>
+
+
+<script>
+var coll = document.getElementsByClassName("collapsible");
+var i;
+
+for (i = 0; i < coll.length; i++) {
+  coll[i].addEventListener("click", function() {
+    this.classList.toggle("active");
+    var content = this.nextElementSibling;
+    if (content.style.display === "block") {
+      content.style.display = "none";
+    } else {
+      content.style.display = "block";
+    }
+  });
+}
+</script>
+

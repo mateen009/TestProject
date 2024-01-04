@@ -1,0 +1,99 @@
+<div class="payment-method" data-bind="css: {'_active': (getCode() == isChecked())}">
+    <div class="payment-method-title field choice">
+        <input type="radio"
+               name="payment[method]"
+               class="radio"
+               data-bind="attr: {'id': getCode()}, value: getCode(), checked: isChecked, click: selectPaymentMethod, visible: isRadioButtonVisible()" />
+        <label data-bind="attr: {'for': getCode()}" class="label"><span data-bind="text: getTitle()"></span></label>
+    </div>
+
+    <div class="payment-method-content">
+        <!-- ko foreach: getRegion('messages') -->
+        <!-- ko template: getTemplate() --><!-- /ko -->
+        <!--/ko-->
+        <div class="payment-method-billing-address">
+            <!-- ko foreach: $parent.getRegion(getBillingAddressFormName()) -->
+            <!-- ko template: getTemplate() --><!-- /ko -->
+            <!--/ko-->
+        </div>
+
+        <div>
+            <!-- <p data-bind="text: $t('Don\'t have approvalaa to pay for this? Forward this purchase to someone else for approval and payment.')"></p> -->
+            <!--<p data-bind="text: $t('Once the transactionss is completed, you will receive confirmation by email.')"></p> -->
+        </div>
+        <form id="oapm-form" class="form form-oapm" data-role="oapm-form">
+            <fieldset class="fieldset payment method" data-bind='attr: {id: "payment_form_" + getCode()}'>
+                <!-- ko ifnot: hideFieldsFlag -->
+                <div class="field field-recipient-name required">
+                    <label for="recipient_name" class="label">
+                        <span><!-- ko i18n: 'Recipient Name'--><!-- /ko --></span>
+                    </label>
+                    <div class="control">
+                        <input type="text"
+                               id="recipient_name"
+                               name="payment[recipient_name]"
+                               data-validate="{required:true}"
+                               data-bind='
+                                attr: {title: $t("Recipient Name")},
+                                value: recipientName
+                                '
+                               class="input-text"/>
+                    </div>
+                </div>
+                <div class="field field-recipient-email required">
+                    <label for="recipient_email" class="label">
+                        <span><!-- ko i18n: 'Recipient Email'--><!-- /ko --></span>
+                    </label>
+                    <div class="control">
+                        <input type="text"
+                               id="recipient_email"
+                               name="payment[recipient_email]"
+                               data-validate="{required:true, 'validate-email':true}"
+                               data-bind='
+                                attr: {title: $t("Recipient Email")},
+                                value: recipientEmail
+                                '
+                               class="input-text"/>
+                    </div>
+                </div>
+                <!-- /ko -->
+                <div class="field field-recipient-note ">
+                    <label for="recipient_note" class="label">
+                        <span><!-- ko i18n: 'Note To Recipient'--><!-- /ko --></span>
+                    </label>
+                    <div class="control">
+                        <textarea id="recipient_note"
+                                  name="payment[recipient_note]"
+                                  data-bind='
+                                    attr: {title: $t("Note To Recipient")},
+                                    value: recipientNote
+                                    '
+                                rows="5" cols="25"
+                        ></textarea>
+                    </div>
+                </div>
+            </fieldset>
+        </form>
+
+        <div class="checkout-agreements-block">
+            <!-- ko foreach: $parent.getRegion('before-place-order') -->
+                <!-- ko template: getTemplate() --><!-- /ko -->
+            <!--/ko-->
+        </div>
+        <div class="actions-toolbar" style="padding-top:1em">
+            <div class="primary">
+                <button class="action primary checkout"
+                        type="submit"
+                        data-bind="
+                        click: placeOrder,
+                        attr: {'title': $t('Place Order')},
+                        enable: (getCode() == isChecked()),
+                        css: {disabled: !isPlaceOrderActionAllowed()}
+                        "
+                        disabled>
+                    <span data-bind="i18n: 'Place Order'"></span>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

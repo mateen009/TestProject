@@ -1,0 +1,139 @@
+<?php
+// BAR CHART 
+$chartData = $block->demoOrders();
+// echo "<pre>";print_r($chartData);die;
+$count = count($chartData);
+
+if ($count > 0) {
+    if ($count > 30) {
+        $count = 30;
+    }
+?>
+    <script>
+        requirejs(['jquery', 'amcharts'], function($, amcharts) {
+            am4core.ready(function() {
+
+                var count = "<?= $count ?>";
+                var width = 150;
+                // updown variable is use for the salesrep name to show one salesrep name up and the other salesrep name down and so on
+                var updown = false;
+                if (count > 5 && count <= 10) {
+                    width = 120;
+                } else if (count > 10 && count <= 15) {
+                    width = 100;
+                } else if (count > 15 && count <= 20) {
+                    width = 85;
+                } else if (count > 20 && count <= 25) {
+                    width = 90;
+                    updown = true;
+                } else if (count > 25 && count <= 30) {
+                    width = 80;
+                    updown = true;
+                }
+                // Themes begin
+                am4core.useTheme(am4themes_animated);
+                // Themes end
+
+                // Create chart instance
+                var chart = am4core.create("chartdiv", am4charts.XYChart);
+                chart.scrollbarX = new am4core.Scrollbar();
+
+                // Add data
+                chart.data = [];
+
+                // Set data
+                // var data = [];
+                <?php
+                for ($i = 0; $i < $count; $i++) {
+                ?>
+                    chart.data.push({
+                        x_axes: "On Demo Orders",
+                        value: <?= $chartData[$i]['orders'] ?>
+                    });
+                    chart.data.push({
+                        x_axes: "On Demo Qty",
+                        value: <?= $chartData[$i]['qty'] ?>
+                    });
+                <?php
+                }
+                ?>
+
+                // // Create axes
+                // var categoryAxis = chart.xAxes.push(new am4charts.CategoryAxis());
+                // categoryAxis.dataFields.category = "x_axes";
+                // categoryAxis.renderer.grid.template.location = 0;
+                // categoryAxis.renderer.minGridDistance = 30;
+                // categoryAxis.renderer.labels.template.horizontalCenter = "right";
+                // categoryAxis.renderer.labels.template.verticalCenter = "middle";
+                // categoryAxis.renderer.labels.template.rotation = 270;
+                // categoryAxis.tooltip.disabled = true;
+                // categoryAxis.renderer.minHeight = 110;
+
+                // Create axes
+                var categoryAxis = chart.xAxes.push(new am4charts.CategoryAxis());
+                categoryAxis.renderer.grid.template.location = 0;
+                categoryAxis.dataFields.category = "x_axes";
+                categoryAxis.renderer.minGridDistance = 30;
+                categoryAxis.fontSize = 11;
+                var labelX = categoryAxis.renderer.labels.template;
+                labelX.maxWidth = width;
+                labelX.truncate = true;
+                labelX.wrap = true;
+                labelX.tooltipText = "{x_axes}";
+
+                if (updown) {
+                    labelX.adapter.add("dy", function(dy, target) {
+                        if (target.dataItem && target.dataItem.index & 2 == 2) {
+                            return dy + 25;
+                        }
+                        return dy;
+                    });
+                } else {
+                    labelX.dy = 5;
+                }
+
+
+                var valueAxis = chart.yAxes.push(new am4charts.ValueAxis());
+                valueAxis.renderer.minWidth = 50;
+
+                // Create series
+                var series = chart.series.push(new am4charts.ColumnSeries());
+                series.sequencedInterpolation = true;
+                series.dataFields.valueY = "value";
+                series.dataFields.categoryX = "x_axes";
+                series.tooltipText = "[{categoryX}: bold]{valueY}[/]";
+                series.columns.template.strokeWidth = 0;
+
+                series.tooltip.pointerOrientation = "vertical";
+
+                series.columns.template.column.cornerRadiusTopLeft = 10;
+                series.columns.template.column.cornerRadiusTopRight = 10;
+                series.columns.template.column.fillOpacity = 0.8;
+
+                // on hover, make corner radiuses bigger
+                var hoverState = series.columns.template.column.states.create("hover");
+                hoverState.properties.cornerRadiusTopLeft = 0;
+                hoverState.properties.cornerRadiusTopRight = 0;
+                hoverState.properties.fillOpacity = 1;
+
+                series.columns.template.adapter.add("fill", function(fill, target) {
+                    return chart.colors.getIndex(target.dataItem.index);
+                });
+
+                // Cursor
+                chart.cursor = new am4charts.XYCursor();
+            }); // end am4core.ready()
+        });
+    </script>
+    <style>
+        #chartdiv {
+            width: 100%;
+            height: 500px;
+        }
+    </style>
+    <hr>
+    <h1>On Demo Chart</h1>
+    <div id="chartdiv"></div>
+<?php
+}
+?>

@@ -1,0 +1,50 @@
+<section class="amrepbuilder-entity-block -main"
+         data-bind="
+            visible: !uiClass.isSearched() || entity.searchCount(),
+            css: {
+                '-main': $index() === 0,
+                '-active': entity.isActive,
+            }">
+    <!-- ko template: {
+                name: uiClass.buttonTmpl,
+                data: {
+                    states: { '-active': ( entity.isActive() || uiClass.isSearched() ) },
+                    html: $t(entity.title),
+                    classes: '-title -clear',
+                    events: {
+                        click: function() {
+                            entity.isActive() ? entity.isActive(false) : entity.isActive(true)
+                        }
+                    }
+                }
+            } -->
+    <!-- /ko -->
+
+    <!-- ko if: Object.keys(entity.columns()).length > uiClass.maxColumnQty -->
+        <!-- ko template: {
+                    name: uiClass.buttonTmpl,
+                    data: {
+                        states: { '-active': true },
+                        html: entity.isViewAll() ? $t('Hide') : $t('View All ( +' + (Object.keys(entity.columns()).length - uiClass.maxColumnQty) + ' )'),
+                        classes: '-viewall -clear -link',
+                        visibility: entity.isActive() && !uiClass.isSearched(),
+                        events: {
+                            click: function() {
+                                entity.isViewAll() ? entity.isViewAll(false) : entity.isViewAll(true)
+                            }
+                        }
+                    }
+        } -->
+        <!-- /ko -->
+    <!-- /ko -->
+
+    <!-- ko template: {
+                name: uiClass.columnsListTmpl,
+                data: {
+                    entity: entity,
+                    maxColumnQty: uiClass.maxColumnQty,
+                    uiClass: uiClass
+                }
+    } -->
+    <!-- /ko -->
+</section>

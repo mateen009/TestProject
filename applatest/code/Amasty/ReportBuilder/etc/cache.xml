@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Cache/etc/cache.xsd">
+    <type name="amasty_report_builder_scheme" translate="label,description" instance="Amasty\ReportBuilder\Model\Cache\Type">
+        <label>Amasty Custom Reports Builder</label>
+        <description>Entities scheme storage</description>
+    </type>
+</config>

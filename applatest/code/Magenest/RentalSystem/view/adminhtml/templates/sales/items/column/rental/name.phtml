@@ -1,0 +1,80 @@
+<?php
+/**
+ * @var $block \Magenest\RentalSystem\Block\Adminhtml\Sales\Items\Column\Rental\Name
+ * @see \Magento\Sales\Block\Adminhtml\Items\Column\Name
+ */
+?>
+<?php if ($_item = $block->getItem()): ?>
+
+    <div id="order_item_<?= $block->escapeHtml($_item->getId()) ?>_title"
+         class="product-title">
+        <?= $block->escapeHtml($_item->getName()) ?>
+    </div>
+    <div class="product-sku-block">
+        <span><?= $block->escapeHtml(__('SKU')) ?>:</span> <?= implode('<br />', $this->helper('Magento\Catalog\Helper\Data')->splitSku($block->escapeHtml($block->getSku()))) ?>
+    </div>
+    <br>
+    <div>
+        <?php $buyRequest = $_item->getBuyRequest()->getData(); ?>
+        <?php if (array_key_exists('additional_options', $buyRequest)): ?>
+            <?php $data = $buyRequest['additional_options'] ?>
+            <?php if (!empty($data['options'])) { ?>
+                <?php foreach ($data['options'] as $key => $value): ?>
+                    <?php if (!empty($value)) : ?>
+                        <?php $optionTitleAndPrice = $block->getOptionTitleAndPrice($value) ?>
+                        <span>
+                            <?= $block->escapeHtml($optionTitleAndPrice['option_title'] . ": ") ?>
+                            <?= $block->escapeHtml($optionTitleAndPrice['option_type_title'] . __(' (%1)', $optionTitleAndPrice['price'])) ?>
+                        </span>
+                        <br>
+                    <?php endif; ?>
+                <?php endforeach; ?>
+            <?php } ?>
+            <?php if (!empty($data['rental_from']) && !empty($data['rental_to'])) { ?>
+                <span><?= $block->escapeHtml("From: " . $block->getLocateTime(date('Y-m-d H:i:s', $data['rental_from']))) ?></span><br>
+                <span><?= $block->escapeHtml("To: " . $block->getLocateTime(date('Y-m-d H:i:s', $data['rental_to']))) ?></span><br>
+            <?php } ?>
+        <?php endif; ?>
+    </div>
+    <?php if ($block->getOrderOptions()): ?>
+        <dl class="item-options">
+            <?php foreach ($block->getOrderOptions() as $_option): ?>
+                <dt><?= $block->escapeHtml($_option['label']) ?>:</dt>
+                <dd>
+                    <?php if (isset($_option['custom_view']) && $_option['custom_view']): ?>
+                        <?= $block->getCustomizedOptionValue($_option) ?>
+                    <?php else:
+                        $_option = $block->getFormattedOption($_option['value']);
+                        $dots = 'dots' . uniqid(); ?>
+                        <?= $block->escapeHtml($_option['value']) ?>
+                        <?php if (isset($_option['remainder']) && $_option['remainder']): ?>
+                            <span id="<?= $block->escapeHtml($dots) ?>"> ...</span>
+                            <?php $id = 'id' . uniqid(); ?>
+                            <span id="<?= $block->escapeHtml($id) ?>"><?= $block->escapeHtml($_option['remainder']) ?></span>
+                            <?php
+                            $scriptString = <<<script
+                                require(['prototype'], function () {
+                                    let id = '{$id}', dots = '{$dots}';
+                                    $(id).hide();
+                                    $(id).up().observe('mouseover', function () {
+                                        $(id).show();
+                                        $(dots).hide();
+                                    });
+                                    $(id).up().observe('mouseout', function () {
+                                        $(id).hide();
+                                        $(dots).show();
+                                    });
+                                });
+                            script;
+                            ?>
+                            <?= isset($secureRenderer)
+                                ? $secureRenderer->renderTag('script', [], $scriptString, false)
+                                : '<script>' . $scriptString . '</script>' ?>
+                        <?php endif; ?>
+                    <?php endif; ?>
+                </dd>
+            <?php endforeach; ?>
+        </dl>
+    <?php endif; ?>
+    <?= $block->escapeHtml($_item->getDescription()) ?>
+<?php endif; ?>

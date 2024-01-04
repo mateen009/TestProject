@@ -1,0 +1,85 @@
+//
+//  Report View Page Styles
+//  ______________________________________________
+
+//
+//  Common
+//  ----------------------------------------------
+
+& when (@media-common = true) {
+    .amreportbuilder-report-view {
+        .admin__data-grid-loading-mask {
+            display: none;
+        }
+
+        .main-col {
+            position: relative;
+        }
+
+        .admin__data-grid-outer-wrap {
+            position: static;
+        }
+
+        .admin__data-grid-action-bookmarks {
+            display: none;
+        }
+    }
+
+    .amreportbuilder-report-view.-amreportbuilder-sidebar {
+        .page-header {
+            margin-bottom: 0;
+            padding: 1.3rem 3rem;
+            border-bottom: 1px solid @amrepbuilder-block__border-color;
+        }
+
+        .page-main-actions .page-title-wrapper {
+            float: left;
+            margin: 0;
+            max-width: 70%;
+            color: @amrepbuilder-text-color;
+            font-weight: 600;
+            font-size: 2.8rem;
+        }
+
+        .page-header-actions {
+            padding-top: 0;
+            width: 100%;
+        }
+
+        .page-content {
+            background: #f4f7fc;
+        }
+
+        .page-main-actions:not(._hidden) {
+            margin: (@amrepbuilder__indent__l * 2) 0 (@amrepbuilder__indent__m * 2);
+            padding: 0;
+            border: none;
+            background: transparent;
+        }
+
+        .page-main-actions .page-actions._fixed {
+            border-top: 0;
+            border-bottom: 1px solid @amrepbuilder-block__border-color;
+            background: @amrepbuilder-block__background;
+        }
+
+        .admin__data-grid-header-row .admin__action-dropdown {
+            background: transparent;
+        }
+
+        .notices-wrapper {
+            min-height: auto;
+        }
+
+        .admin__data-grid-header {
+            margin-top: @amrepbuilder__indent__l;
+        }
+
+        .amrepbuilder-chart-wrapper {
+            margin-bottom: 4rem;
+            border-radius: 6px;
+            background: @amrepbuilder-block__background;
+            box-shadow: 0 2px 8px rgba(23, 63, 224, .1);
+        }
+    }
+}

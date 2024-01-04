@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <type name="Magento\Customer\Block\Adminhtml\Group\Edit\Form">
+        <plugin name="cminds_oapm_add_form_field" type="Cminds\Oapm\Plugin\Customer\Group\Model\Form" sortOrder="1"/>
+    </type>
+    <type name="Magento\Customer\Model\ResourceModel\Group">
+        <plugin name="cminds_oapm_before_save_group" type="Cminds\Oapm\Plugin\Customer\Group\Model\ResourceModel\Group" sortOrder="1" />
+    </type>
+</config>

@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<listing xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd">
+    <argument name="data" xsi:type="array">
+        <item name="js_config" xsi:type="array">
+            <item name="provider" xsi:type="string">
+                amreportbuilder_view_listing.amreportbuilder_view_listing_data_source
+            </item>
+        </item>
+        <item name="buttons" xsi:type="array">
+            <item name="back" xsi:type="array">
+                <item name="name" xsi:type="string">back</item>
+                <item name="label" xsi:type="string" translate="true">Back</item>
+                <item name="class" xsi:type="string">back</item>
+                <item name="url" xsi:type="string">*/report/index</item>
+            </item>
+            <item name="edit" xsi:type="string">Amasty\ReportBuilder\Ui\Component\Listing\View\Buttons\EditButton</item>
+        </item>
+    </argument>
+    <settings>
+        <deps>
+            <dep>amreportbuilder_view_listing.amreportbuilder_view_listing_data_source</dep>
+        </deps>
+    </settings>
+    <container name="amrepbuilder_loader" component="Amasty_ReportBuilder/js/components/loader">
+        <argument name="data" xsi:type="array">
+            <item name="config" xsi:type="array">
+                <item name="uniq_name" xsi:type="string">loader</item>
+            </item>
+        </argument>
+    </container>
+    <container name="amrepbuilder_chart" component="Amasty_ReportBuilder/js/charts/linear-chart">
+        <argument name="data" xsi:type="array">
+            <item name="config" xsi:type="array">
+                <item name="uniq_name" xsi:type="string">chart</item>
+            </item>
+        </argument>
+    </container>
+    <container name="custom_tab_container">
+        	<htmlContent name="html_content">
+            	<argument name="block" xsi:type="object">Amasty\ReportBuilder\Block\Adminhtml\Chart\Chart</argument>
+        	</htmlContent>
+    	</container>
+    <container name="amrepbuilder_charts_toolbar" component="Amasty_ReportBuilder/js/charts/toolbar">
+        <argument name="data" xsi:type="array">
+            <item name="config" xsi:type="array">
+                <item name="uniq_name" xsi:type="string">toolbar</item>
+            </item>
+        </argument>
+    </container>
+    <dataSource name="amreportbuilder_view_listing_data_source" component="Magento_Ui/js/grid/provider">
+        <settings>
+            <updateUrl path="mui/index/render"/>
+            <filterUrlParams>
+                <param name="report_id">*</param>
+            </filterUrlParams>
+            <storageConfig>
+                <param name="cacheRequests" xsi:type="boolean">false</param>
+            </storageConfig>
+        </settings>
+        <aclResource>Amasty_ReportBuilder::report_view</aclResource>
+        <dataProvider class="Amasty\ReportBuilder\Ui\DataProvider\Listing\View\DataProvider"
+                      name="amreportbuilder_view_listing_data_source">
+            <settings>
+                <requestFieldName>id</requestFieldName>
+                <primaryFieldName>id</primaryFieldName>
+            </settings>
+        </dataProvider>
+    </dataSource>
+    <listingToolbar name="listing_top">
+        <settings>
+            <sticky>true</sticky>
+        </settings>
+        <bookmark name="bookmarks" class="Amasty\ReportBuilder\Ui\Component\Listing\View\Bookmark">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="uniq_name" xsi:type="string">bookmarks</item>
+                </item>
+            </argument>
+        </bookmark>
+        <columnsControls name="columns_controls"/>
+        <filters name="listing_filters"/>
+        <paging name="listing_paging"/>
+        <exportButton name="export_button" component="Amasty_ReportBuilder/js/grid/export">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="confirmMessage" xsi:type="string" translate="true">The report can take a few minutes to export. Please make sure to leave this tab open until the export is complete. Continue?</item>
+                </item>
+            </argument>
+            <settings>
+                <options>
+                    <option name="xml" xsi:type="array">
+                        <item name="disabled" xsi:type="boolean">true</item>
+                    </option>
+                </options>
+                <additionalParams>
+                    <param xsi:type="string" name="report_id">*</param>
+                </additionalParams>
+                <imports>
+                    <link name="report_id">${ $.provider }:report_id</link>
+                </imports>
+            </settings>
+        </exportButton>
+    </listingToolbar>
+    <columns name="view_columns" class="Amasty\ReportBuilder\Ui\Component\Listing\View\Columns">
+        <argument name="data" xsi:type="array">
+            <item name="config" xsi:type="array">
+                <item name="resizeConfig" xsi:type="array">
+                    <item name="enabled" xsi:type="boolean">true</item>
+                </item>
+            </item>
+        </argument>
+    </columns>
+</listing>

@@ -1,0 +1,42 @@
+<div class="amrepbuilder-column-filter -date -range"
+     data-bind="afterRender: function(node) {
+                    $parent.initDatePicker(node, $data);
+                }">
+    <label class="amrepbuilder-label">
+        <span class="amrepbuilder-text" data-bind="i18n: 'From'"></span>
+        <input class="amrepbuilder-input -from"
+               name="from"
+               data-bind="
+                   attr: {
+                        id: 'datepicker-from-' + $data.name
+                   },
+                   value: $data.filtration.value.from" />
+        <!-- ko template: $parent.templates.calendarIcon --><!-- /ko -->
+    </label>
+    <label class="amrepbuilder-label">
+        <span class="amrepbuilder-text" data-bind="i18n: 'To'"></span>
+        <input class="amrepbuilder-input -to"
+               name="to"
+               data-bind="
+                   attr: {
+                        id: 'datepicker-to-' + $data.name
+                   },
+                   value: $data.filtration.value.to" />
+        <!-- ko template: $parent.templates.calendarIcon --><!-- /ko -->
+    </label>
+</div>
+
+<!-- ko template: {
+            name: $parent.templates.filterToolbar,
+            data: {
+                uiClass: $parent,
+                cancelListener: function() {
+                    $parent.clearRange($data);
+                },
+                applyListener: function() {
+                    $parent.applyFiltration($data);
+                },
+                applyStates: { '-disabled': $data.filtration.isEmpty }
+            }
+        } -->
+<!-- /ko -->

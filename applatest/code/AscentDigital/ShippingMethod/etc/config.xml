@@ -1,0 +1,26 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
+    <default>
+        <carriers>
+            <ups_carrier>
+                <active>0</active>
+                <title>UPS CARRIER</title>
+                <name>UPS</name>
+                <shipping_cost>0</shipping_cost>
+                <sallowspecific>0</sallowspecific>
+                <sort_order>15</sort_order>
+                <model>AscentDigital\ShippingMethod\Model\Carrier\Customshipping</model>
+            </ups_carrier>
+            <fedex_carrier>
+                <active>0</active>
+                <title>FEDEX CARRIER</title>
+                <name>FEDEX</name>
+                <shipping_cost>0</shipping_cost>
+                <sallowspecific>0</sallowspecific>
+                <sort_order>20</sort_order>
+                <model>AscentDigital\ShippingMethod\Model\Carrier\FEDEXShipping</model>
+            </fedex_carrier>
+        </carriers>
+    </default>
+</config>

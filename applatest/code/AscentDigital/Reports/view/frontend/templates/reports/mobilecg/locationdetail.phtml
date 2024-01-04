@@ -1,0 +1,29 @@
+<!-- <style>
+    .block-title{
+        display: none;
+    }
+    .empty{
+        display: none;
+    }
+</style> -->
+<?php
+$locationDetail = $block->getLocationDetails();
+$itemId = $locationDetail->getItemId();
+$product = $block->getProduct($itemId);
+if ($product){
+    // die('dfgd');
+    $sku = $product->getName();
+    $title = $product->getShortDescription();
+} else {
+    $sku = '';
+    $title = '';
+}
+?>
+<!-- <div class="row"> -->
+      
+    <p><b>MCG SKU: </b><?=$sku?></p>
+    <p><b>Item Title: </b><?=$title?></p>
+    <p><b>Location Name: </b><?=$locationDetail->getLocationName()?></p>
+    <p><b>Qty: </b><?=$locationDetail->getQty()?></p>
+    
+  <!-- </div> -->

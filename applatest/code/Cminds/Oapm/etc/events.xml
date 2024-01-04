@@ -1,0 +1,46 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Event/etc/events.xsd">
+    <event name="payment_method_assign_data_cminds_oapm">
+        <observer name="cminds_oapm_payment_method_assign_data_cminds_oapm"
+                  instance="Cminds\Oapm\Observer\PaymentMethodAssignDataCmindsOapmObserver" />
+    </event>
+    <!-- restriction oapm payment if on oapm checkout confirmation -->
+    <event name="payment_method_is_active">
+        <observer name="cminds_oapm_payment_method_is_active"
+                  instance="Cminds\Oapm\Observer\PaymentMethodIsActiveObserver" />
+    </event>
+    <!-- remove redundant shipping and billing addresses entities, replace payments -->
+    <event name="sales_model_service_quote_submit_before">
+        <observer name="cminds_oapm_sales_model_service_quote_submit_before"
+                  instance="Cminds\Oapm\Observer\SalesModelServiceQuoteSubmitBeforeObserver" />
+    </event>
+    <!-- set custom success template -->
+    <event name="checkout_onepage_controller_success_action">
+        <observer name="cminds_oapm_checkout_onepage_controller_success_action"
+                  instance="Cminds\Oapm\Observer\AddCustomerDataOrderSuccessObserver" />
+    </event>
+    <!-- trigger EVENT_STATUS_UPDATE_CANCELED on oapm cancelation -->
+    <event name="cminds_oapm_order_save_after">
+        <observer name="cminds_oapm_order_save_after"
+                  instance="Cminds\Oapm\Observer\CmindsOapmOrderSaveAfterObserver" />
+    </event>
+    <event name="cminds_oapm_order_update_status_canceled">
+        <observer name="cminds_oapm_order_update_status_canceled"
+                  instance="Cminds\Oapm\Observer\CmindsOapmOrderUpdateStatusCanceledObserver" />
+    </event>
+    <!-- Order canceled notifications -->
+    <event name="sales_order_save_commit_after">
+        <observer name="cminds_oapm_sales_order_save_commit_after"
+                  instance="Cminds\Oapm\Observer\SalesOrderSaveCommitAfterObserver" />
+    </event>
+    <!-- modify billing address entity - set save to address book to 0  -->
+    <event name="checkout_submit_before">
+        <observer name="cminds_oapm_checkout_submit_before"
+                  instance="Cminds\Oapm\Observer\CheckoutSubmitBeforeObserver" />
+    </event>
+    <!-- remove oapm objects from session -->
+    <event name="checkout_submit_all_after">
+        <observer name="cminds_oapm_checkout_submit_all_after"
+                  instance="Cminds\Oapm\Observer\CheckoutSubmitAllAfterObserver" />
+    </event>
+</config>

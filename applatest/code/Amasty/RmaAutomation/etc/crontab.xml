@@ -1,0 +1,8 @@
+<?xml version="1.0" ?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Cron:etc/crontab.xsd">
+    <group id="default">
+        <job instance="Amasty\RmaAutomation\Cron\RmaUpdate" method="execute" name="amrmaaut_rma_update">
+            <config_path>amrmaaut/general/cron_expr</config_path>
+        </job>
+    </group>
+</config>

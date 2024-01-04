@@ -1,0 +1,669 @@
+<?php
+/**
+ * Copyright © 2019 Magenest. All rights reserved.
+ * See COPYING.txt for license details.
+ */ ?>
+<?php /** @var $block \Magenest\RentalSystem\Block\Product\Rental */
+$block->initRental();
+$symbol         = $block->getCurrencySymbol();
+$priceData      = $block->getRentalPrice();
+$ruleString     = $block->getRuleString();
+$taxRate        = $block->getTaxRate();
+$rentalOptions  = $block->getRentalOptions();
+$leadTime       = $block->isShipping();
+$pickupAddress  = $block->isPickup();
+$policyRequired = $block->isPolicyRequired();
+$policyErrorMsg = $block->getPolicyErrorMsg();
+$deliveryType   = $block->getType();
+$duration       = $block->getMaxDuration();
+$advance        = $block->getMaxAdvance();
+$daysOff        = $block->getDaysOff();
+$weekOff        = (int)$block->isWeekOff();
+$daysLabel      = $block->getDaysOfWeek();
+$monthsLabel    = $block->getMonthLabels();
+$selectButton   = $block->getSelectButton();
+$clearButton    = $block->getClearButton();
+$dateFormat     = $block->getDateFormat();
+$timeFormat     = $block->getTimeFormat();
+$firstDay       = $block->getFirstDay();
+$workHours      = $block->getWorkHours();
+$priceFormat    = $block->getPriceFormatArray();
+$editOptions    = $block->getEditOptions();
+$holidays       = $block->getHolidays();
+
+?>
+
+<div class="rental-wrapper" id="rental-wrapper" data-hasrequired="* Required Fields">
+    <div class="rental-price-info" id="rental-price-info">
+        <?php if (!empty($priceData)) { ?>
+            <?php if ($priceData['add_price'] > 0 && $priceData['add_hour'] > 0) : ?>
+                <div class="rental-price base" id="rental-price-base">
+                    <div class="rental-price-item">
+                        <?= __(
+                            '<span>%1</span> for the first %2 %3',
+                            $block->getLocatePrice($priceData['base_price'] * $taxRate),
+                            $priceData['base_period'][0],
+                            __($priceData['base_period'][1])
+                        ) ?>
+                    </div>
+                </div>
+                <div class="rental-price add" id="rental-price-add">
+                    <div class="rental-price-item">
+                        <?= __(
+                            '<span>%1</span> for every extra %2 %3',
+                            $block->getLocatePrice($priceData['add_price'] * $taxRate),
+                            $priceData['add_period'][0],
+                            __($priceData['add_period'][1])
+                        ) ?>
+                    </div>
+                </div>
+            <?php else  : ?>
+                <div class="rental-price-base" id="rental-price-base">
+                    <div class="rental-price-item">
+                        <?= __(
+                            '<span>%1</span> for every %2 %3',
+                            $block->getLocatePrice($priceData['base_price'] * $taxRate),
+                            $priceData['base_period'][0],
+                            __($priceData['base_period'][1])
+                        ) ?>
+                    </div>
+                </div>
+            <?php endif; ?>
+        <?php } ?>
+        <?php if (!empty($ruleString)) { ?>
+            <strong><?= $block->escapeHtml(__("Available Discount:")) ?></strong>
+            <?php foreach ($ruleString as $rule): ?>
+                <div><?= $block->escapeHtml($rule) ?></div>
+            <?php endforeach; ?>
+        <?php } ?>
+    </div>
+    <br>
+    <div class="rental-delivery" id="rental-delivery">
+        <?php if ($leadTime > 0) : ?>
+            <div class="rental-delivery-ship" id="rental-delivery-info">
+                <p><?= $block->escapeHtml(__('Approximate ship time') . ': ' . $leadTime . ' ' . __('days')) ?></p>
+            </div>
+        <?php endif; ?>
+        <?php if (!empty($pickupAddress)) : ?>
+            <div class="rental-delivery-local" id="rental-delivery-info">
+                <p><?= $block->escapeHtml(__('Pickup Address') . ': ' . $pickupAddress) ?></p>
+                <iframe width="100%" height="100%" frameborder="1" style="border:0;display: inline-block;"
+                        src="https://www.google.com/maps/embed/v1/place?key=<?= $block->getGoogleApiKey() ?>
+                        &q=<?= str_replace(' ', '+', $pickupAddress) ?>"
+                        allowfullscreen>
+                </iframe>
+            </div>
+        <?php endif; ?>
+    </div>
+    <div class="rental-time block-content" id="rental-time">
+        <label style="display: inline-block; width: 245px;">
+            <input id="rentfrom" type="text"
+                   placeholder="Select date"
+                   style="background: url('<?= $this->getViewFileUrl('Magenest_RentalSystem::images/calendar.png') ?>') no-repeat scroll 4px 4px;
+                           background-size: 22px 22px;
+                           padding-left:30px;"
+                   name="rentfrom"
+                   autocomplete="off"/>
+        </label>
+        <label style="display: inline-block; width: 245px;">
+            <input id="rentto" type="text"
+                   placeholder="Select date"
+                   style="background: url('<?= $this->getViewFileUrl('Magenest_RentalSystem::images/calendar.png') ?>') no-repeat scroll 4px 4px;
+                           background-size: 22px 22px;
+                           padding-left:30px;"
+                   name="rentto"
+                   autocomplete="off"/>
+        </label>
+    </div>
+    <div class="fieldset_form" tabindex="0">
+        <?php foreach ($rentalOptions as $rentalOption) : ?>
+            <?php $types = $block->getOptionTypes($rentalOption['id']);
+            $priceType   = $block->getOptionPriceType($rentalOption['type']); ?>
+            <div class="field  <?php if ($rentalOption['is_required'] == 1) {
+                echo 'required';
+            } ?>">
+                <?php if (!empty($types)): ?>
+                    <br>
+                    <label class="label_rule" for="rental_select_form">
+                        <span class="label_rule <?= $block->escapeHtml($rentalOption['is_required'] == 1 ? 'option_required' : '') ?>">
+                            <?= $block->escapeHtml($rentalOption['option_title']) ?></span>
+                    </label>
+                    <div class="control">
+                        <label>
+                            <select id="option_<?= $block->escapeHtml($rentalOption['id']) ?>"
+                                    name="additional_options[options][<?= $block->escapeHtml($rentalOption['id']) ?>]"
+                                    class="
+                                        <?= $block->escapeHtml($rentalOption['is_required'] == 1 ? 'required' : '') ?>
+                                        admin__control-select
+                                        rental_select_form
+                                    ">
+                                <option value=""><?= $block->escapeHtml(__('Select ...')) ?></option>
+                                <?php foreach ($types as $type) : ?>
+                                    <option
+                                            id="rental_select_<?= $block->escapeHtml($type['id']) ?>"
+                                            class="picker"
+                                            name="drop_down_option"
+                                            value="<?= $block->escapeHtml(
+                                                $type['price'] . "_"
+                                                . $type['id'] . "_"
+                                                . $rentalOption['id'] . "_"
+                                                . preg_replace('~_~', '', $rentalOption['type']))
+                                            ?>"
+                                    >
+                                        <?php if ($type['price'] > 0) : ?>
+                                            <?php if (!empty($priceType)) : ?>
+                                                <?= $block->escapeHtml($type['option_title'] . " +" . $block->getLocatePrice($type['price'] * $taxRate) . '/' . __($priceType)) ?>
+                                            <?php else : ?>
+                                                <?= $block->escapeHtml($type['option_title'] . " +" . $block->getLocatePrice($type['price'] * $taxRate)) ?>
+                                            <?php endif; ?>
+                                        <?php else : ?>
+                                            <?= $block->escapeHtml($type['option_title']) ?>
+                                        <?php endif; ?>
+                                    </option>
+                                <?php endforeach; ?>
+                            </select>
+                        </label>
+                    </div>
+                <?php endif ?>
+            </div>
+        <?php endforeach; ?>
+    </div>
+
+    <?php if ($deliveryType == 1) : ?>
+        <input id="product_rental_pickup" name="additional_options[local_pickup]" style="display: none" value="1">
+    <?php endif; ?>
+    <?php if ($deliveryType == 2) : ?>
+        <?php
+        $scriptString = <<<script
+            require(['jquery'], function ($) {
+                $(document).ready(function () {
+                    $('.rental-delivery-local').css('display', 'none');
+                });
+            });
+        script;
+        ?>
+        <?= isset($secureRenderer)
+            ? $secureRenderer->renderTag('script', [], $scriptString, false)
+            : '<script>' . $scriptString . '</script>' ?>
+        <div style="padding-bottom: 5px; padding-top: 5px;"><?= $block->escapeHtml(__('Delivery Type') . ':') ?></div>
+        <select name="additional_options[local_pickup]" id="chosen">
+            <option value="0" selected="selected"><?= $block->escapeHtml(__('Shipping')) ?></option>
+            <option value="1"><?= $block->escapeHtml(__('Local Pickup')) ?></option>
+        </select>
+    <?php endif; ?>
+
+    <?php if ($policyRequired == 1) : ?>
+        <div class="field choice admin__field admin__field-option ">
+            <input id="rental_policy_checkbox" type="checkbox">
+            <label for="rental_policy_checkbox"><?= $block->getConfirmationStr() ?></label>
+        </div>
+    <?php endif; ?>
+    <input id="product_rental_price" name="additional_options[rental_price]" style="display: none">
+    <input id="product_rental_from" name="additional_options[rental_from]" style="display: none">
+    <input id="product_rental_to" name="additional_options[rental_to]" style="display: none">
+    <input id="product_rental_from_utc" name="additional_options[rental_from_utc]" style="display: none">
+    <input id="product_rental_to_utc" name="additional_options[rental_to_utc]" style="display: none">
+    <input id="product_rental_start" name="additional_options[rental_start]" style="display: none">
+    <input id="product_rental_hour" name="additional_options[rental_hours]" style="display: none">
+    <input id="product_rental_showTime" name="additional_options[has_time]" style="display: none" value="0">
+
+</div>
+
+<style>
+    .rental-wrapper div span p {
+        display: inline-block;
+        max-width: 100%;
+    }
+
+    .label_rule .option_required::after {
+        content: ' *';
+        color: red;
+    }
+</style>
+
+<?php
+$rentalRuleJs = $block->getRentalRule(true);
+$scriptString = <<<script
+    require([
+        "jquery",
+        "jquery/ui",
+        "mage/translate",
+        "rental_daterangepicker",
+        "Magento_Catalog/js/price-utils"
+    ], function ($) {
+        var priceUtils = require('Magento_Catalog/js/price-utils');
+        var priceFormat = JSON.parse('{$priceFormat}');
+        var addToCart = $("#product-addtocart-button");
+        var datefrom = $('input[name="rentfrom"]');
+        var dateto = $('input[name="rentto"]');
+        var viewPolicy = $('#policy_read');
+        var basePrice = '{$priceData['base_price']}';
+        var basePeriod = '{$priceData['base_hour']}';
+        var addPrice = '{$priceData['add_price']}';
+        var addPeriod = '{$priceData['add_hour']}';
+        var taxRate = parseFloat('{$taxRate}');
+        var leadTime = '{$leadTime}';
+        var maxDuration = '{$duration}';
+        var maxAdvance = '{$advance}';
+        var days = JSON.parse('{$daysOff}');
+        var dayOff = 0;
+        var weekOff = '{$weekOff}';
+        var today = new Date();
+        var workHours = JSON.parse('{$workHours}');
+        var startHour = parseInt(workHours[0]);
+        var endHour = parseInt(workHours[1]);
+        var daysOfWeek = JSON.parse('{$daysLabel}');
+        var monthNames = JSON.parse('{$monthsLabel}');
+        var applyLabel = '{$selectButton}';
+        var cancelLabel = '{$clearButton}';
+        var dateFormat = '{$dateFormat}';
+        var firstDay = {$firstDay};
+        var policyErrorMsg = '{$policyErrorMsg}';
+        var editOptions = '{$editOptions}';
+        var priceRule = {$rentalRuleJs};
+        var existingFrom = '';
+        var durationMsg = $.mage.__('Please select rent duration!');
+        var productPrice = $('.price-wrapper[data-price-type="finalPrice"]').get(0);
+        var priceSpan = $('.price-wrapper[data-price-type="finalPrice"]');
+        var currentPrice = productPrice.getAttribute("data-price-amount");
+        var productPriceRental = document.getElementById("product_rental_price");
+        var productRentalFrom = document.getElementById("product_rental_from");
+        var productRentalTo = document.getElementById("product_rental_to");
+        var productRentalFromUTC = document.getElementById("product_rental_from_utc");
+        var productRentalToUTC = document.getElementById("product_rental_to_utc");
+        var productRentalStart = document.getElementById("product_rental_start");
+        var productRentalHour = document.getElementById("product_rental_hour");
+        var hasTime = document.getElementById("product_rental_showTime");
+        var moment = require('moment');
+        var timePicker = true;
+        var showTime = '{$timeFormat}';
+        var duration = 0;
+        var optionPriceTotal = 0;
+        var priceArray = [];
+        var holidays = JSON.parse('{$holidays}');
+        datefrom.before($.mage.__('From') + ":");
+        dateto.before($.mage.__('To') + ":");
+
+        var dayOfWeek = today.getDay();
+        if (days.indexOf(dayOfWeek.toString()) > -1) {
+            dayOff += 1;
+            offsetDayOff(today.setDate(today.getDate() + 1));
+        }
+
+        function offsetDayOff(today) {
+            today = new Date(today);
+            var dayOfWeek = today.getDay();
+            if (days.indexOf(dayOfWeek.toString()) > -1 && dayOff < 7) {
+                dayOff += 1;
+                offsetDayOff(today.setDate(today.getDate() + 1));
+            }
+        }
+
+
+        maxDuration = parseInt(maxDuration) + dayOff;
+
+        var minDate = moment().add(dayOff + parseInt(leadTime), 'day').startOf('day').add(startHour, 'hour');
+        var maxDate = moment().add(dayOff + parseInt(leadTime) + parseInt(maxAdvance) + parseInt(leadTime), 'day').startOf('day').add(startHour, 'hour');
+
+        $("select").each(function () {
+            this.selectedIndex = 0
+        });
+
+        var productPriceSpan = $(productPrice).find('span');
+        productPriceSpan.text(priceUtils.formatPrice(basePrice * taxRate, priceFormat));
+        productPriceRental.value = basePrice;
+        currentPrice = parseFloat(basePrice);
+
+        hasTime.value = 1;
+        var startTime = '';
+
+        dateto.attr('disabled', true);
+
+        var timeFormat = dateFormat + showTime;
+
+        // parsing date without timezone inconsistency, input format y-m-d
+        function parseDate(input) {
+            let parts = input.split('-');
+            return new Date(parts[0], parts[1]-1, parts[2]);
+        }
+
+        datefrom.daterangepicker({
+            timePicker: timePicker,
+            autoUpdateInput: false,
+            minDate: minDate,
+            maxDate: maxDate,
+            timePickerIncrement: 60,
+            timePicker24Hour: true,
+            startHour: startHour,
+            endHour: endHour,
+            singleDatePicker: true,
+            locale: {
+                format: timeFormat,
+                cancelLabel: cancelLabel,
+                applyLabel: applyLabel,
+                daysOfWeek: daysOfWeek,
+                monthNames: monthNames,
+                firstDay: firstDay
+            },
+            isInvalidDate: function (date) {
+                if (days.indexOf(date.format('d')) > -1) {
+                    return true;
+                }
+            },
+            setHolidays: function (date) {
+                if (holidays.indexOf(date.format('YYYY/MM/DD')) > -1) {
+                    return true;
+                }
+            },
+            isDiscountedDate: function(date) {
+                for (let rule of priceRule) {
+                    let fromDate = moment(parseDate(rule.from_date)),
+                        toDate = moment(parseDate(rule.to_date));
+                    if (date >= fromDate && date <= toDate) {
+                        return true;
+                    }
+                }
+            }
+        }, function (start) {
+            startTime = start.valueOf();
+        });
+
+        /*generate end date dateto dynamically */
+        datefrom.on('apply.daterangepicker', function (ev, picker) {
+            var startDate = (picker == null) ? existingFrom : picker.startDate;
+            $(this).val(startDate.format(dateFormat + showTime));
+            //add min 1 hour to rent duration
+            var minDateTo = new Date(startDate.valueOf() + 1000 * 60 * 60);
+            //add duration to max, subtract the 1 hour added to min
+            var maxDateTo = new Date(minDateTo.getTime() + 1000 * 60 * 60 * (24 * (maxDuration - parseInt(leadTime)) - 1));
+            productRentalStart.value = startDate.valueOf();
+            dateto.attr('disabled', false);
+            resetPriceArray();
+            duration = 0;
+            getPrice(0);
+            dateto.val('');
+            dateto.daterangepicker({
+                timePicker: timePicker,
+                autoUpdateInput: false,
+                minDate: minDateTo,
+                maxDate: maxDateTo,
+                timePickerIncrement: 60,
+                timePicker24Hour: true,
+                startHour: startHour,
+                endHour: endHour,
+                singleDatePicker: true,
+                cancelClass: 'btn-clearTo',
+                locale: {
+                    format: timeFormat,
+                    cancelLabel: cancelLabel,
+                    applyLabel: applyLabel,
+                    daysOfWeek: daysOfWeek,
+                    monthNames: monthNames,
+                    firstDay: firstDay
+                },
+                isInvalidDate: function (date) {
+                    if (days.indexOf(date.format('d')) > -1) {
+                        return true;
+                    }
+                },
+                setHolidays: function (date) {
+                    if (holidays.indexOf(date.format('YYYY/MM/DD')) > -1) {
+                        return true;
+                    }
+                },
+                isDiscountedDate: function (date) {
+                    for (let rule of priceRule) {
+                        let fromDate = moment(parseDate(rule.from_date)),
+                            toDate = moment(parseDate(rule.to_date));
+                        if (date >= fromDate && date <= toDate) {
+                            return true;
+                        }
+                    }
+                }
+            }, function (start, end) {
+                update(end);
+            });
+        });
+
+        /*clear duration when canceling from datefrom*/
+        datefrom.on('cancel.daterangepicker', function (ev, picker) {
+            dateto.attr('disabled', true);
+            $(this).val('');
+            resetPriceArray();
+            duration = 0;
+            getPrice(0);
+            dateto.val('');
+        });
+
+        datefrom.on("cut copy paste contextmenu keydown keypress keyup", function (e) {
+            e.preventDefault();
+        });
+        dateto.on("cut copy paste contextmenu keydown keypress keyup", function (e) {
+            e.preventDefault();
+        });
+
+        /*clear duration when canceling to dateto*/
+        $(document).on('click', ".btn-clearTo", function () {
+            resetPriceArray();
+            duration = 0;
+            getPrice(0);
+            dateto.val('');
+        });
+
+        viewPolicy.click(function (event) {
+            event.preventDefault();
+            //for column layout
+            $('.product.data.items [data-role="content"]').each(function (index) {
+                if (this.id == 'policy.tab') {
+                    $('.product.data.items').tabs('activate', index);
+                    $('html, body').animate({
+                        scrollTop: $('#rental_policy-form').offset().top - 50
+                    }, 'slow');
+                }
+            });
+            //for full width layout
+            $('.product-full-width-section').children().each(function () {
+                if (this.id == 'rental_policy-form') {
+                    $('html, body').animate({
+                        scrollTop: $('#rental_policy-form').offset().top - 50
+                    }, 'slow');
+                }
+            });
+        });
+
+        $(".rental_select_form").change(function () {
+            var strDrop = $(this).val();
+            if (strDrop === "") {
+                var id = $(this).attr("name").substring(28);
+                id = id.substring(0, id.indexOf("]"));
+                changePriceArray(id, "null", "null");
+            } else {
+                var resDrop = strDrop.split("_");
+                changePriceArray(resDrop[2], resDrop[0], resDrop[3]);
+            }
+        });
+
+        //load out selected params from cart
+        if (editOptions.length > 0) {
+            setTimeout(function () {
+                updateExisting(editOptions)
+            }, 1000);
+        }
+
+        function updateExisting(editOptions) {
+            var existing = JSON.parse(editOptions);
+            datefrom.data().daterangepicker.setStartDate(existing.rental_from * 1000);
+            existingFrom = moment.unix(parseInt(existing.rental_from));
+            datefrom.trigger('apply.daterangepicker');
+
+            update(moment.unix(parseInt(existing.rental_to)));
+
+            $.each(existing.options, function (index, value) {
+                if (value.length > 0) {
+                    let optionData = value.split('_');
+                    $("#option_" + index + " option[id='rental_select_" + parseInt(optionData[1]) + "']").attr("selected", "selected").change();
+                }
+            });
+        }
+
+        function update(end) {
+            dateto.val(end.format(dateFormat + showTime));
+            var fromStamp = parseInt(productRentalStart.value);
+            var duration = getDurationInHour(fromStamp, end);
+            getPrice(duration);
+        }
+
+        function getDurationInHour(start, end) {
+            productRentalFrom.value = Math.round(start / 1000);
+            productRentalTo.value = Math.round(end / 1000);
+            productRentalFromUTC.value = Math.round(getUTCTimestamp(start) / 1000);
+            productRentalToUTC.value = Math.round(getUTCTimestamp(end) / 1000);
+            duration = Math.abs(end - start) / 36e5;
+            productRentalHour.value = Math.ceil(duration);
+            return Math.ceil(duration);
+        }
+
+        function getPrice(duration) {
+            resetPriceArray();
+            var periods = duration / parseInt(basePeriod);
+            if (periods <= 1) {
+                changePriceShow(applyRule(basePrice, duration));
+            } else {
+                if (parseFloat(addPrice) > 0 && parseInt(addPeriod) > 0) {
+                    var extraDuration = duration - basePeriod;
+                    var newPrice = (parseFloat(basePrice) + (addPrice * Math.ceil(extraDuration / addPeriod))).toFixed(2);
+                    changePriceShow(applyRule(newPrice, duration));
+                } else {
+                    var newPrice = Math.ceil(periods) * basePrice;
+                    changePriceShow(applyRule(newPrice, duration));
+                }
+            }
+        }
+
+        // generate timestamp without local timezone
+        function getUTCTimestamp(timestamp) {
+            let oldDate = new Date(timestamp);
+            return Date.UTC(oldDate.getFullYear(), oldDate.getMonth(), oldDate.getDate(), oldDate.getHours());
+        }
+
+        function applyRule(price, rentHour) {
+            let period, fromDate, toDate,
+                rentalFrom = new Date(productRentalFrom.value * 1000),
+                rentalTo = new Date(productRentalTo.value * 1000),
+                finalPrice = price, duration = rentHour,
+                finalRule = [];
+            for (let rule of priceRule) {
+                fromDate = parseDate(rule.from_date);
+                toDate = parseDate(rule.to_date);
+                if ((rentalFrom < fromDate && rentalTo < fromDate) || (rentalFrom > toDate && rentalTo > toDate)) {
+                    continue;
+                }
+                if (rule.simple_action === "to_percent" || rule.simple_action === "to_fixed") {
+                    finalRule.push(rule);
+                    continue;
+                }
+                if (fromDate > rentalFrom) {
+                    duration -= Math.abs(fromDate - rentalFrom) / 36e5;
+                }
+                if (rentalTo > toDate) {
+                    duration -= Math.abs(rentalTo - toDate) / 36e5;
+                }
+                switch (parseInt(rule.repeat_type)) {
+                    case 1:
+                        period = Math.floor(duration / (parseInt(rule.repeat_period) * 24));
+                        break;
+                    case 2:
+                        period = Math.floor(duration / (parseInt(rule.repeat_period) * 24 * 30));
+                        break;
+                    default:
+                        period = Math.floor(duration / parseInt(rule.repeat_period));
+                }
+                if (period < 0) continue;
+                if (rule.simple_action === "by_percent") {
+                    finalPrice = finalPrice - (basePrice * rule.discount_amount / 100) * period;
+                } else {
+                    finalPrice = finalPrice - rule.discount_amount * period;
+                }
+            }
+            for (let rule of finalRule) {
+                if (rule.simple_action === "to_percent") {
+                    finalPrice = finalPrice * (100 - rule.discount_amount) / 100;
+                } else {
+                    finalPrice = finalPrice - rule.discount_amount;
+                }
+            }
+
+            return finalPrice > 0 ? finalPrice : 0;
+        }
+
+        function changePriceArray(optionId, optionPrice, priceType) {
+            if (optionPrice !== "null") {
+                optionPrice = parseFloat(optionPrice).toFixed(2);
+                if (priceType === 'perhour') {
+                    optionPrice = optionPrice * duration;
+                } else if (priceType === 'perday') {
+                    optionPrice = optionPrice * Math.ceil(duration / 24);
+                }
+            }
+            if (priceArray[optionId] !== undefined) {
+                if (optionPrice === "null") {
+                    optionPriceTotal = (optionPriceTotal) - parseFloat(priceArray[optionId]);
+                    delete priceArray[optionId];
+                } else {
+                    optionPriceTotal = (optionPriceTotal) - parseFloat(priceArray[optionId]) + parseFloat(optionPrice);
+                    priceArray[optionId] = optionPrice;
+                }
+            } else {
+                optionPriceTotal = (optionPriceTotal) + parseFloat(optionPrice);
+                priceArray[optionId] = optionPrice;
+            }
+            changePriceShow(currentPrice);
+        }
+
+        function resetPriceArray() {
+            optionPriceTotal = 0;
+            priceArray = [];
+            $("select:not(#chosen)").each(function () {
+                this.selectedIndex = 0;
+            });
+        }
+
+        function changePriceShow(newPrice) {
+            currentPrice = parseFloat(newPrice);
+            if (!isNaN(optionPriceTotal)) {
+                var totalPrice = (parseFloat(currentPrice) + optionPriceTotal).toFixed(2);
+            } else var totalPrice = parseFloat(currentPrice).toFixed(2);
+            productPriceSpan.text(priceUtils.formatPrice(totalPrice, priceFormat));
+            var priceStr = priceUtils.formatPrice(totalPrice * taxRate, priceFormat);
+            priceSpan.html('<span class="price">' + priceStr + '</span>');
+            productPriceRental.value = totalPrice;
+
+            var exclTaxPriceSpan = $('.price-wrapper[data-price-type="basePrice"]');
+            if (exclTaxPriceSpan.length > 0) {
+                var exclPriceStr = priceUtils.formatPrice(totalPrice, priceFormat);
+                exclTaxPriceSpan.html('<span class="price">' + exclPriceStr + '</span>');
+            }
+        }
+
+        /*validate duration selected*/
+        addToCart.on('click', function (event) {
+            var maxHours = maxDuration * 24;
+            addToCart.next().remove();
+            if (duration == 0 || weekOff == 1 || duration > maxHours) {
+                event.preventDefault();
+                addToCart.after('<div style="color: red;">' + durationMsg + '</div>');
+                return false;
+            }
+            var policyCheck = $('#rental_policy_checkbox');
+            if (policyCheck.length > 0 && !policyCheck.is(':checked')) {
+                event.preventDefault();
+                addToCart.after('<div style="color: red;">' + policyErrorMsg + '</div>');
+                return false;
+            }
+        });
+    })
+script;
+?>
+<?= isset($secureRenderer)
+    ? $secureRenderer->renderTag('script', [], $scriptString, false)
+    : '<script>' . $scriptString . '</script>' ?>

@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:Acl/etc/acl.xsd">
+    <acl>
+        <resources>
+            <resource id="Magento_Backend::admin">
+                <resource id="Magento_Backend::stores">
+                    <resource id="Magento_Backend::stores_settings">
+                        <resource id="Magento_Config::config">
+                            <resource id="Amasty_ReportBuilder::config" title="Amasty Custom Reports Builder"
+                                      sortOrder="031802"/>
+                        </resource>
+                    </resource>
+                </resource>
+                <resource id="Magento_Reports::report">
+                    <resource id="Amasty_ReportBuilder::reports" title="Amasty Custom Reports Builder" sortOrder="105">
+                        <resource id="Amasty_ReportBuilder::report_view" title="View Reports" translate="title" sortOrder="10" />
+                        <resource id="Amasty_ReportBuilder::report_edit" title="Edit Reports" translate="title" sortOrder="20" />
+                        <resource id="Amasty_ReportBuilder::report_delete" title="Delete Reports" translate="title" sortOrder="30" />
+                        <resource id="Amasty_ReportBuilder::report_duplicate" title="Duplicate Reports" translate="title" sortOrder="40" />
+                    </resource>
+                </resource>
+            </resource>
+        </resources>
+    </acl>
+</config>

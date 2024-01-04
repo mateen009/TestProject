@@ -1,0 +1,103 @@
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+// phpcs:disable Magento2.Templates.ThisInTemplate
+
+/** @var \Magento\Sales\Block\Order\Items $block */
+    $objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+    $blockData = $objectManager->create('\Magento\Sales\Block\Order\Items');
+    
+    
+    $resultPageFactory = $objectManager->create('Magento\Framework\View\Result\PageFactory');
+    $resultPage = $resultPageFactory->create();
+    
+?>
+<div class="table-wrapper order-items">
+    <table class="data table table-order-items" id="my-orders-table" summary="<?= $blockData->escapeHtml(__('Items Ordered')) ?>">
+        <caption class="table-caption"><?= $blockData->escapeHtml(__('Items Ordered')) ?></caption>
+        <thead>
+            
+                <tr>
+                    <td colspan="5" data-block="order-items-pager-top" class="order-pager-wrapper order-pager-wrapper-top">
+                        <?= $blockData->getPagerHtml() ?>
+                    </td>
+                </tr>
+            
+            <tr>
+                <th class="col name"><?= $blockData->escapeHtml(__('Product Name')) ?></th>
+                <th class="col sku"><?= $blockData->escapeHtml(__('SKU')) ?></th>
+                <th class="col price"><?= $blockData->escapeHtml(__('Price')) ?></th>
+                <th class="col qty"><?= $blockData->escapeHtml(__('Qty')) ?></th>
+                <th class="col subtotal"><?= $blockData->escapeHtml(__('Subtotal')) ?></th>
+            </tr>
+        </thead>
+       <?php
+           $objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+           $order = $objectManager->create('Magento\Sales\Model\Order')->load(113);
+           
+           $items = $order->getAllVisibleItems();  ?>
+        <?php $giftMessage = ''?>
+        <?php foreach ($items as $item) :
+            if ($item->getParentItem()) :
+                continue;
+            endif;
+            ?>
+            <tbody>
+                <?= $blockItems = $resultPage->getLayout()->createBlock('Magento\Framework\View\Element\Template')->setTemplate('Magento_Checkout::cart/item/default.phtml')->setItem($item)->toHtml();
+                echo $blockItems; ?>
+                <?php if ($this->helper(\Magento\GiftMessage\Helper\Message::class)->isMessagesAllowed('order_item', $item) && $item->getGiftMessageId()) : ?>
+                    <?php $giftMessage = $this->helper(\Magento\GiftMessage\Helper\Message::class)->getGiftMessageForEntity($item); ?>
+                    <tr>
+                        <td class="col options" colspan="5">
+                            <a href="#"
+                               id="order-item-gift-message-link-<?= (int) $item->getId() ?>"
+                               class="action show"
+                               aria-controls="order-item-gift-message-<?= (int) $item->getId() ?>"
+                               data-item-id="<?= (int) $item->getId() ?>">
+                                <?= $blockData->escapeHtml(__('Gift Message')) ?>
+                            </a>
+                            <?php $giftMessage = $this->helper(\Magento\GiftMessage\Helper\Message::class)->getGiftMessageForEntity($item); ?>
+                            <div class="order-gift-message" id="order-item-gift-message-<?= (int) $item->getId() ?>" role="region" aria-expanded="false" tabindex="-1">
+                                <a href="#"
+                                   title="<?= $blockData->escapeHtml(__('Close')) ?>"
+                                   aria-controls="order-item-gift-message-<?= (int) $item->getId() ?>"
+                                   data-item-id="<?= (int) $item->getId() ?>"
+                                   class="action close">
+                                    <?= $blockData->escapeHtml(__('Close')) ?>
+                                </a>
+                                <dl class="item-options">
+                                    <dt class="item-sender"><strong class="label"><?= $blockData->escapeHtml(__('From')) ?></strong><?= $blockData->escapeHtml($giftMessage->getSender()) ?></dt>
+                                    <dt class="item-recipient"><strong class="label"><?= $blockData->escapeHtml(__('To')) ?></strong><?= $blockData->escapeHtml($giftMessage->getRecipient()) ?></dt>
+                                    <dd class="item-message"><?= /* @noEscape */ $this->helper(\Magento\GiftMessage\Helper\Message::class)->getEscapedGiftMessage($item) ?></dd>
+                                </dl>
+                            </div>
+                        </td>
+                    </tr>
+                <?php endif ?>
+            </tbody>
+        <?php endforeach; ?>
+        <tfoot>
+            <?php if ($blockData->isPagerDisplayed()) : ?>
+                <tr>
+                    <td colspan="5" data-block="order-items-pager-bottom" class="order-pager-wrapper order-pager-wrapper-bottom">
+                        <?= $blockData->getPagerHtml() ?>
+                    </td>
+                </tr>
+            <?php endif ?>
+            <?= $blockData->getChildHtml('order_totals') ?>
+        </tfoot>
+    </table>
+</div>
+<?php if ($giftMessage) : ?>
+<script type="text/x-magento-init">
+    {
+        "a.action.show, a.action.close": {
+            "giftMessage": {}
+        }
+    }
+</script>
+<?php endif; ?>
+

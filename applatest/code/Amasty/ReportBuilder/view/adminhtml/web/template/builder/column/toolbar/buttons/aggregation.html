@@ -1,0 +1,23 @@
+<!-- ko if: item.aggregationOptions -->
+    <!-- ko template: {
+        name: $data.templates.button,
+        data: {
+            states: {
+                '-active': item.isAggregation(),
+                '-filtered': item.aggregation.isActive(),
+                '-disabled': $data.isUsePeriod() ? !$data.isUsePeriod() : !item.isAggregationEnabled()
+            },
+            classes: '-clear -icon -aggregation',
+            templatePath: $data.templates.aggregationIcon,
+            title: 'Choose aggregation',
+            events: {
+                click: function() {
+                    item.isFooterActive(!item.isFooterActive());
+                    item.isAggregation(!item.isAggregation());
+                }
+            }
+        }
+    } -->
+    <!-- /ko -->
+<!-- /ko -->
+

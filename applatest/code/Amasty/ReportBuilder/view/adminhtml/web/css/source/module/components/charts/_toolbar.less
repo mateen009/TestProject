@@ -1,0 +1,98 @@
+//
+//  Charts Toolbar Component
+//  ______________________________________________
+
+//
+//  Common
+//  ----------------------------------------------
+
+& when (@media-common = true) {
+    .amrepbuilder-charts-toolbar {
+        & {
+            .amrepbuilder-flex(none, center);
+
+            margin-bottom: @amrepbuilder__indent__l * 2;
+        }
+
+        .amrepbuilder-filter-from .admin__field-label,
+        .amrepbuilder-filter-to .admin__field-label {
+            padding: 0 @amrepbuilder__indent 0 0;
+        }
+
+        .amrepbuilder-filter-from .ui-datepicker-trigger,
+        .amrepbuilder-filter-to .ui-datepicker-trigger {
+            & {
+                margin-left: -22px;
+            }
+
+            &:hover:after {
+                color: @amrepbuilder-color__hover;
+            }
+
+            &:after {
+                color: @amrepbuilder-icon-color;
+                font-size: 13px;
+                line-height: 31px;
+            }
+        }
+
+        .amrepbuilder-filter-from {
+            margin: 0 @amrepbuilder__indent__l 0 0;
+        }
+
+        .amrepbuilder-filter-to {
+            margin: 0 auto 0 0;
+        }
+
+        .amrepbuilder-filter-interval {
+            .amrepbuilder-flex(center, center);
+
+            margin: 0 @amrepbuilder__indent__l 0 0;
+            border: 1px solid @amrepbuilder-input__border-color;
+        }
+
+        .amrepbuilder-filter-interval .admin__field-option:not(:last-child) {
+            border-right: 1px solid @amrepbuilder-input__border-color;
+        }
+
+        .amrepbuilder-filter-interval .admin__field-label {
+            & {
+                display: block;
+                margin: 0;
+                padding: 6px 3px;
+                width: 100%;
+                height: 100%;
+                background: @amrepbuilder-block__background;
+                text-align: center;
+            }
+
+            &:before,
+            &:after {
+                display: none;
+            }
+        }
+
+        .admin__control-radio {
+            display: none;
+        }
+
+        .admin__field-option {
+            min-width: 65px;
+        }
+
+        .admin__field.admin__field-option {
+            margin: 0;
+            padding: 0;
+        }
+
+        .admin__control-radio:checked + label {
+            background: #4d7cfe;
+            color: #fff;
+        }
+
+        .amrepbuilder-select {
+            padding: 6px 34px 6px @amrepbuilder__indent;
+            background-position: ~'94% calc(100% - 12px), 100% 100%';
+        }
+    }
+}

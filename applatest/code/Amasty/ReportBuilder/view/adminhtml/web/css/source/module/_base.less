@@ -1,0 +1,75 @@
+//
+//  Base Styles
+//  ______________________________________________
+
+//
+//  Common
+//  ----------------------------------------------
+
+& when (@media-common = true) {
+    .amrepbuilder-wrapper > * {
+        box-sizing: border-box;
+    }
+
+    .amrepbuilder-link {
+        & {
+            color: @amrepbuilder-color__hover;
+        }
+
+        &:hover {
+            text-decoration: underline;
+        }
+    }
+
+    .amrepbuilder-chosen-block,
+    .amrepbuilder-available-block {
+        .amrepbuilder-flex(none, flex-start, wrap);
+
+        align-self: stretch;
+        flex-direction: column;
+        max-width: 430px;
+        width: 100%;
+    }
+
+    .amrepbuilder-column-header {
+        & {
+            margin: 0;
+        }
+
+        .amrepbuilder-title {
+            color: @amrepbuilder-text-color;
+            letter-spacing: .03em;
+            font-weight: 600;
+            font-size: 1.7rem;
+            line-height: 2.3rem;
+        }
+
+        .amrepbuilder-desc {
+            display: block;
+            margin: 0;
+            padding: @amrepbuilder__indent__l 0;
+            color: #989898;
+            font-size: 1.4rem;
+            line-height: 19px;
+        }
+    }
+
+    .amreportbuilder-amchart-container {
+        min-height: 460px;
+        width: 100%;
+    }
+
+    .admin__collapsible-block-wrapper.fieldset-wrapper.amrebuilder-axis-fieldset {
+        margin-top: 50px;
+        border-top: 1px solid @amrepbuilder-input__border-color;
+        border-bottom-color: transparent;
+    }
+
+    .amreportbuilder-report-edit .admin__collapsible-block-wrapper.fieldset-wrapper {
+        border-bottom-color: transparent;
+    }
+
+    .amreportbuilder-image-tooltip .admin__field-tooltip-content {
+        width: 32vw;
+    }
+}

@@ -1,0 +1,28 @@
+//
+//  Icons Styles
+//  ______________________________________________
+
+//
+//  Common
+//  ----------------------------------------------
+
+& when (@media-common = true) {
+    .amrepbuilder-icon {
+        & {
+            color: @amrepbuilder-icon-color;
+            transition: .1s;
+        }
+
+        &:hover {
+            color: @amrepbuilder-icon-color__hover;
+        }
+
+        &:active {
+            color: @amrepbuilder-icon-color__active;
+        }
+
+        &.-disabled {
+            color: @amrepbuilder-icon-color__disabled;
+        }
+    }
+}

@@ -1,0 +1,95 @@
+"Are you sure you want to do this?","Are you sure you want to do this?"
+Delete,Delete
+Conditions,Conditions
+"The rule has been deleted.","The rule has been deleted."
+"Can't delete rule right now. Please review the log and try again.","Can't delete rule right now. Please review the log and try again."
+"Can't find a rule to delete.","Can't find a rule to delete."
+"New Return Rule","New Return Rule"
+"Edit Automation Rule %1","Edit Automation Rule %1"
+"This rule no longer exists.","This rule no longer exists."
+"Return Rules","Return Rules"
+"RMA Automation Rules","RMA Automation Rules"
+"Automation Rules","Automation Rules"
+"Error occurred while deleting rule with ID %1. Error: %2","Error occurred while deleting rule with ID %1. Error: %2"
+"%1 rule(s) has been successfully deleted","%1 rule(s) has been successfully deleted"
+"%1 rule(s) has been failed to delete","%1 rule(s) has been failed to delete"
+"Something went wrong while saving the rule data. Please review the error log.","Something went wrong while saving the rule data. Please review the error log."
+"The rule is saved.","The rule is saved."
+Unknown,Unknown
+"Conditions Combination","Conditions Combination"
+"Product attributes","Product attributes"
+"Customer attributes","Customer attributes"
+"Request Attributes","Request Attributes"
+"Customer ID","Customer ID"
+"Current Status","Current Status"
+"Current Manager","Current Manager"
+"Last Update (hours)","Last Update (hours)"
+"Last Update by","Last Update by"
+"Items Reason","Items Reason"
+"Items Condition","Items Condition"
+"Items Resolution","Items Resolution"
+"Items Total Price","Items Total Price"
+"Unable to save rule with ID %1. Error: %2","Unable to save rule with ID %1. Error: %2"
+"Unable to save new rule. Error: %1","Unable to save new rule. Error: %1"
+"Rule with specified ID ""%1"" not found.","Rule with specified ID ""%1"" not found."
+"Unable to remove rule with ID %1. Error: %2","Unable to remove rule with ID %1. Error: %2"
+"Unable to remove rule. Error: %1","Unable to remove rule. Error: %1"
+None,None
+"New Rma","New Rma"
+"Existing Rma","Existing Rma"
+"New And Existing Rma","New And Existing Rma"
+Customer,Customer
+Manager,Manager
+System,System
+General,General
+Enabled,Enabled
+"RMA Automation Rules Apply Schedule","RMA Automation Rules Apply Schedule"
+"Enter cron expression<br/>
+<br/>
+* * * * *<br/>
+| | | | |<br/>
+| | | | +---- Day of the Week   (range: 0-6, 1 standing for Monday)<br/>
+| | | +------ Month of the Year (range: 1-12)<br/>
+| | +-------- Day of the Month  (range: 1-31)<br/>
+| +---------- Hour              (range: 0-23)<br/>
++------------ Minute            (range: 0-59)<br/>
+Example: 0 0 * * * Daily at midnight<br/>
+<br/>
+Read more about cron expressions - <a href=""https://en.wikipedia.org/wiki/Cron"">here</a>","Enter cron expression<br/>
+<br/>
+* * * * *<br/>
+| | | | |<br/>
+| | | | +---- Day of the Week   (range: 0-6, 1 standing for Monday)<br/>
+| | | +------ Month of the Year (range: 1-12)<br/>
+| | +-------- Day of the Month  (range: 1-31)<br/>
+| +---------- Hour              (range: 0-23)<br/>
++------------ Minute            (range: 0-59)<br/>
+Example: 0 0 * * * Daily at midnight<br/>
+<br/>
+Read more about cron expressions - <a href=""https://en.wikipedia.org/wiki/Cron"">here</a>"
+Back,Back
+"Save Automation Rule","Save Automation Rule"
+"Save and Continue Edit","Save and Continue Edit"
+"General Settings","General Settings"
+"Return Rule Name","Return Rule Name"
+Priority,Priority
+"Stop Further Rules Processing","Stop Further Rules Processing"
+"Apply Rule for New RMA","Apply Rule for New RMA"
+"Apply Rule for Existing RMA","Apply Rule for Existing RMA"
+Actions,Actions
+"Set Status","Set Status"
+"Set Owner","Set Owner"
+"Send Email to Customer","Send Email to Customer"
+"Email Sender","Email Sender"
+"Email Template","Email Template"
+"Send Email to Admin","Send Email to Admin"
+"Email Receivers","Email Receivers"
+"Please write each email address from a new line","Please write each email address from a new line"
+"Add New Rule","Add New Rule"
+"Delete rules","Delete rules"
+"Are you sure you want to delete selected rule(s)?","Are you sure you want to delete selected rule(s)?"
+"Rule ID","Rule ID"
+"Rule Name","Rule Name"
+Status,Status
+"Rule Applied For","Rule Applied For"
+Edit,Edit

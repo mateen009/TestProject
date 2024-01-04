@@ -1,0 +1,5 @@
+<section class="amrepbuilder-header">
+    <span class="amrepbuilder-title" data-bind="html: item.title ? item.title : item.frontend_label"></span>
+    <span class="amrepbuilder-aggregation" if="item.aggregation_type" data-bind="i18n: item.aggregation_type"></span>
+    <span class="amrepbuilder-type" data-bind="i18n: item.type ? item.type : item.backend_type"></span>
+</section>

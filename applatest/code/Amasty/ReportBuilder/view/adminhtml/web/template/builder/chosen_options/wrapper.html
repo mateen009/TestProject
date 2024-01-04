@@ -1,0 +1,27 @@
+<section class="amrepbuilder-chosen-block">
+    <!-- ko template: { name: templates.header, $data: $data } --><!-- /ko-->
+
+    <!-- ko template: { name: templates.howToLink } --><!-- /ko-->
+
+    <section class="amrepbuilder-chosen" afterRender="initDropZone.bind($data)">
+        <!-- ko template: {
+            name: templates.button,
+            data: {
+                states: {
+                    '-active': true,
+                    '-disabled': $data.elems().length <= 1
+                },
+                html: $t('Clear all'),
+                classes: '-clearall -clear -link',
+                events: {
+                    click: function() {
+                        clearAll();
+                    }
+                }
+            }
+        } -->
+        <!-- /ko -->
+        <!-- ko template: templates.overlay --><!-- /ko -->
+        <!-- ko template: templates.columnsList --><!-- /ko -->
+    </section>
+</section>

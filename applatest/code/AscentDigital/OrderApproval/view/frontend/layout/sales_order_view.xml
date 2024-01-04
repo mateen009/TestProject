@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <referenceContainer name="page.main.title">
+        <block class="Magento\Sales\Block\Order\Info" name="order.demo.length" after="order.date" template="AscentDigital_OrderApproval::order/demo_length.phtml"/>
+        <block class="Magento\Sales\Block\Order\Info" name="order.agency.customer.email" after="order.demo.length" template="AscentDigital_OrderApproval::order/customer_email.phtml"/>
+        <block class="Magento\Sales\Block\Order\Info" name="order.custom.emaillink" after="order.agency.customer.email" template="AscentDigital_OrderApproval::order/resend_email.phtml"/>
+    </referenceContainer>
+</page>

@@ -1,0 +1,155 @@
+//
+//  Select Component
+//  ______________________________________________
+
+//
+//  Variables
+//  ----------------------------------------------
+
+@amrepbuilder-input-color__hover: @amrepbuilder-color__hover;
+
+//
+//  Common
+//  ----------------------------------------------
+
+& when (@media-common = true) {
+    .amrepbuilder-select-block {
+        & {
+            .amrepbuilder-flex(none, none, wrap);
+        }
+
+        &:not(.active) .amrepbuilder-options {
+            display: none;
+        }
+
+        &:not(.active) .amrepbuilder-input:after {
+            transform: rotate(180deg) translateY(-2px);
+        }
+
+        &.active .amrepbuilder-input {
+            border-color: @amrepbuilder-input-color__hover;
+        }
+
+        .amrepbuilder-input {
+            & {
+                position: relative;
+                overflow: hidden;
+            }
+
+            &:after,
+            &:before {
+                .amrepbuilder-flex(center, center);
+
+                position: absolute;
+                top: 0;
+                right: 0;
+                bottom: 0;
+            }
+
+            &:before {
+                width: 34px;
+                background: @amrepbuilder-loader__color__second;
+                content: '';
+            }
+
+            &:after {
+                margin: auto 0;
+                padding: 5px 12px;
+                content: '▴';
+                font-size: 16px;
+                transition: .1s;
+                transform: translateY(-1px);
+            }
+        }
+
+        .amrepbuilder-options {
+            flex-basis: 100%;
+            margin: 1px 0 0;
+            padding: @amrepbuilder__indent 0;
+            border: 1px solid @amrepbuilder-button-color__hover;
+            list-style: none;
+        }
+
+        .amrepbuilder-options .amrepbuilder-item {
+            & {
+                .amrepbuilder-flex(none, center);
+
+                padding: 2px @amrepbuilder__indent;
+                font-weight: 400;
+                font-size: 14px;
+                line-height: @amrepbuilder__indent__l;
+                cursor: pointer;
+                transition: .3s ease-in-out;
+            }
+
+            &:not(:last-child) {
+                margin-bottom: @amrepbuilder__indent;
+            }
+
+            &:hover {
+                background: @amrepbuilder-column__background;
+            }
+        }
+
+        .amrepbuilder-input {
+            & {
+                .amrepbuilder-flex(none, center, wrap);
+
+                text-align: left;
+                font-weight: 400;
+                cursor: pointer;
+            }
+
+            &:hover,
+            &:focus {
+                border-color: @amrepbuilder-button-color__hover;
+                background: #fff;
+            }
+        }
+    }
+
+    .amrepbuilder-select-block.-multiselect {
+        .amrepbuilder-input {
+            padding: 0;
+        }
+
+        .amrepbuilder-input > .amrepbuilder-list {
+            .amrepbuilder-flex(none, center, wrap);
+
+            overflow: hidden;
+            margin: 0;
+            padding: 0 0 0 7.5px;
+            width: 90%;
+        }
+
+        .amrepbuilder-input > .amrepbuilder-list > .amrepbuilder-item {
+            .amrepbuilder-flex(none, center);
+
+            box-sizing: border-box;
+            margin: 4px 2.5px;
+            padding: 0 0 0 @amrepbuilder__indent;
+            border: 1px solid #514943;
+            border-radius: 1px;
+            background: @amrepbuilder-loader__color__second;
+            font-size: 12px;
+        }
+
+        .amrepbuilder-input > .amrepbuilder-list .amrepbuilder-button {
+            & {
+                padding: 11px 8px;
+                color: #514943;
+                font-size: 10px;
+                line-height: 0;
+                cursor: pointer;
+            }
+
+            &:before {
+                content: 'x';
+            }
+        }
+
+        .amrepbuilder-options .amrepbuilder-text {
+            padding: 0 0 0 7px;
+        }
+    }
+}

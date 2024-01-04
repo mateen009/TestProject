@@ -1,0 +1,86 @@
+//
+//  Popup Component
+//  ______________________________________________
+
+//
+//  Common
+//  ----------------------------------------------
+
+& when (@media-common = true) {
+    .amrepbuilder-popup-wrapper {
+        & {
+            .amrepbuilder-flex(center, center);
+
+            position: fixed;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            z-index: 999;
+            background: rgba(0, 0, 0, .2);
+        }
+
+        .amrepbuilder-popup {
+            position: relative;
+            padding: @amrepbuilder__indent__l * 2;
+            max-width: 700px;
+            border-radius: 4px;
+            background: #fff;
+            box-shadow: 0 8px 16px rgba(87, 87, 87, .24);
+            text-align: center;
+        }
+
+        .amrepbuilder-checkbox-block {
+            .amrepbuilder-flex(center, center);
+
+            padding: @amrepbuilder__indent__m * 2 0 0 0;
+        }
+
+        .amrepbuilder-checkbox-block .amrepbuilder-checkbox {
+            margin-right: 8px;
+        }
+
+        .amrepbuilder-button.-close {
+            position: absolute;
+            top: 0;
+            right: 0;
+            margin: 16.5px;
+        }
+
+        .amrepbuilder-toolbar {
+            .amrepbuilder-flex(center, center);
+
+            padding: 30px 0 0;
+        }
+
+        .amrepbuilder-toolbar .amrepbuilder-button {
+            min-width: 100px;
+        }
+
+        .amrepbuilder-button.-cancel {
+            color: #575855;
+        }
+
+        .amrepbuilder-title {
+            padding: 0;
+        }
+
+        .amrepbuilder-header {
+            margin: 0;
+            padding: 0;
+            font-weight: 700;
+            font-size: 29px;
+        }
+
+        .amrepbuilder-description {
+            margin: 0;
+            padding: 30px 0 0;
+            font-weight: 400;
+            font-size: 16px;
+        }
+
+        .amrepbuilder-content {
+            padding: 30px 0 0;
+        }
+    }
+}

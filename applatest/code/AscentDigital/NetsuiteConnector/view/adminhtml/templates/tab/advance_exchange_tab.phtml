@@ -1,0 +1,51 @@
+<section class="admin__page-section">
+    <div class="admin__page-section-title">
+        <span class="title">
+            <?php /* @escapeNotVerified */ echo __('Advance Exchange Cron Job') ?>
+        </span>
+
+    </div>
+    <div class="admin__page-section-content">
+        <div class="order-information textfied" id="advance-exchange-cron-message">
+            <div class="box">
+                <div class="advance-exchange-cron-box-content">
+                    <p></p>
+                </div>
+            </div>
+        </div>
+    </div>
+        <div class="admin__page-section-item-content edit-checkoutfield-date" id="run-advance-exchange-cron-job-form">
+        <button id="advance-exchange-cron-submit">Run Advance Exchange Cron Job</button>
+        </div>
+        
+</section>
+<script type="text/javascript">
+    // advance exchange cron job
+    document.querySelector('#advance-exchange-cron-submit').addEventListener('click', function() {
+        document.querySelector('#advance-exchange-cron-submit').innerHTML = 'Running...';
+        document.querySelector('#advance-exchange-cron-submit').disabled = true;
+        require([
+            'jquery'
+        ], function($) {
+            var url = '<?=
+                        /** @noEscape */
+                        $block->getUrl("nsproduct/cron/advanceexchangecron") ?>';
+            jQuery.ajax({
+                url: url,
+                data: {
+                    orderCron: 'run'
+                },
+                type: "POST",
+                async: false,
+            }).done(function(response) {
+                $(".advance-exchange-cron-box-content").html("<span style='color:#008000; font-weight:bold'>Advance Exchange cron job completed. </span>");
+                $("#advance-exchange-cron-submit").text('Run Advance Exchange Cron Job');
+                document.querySelector('#advance-exchange-cron-submit').disabled = false;
+            });
+
+            //});            
+        });
+    });
+
+   
+</script>

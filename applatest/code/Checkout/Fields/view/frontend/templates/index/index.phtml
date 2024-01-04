@@ -1,0 +1,107 @@
+<style>
+     div[name="shippingAddress.cost_center"]{
+          width: 200px;
+
+     }
+     div[name="shippingAddress.client_po"]{
+          margin-top: 10px;
+          width: 200px;
+
+     }
+     div[name="shippingAddress.customer_shipping_account"] label:first-child{
+          display: none;
+          
+     }
+     div[name="shippingAddress.customer_shipping_account"]{
+          margin-top: 10px;
+
+     }
+</style>
+<!-- <label id="myLabel" for="inputField">Enter your name:</label> -->
+<!-- <input type="checkbox" id="inputField" /> -->
+<script type="text/javascript">
+     // $("label[for='id_16_gen']").addClass("app-required-label");
+    // JW | Ticket Ref=1150
+    require(["jquery"], function($) {
+        $(document).ready(function() {
+           if(jQuery('[name="cost_center"]').val() == ''){
+                document.cookie = "costcenter=;expires=Thu, 01 Jan 1970 00:00:00 GMT";
+           }
+           if(jQuery('[name="client_po"]').val() == ''){
+              document.cookie = "clientpo=;expires=Thu, 01 Jan 1970 00:00:00 GMT";
+            }
+            if(jQuery('[name="customer_shipping_account"]').val() == ''){
+              document.cookie = "customershippingaccount=;expires=Thu, 01 Jan 1970 00:00:00 GMT";
+            }
+            // document.cookie = "costcenter=;expires=Thu, 01 Jan 1970 00:00:00 GMT";
+            // document.cookie = "clientpo=;expires=Thu, 01 Jan 1970 00:00:00 GMT";
+            // $('button.action').click(function (){
+            //     var cost= $('input[name="cost_center"]').val();
+            //     var client= $('input[name="client_po"]').val();
+            //     document.cookie="costcenter="+ cost;
+            //     document.cookie="clientpo="+client;
+
+            //     console.log(cost);
+            //     console.log(client);
+            // });
+
+           
+            // $('input[name="cost_center"]').keyup(function() {
+            //     alert('jawad');
+            //     // var cost= $('input[name="cost_center"]').val();
+            //     // document.cookie="costcenter="+ cost;
+            //     // console.log(cost);
+            // }); 
+
+            // jQuery('button').on( "keyup", function() {
+            //     alert( "Handler for `keyup` called." );
+            // } );
+          
+
+            // $('input[name="client_po"]').keyup(function() {
+            //     var client= $('input[name="client_po"]').val();
+            //     document.cookie="clientpo="+ client;
+            //     console.log(client);
+            // }); 
+          
+           jQuery(document).on("keyup", '[name="cost_center"]', function () {
+             var costcenter= jQuery('[name="cost_center"]').val();
+                  document.cookie="costcenter="+costcenter+";path=/";
+                 console.log(costcenter);
+            });
+
+            jQuery(document).on("keyup", '[name="client_po"]', function () {
+             var clientpo= jQuery('[name="client_po"]').val();
+                  document.cookie="clientpo="+clientpo+";path=/";
+                 console.log(clientpo);
+            });
+            jQuery(document).on("change", '[name="customer_shipping_account"]', function () {
+             var customershippingaccount= jQuery('[name="customer_shipping_account"]').val();
+                  document.cookie="customershippingaccount="+customershippingaccount+";path=/";
+                 console.log(customershippingaccount);
+            });
+       
+    });
+
+    // var cost_el= document.getElementsByName('client_po');
+    // cost_el.addEventListener('keyup', () => {
+    //         alert( "jawad Handler for `keyup` called." );
+    //     });
+});
+         //var cost_el= document.getElementsByName('cost_center');
+       
+      
+
+        // document.getElementsByName('cost_center').onkeyup = function() {
+        //     alert( "jawad Handler for `keyup` called." );
+
+        // };
+
+            // function myFunction() {
+            // let x = document.getElementById("fname");
+            // x.value = x.value.toUpperCase();
+            // }
+                
+        
+
+</script>

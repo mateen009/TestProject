@@ -1,0 +1,14 @@
+<ul class="amrepbuilder-columns-list"
+    data-amrepbuilder-js="chosen-list"
+    data-bind="
+        afterRender: initDnD.bind($data),
+        foreach: { data: Object.keys(elems()), as: 'key' }">
+    <!-- ko template: {
+                name: $parent.templates.column,
+                data: {
+                    item: $parent.elems()[key],
+                    uiClass: $parent
+                }
+    } -->
+    <!-- /ko -->
+</ul>

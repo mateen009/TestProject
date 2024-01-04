@@ -1,9 +1,0 @@
-<?xml version="1.0"?>
- 
-<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">    
-    <!-- <type name="Magento\Checkout\Controller\Cart\Add">
-        <plugin name="addtocartplugin" type="PerksAtWork\Popup\Plugin\Add"  sortOrder="10"/>
-    </type> -->
-    <preference for="Magento\Checkout\Controller\Cart\Add"
-                type="AscentDigital\Checkout\Plugin\Add" />
-</config>

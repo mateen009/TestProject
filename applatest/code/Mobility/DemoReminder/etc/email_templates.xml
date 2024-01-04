@@ -1,5 +1,0 @@
-<?xml version="1.0"?>
-<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Email:etc/email_templates.xsd">
-    <template id="customer_demo_reminder_email_template" label="Customer Demo Reminder Email Template" file="customer_reminder.html" type="html" module="Mobility_DemoReminder" area="frontend"/>
-    <template id="sales_rep_email_template" label="Sales Rep Demo Reminder Email Template" file="salerep_reminder.html" type="html" module="Mobility_DemoReminder" area="frontend"/>
-</config>

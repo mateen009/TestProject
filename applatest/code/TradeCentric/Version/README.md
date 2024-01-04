@@ -1,1 +1,0 @@
-TradeCentric Version module 3.0.0

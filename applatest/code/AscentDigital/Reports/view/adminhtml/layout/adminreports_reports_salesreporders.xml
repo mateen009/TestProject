@@ -1,9 +1,0 @@
-<?xml version="1.0"?>
-<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
-    <body>
-        <referenceContainer name="content">
-             <block class="AscentDigital\Reports\Block\Adminhtml\Reports\SalesRepOrders" name="sales-rep-orders" template="AscentDigital_Reports::sales_rep_orders.phtml" />
-             <block class="AscentDigital\Reports\Block\Adminhtml\Reports\Graph\SalesRepOrders" name="sales-rep-orders-graph" template="Amasty_ReportBuilder::graph/sales_rep_orders_graph.phtml" />
-        </referenceContainer>
-    </body>
-</page>
